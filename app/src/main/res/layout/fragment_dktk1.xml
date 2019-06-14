@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1565c0"
+    android:stretchColumns="0">
+    <TableRow>
+        <TextView
+            android:background="#f4aa00"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textColor="#000000"
+            android:text="Thông Tin Cơ Bản" />
+    </TableRow>
+    <TableRow android:layout_marginTop="5dp">
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_hoten"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập họ tên"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow>
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+            <EditText
+                android:inputType="number"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/edt_cmnd"
+                android:singleLine="true"
+                android:paddingLeft="15dp"
+                android:hint="Nhập số CMND"
+                android:textSize="30sp"
+                android:background="@drawable/style_edittext2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow>
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_email"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập email"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow>
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_diachi"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập địa chỉ"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow android:layout_marginTop="20dp">
+        <TextView
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:textColor="#ffffff"
+            android:text="Ngày Sinh" />
+    </TableRow>
+    <TableRow android:layout_marginTop="20dp">
+        <LinearLayout
+            android:orientation="vertical">
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:text="Ngày"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:text="Tháng"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:text="Năm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:background="#f4aa00"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40sp">
+                <Spinner
+                    android:id="@+id/spn_ngay"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"></Spinner>
+                <Spinner
+                    android:id="@+id/spn_thang"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"></Spinner>
+                <Spinner
+                    android:id="@+id/spn_nam"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"></Spinner>
+            </LinearLayout>
+        </LinearLayout>
+    </TableRow>
+    <TableRow android:layout_marginTop="20dp">
+        <LinearLayout
+            android:weightSum="3"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:text="Giới Tính: "
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <RadioGroup
+                android:id="@+id/rdg_gioitinh"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <RadioButton
+                    android:id="@+id/rd_nam"
+                    android:textSize="25sp"
+                    android:layout_marginRight="30dp"
+                    android:checked="true"
+                    android:textColor="#ffffff"
+                    android:text="Nam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/rd_nu"
+                    android:textSize="25sp"
+                    android:textColor="#ffffff"
+                    android:text="Nữ"
+                    android:checked="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+        </LinearLayout>
+    </TableRow>
+
+</TableLayout>

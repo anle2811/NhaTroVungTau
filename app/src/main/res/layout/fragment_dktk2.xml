@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#1565c0"
+    android:stretchColumns="0">
+    <TableRow>
+        <TextView
+            android:background="#f4aa00"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textColor="#000000"
+            android:text="Thông Tin Đăng Nhập" />
+    </TableRow>
+    <TableRow android:layout_marginTop="15dp">
+        <LinearLayout
+            android:weightSum="4"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                app:hintTextAppearance="@style/FloatingHintStyle">
+                <EditText
+                    android:id="@+id/edt_sdt"
+                    android:inputType="number"
+                    android:paddingLeft="15dp"
+                    android:hint="Nhập SĐT"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:singleLine="true"
+                    android:textSize="30sp"
+                    android:background="@drawable/style_edittext2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:id="@+id/btn_guima"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/style_button2"
+                    android:text="Gửi Mã"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" />
+        </LinearLayout>
+    </TableRow>
+    <TableRow android:layout_marginTop="15dp">
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_tenDN"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập tên đăng nhập"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow android:layout_marginTop="15dp">
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_matkhau"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập mật khẩu"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow android:layout_marginTop="15dp">
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_laimatkhau"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập lại mật khẩu"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+    <TableRow android:layout_marginTop="15dp">
+        <android.support.design.widget.TextInputLayout
+            app:hintTextAppearance="@style/FloatingHintStyle">
+        <EditText
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/edt_maxacnhan"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:hint="Nhập mã xác nhận"
+            android:textSize="30sp"
+            android:background="@drawable/style_edittext2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        </android.support.design.widget.TextInputLayout>
+    </TableRow>
+</TableLayout>

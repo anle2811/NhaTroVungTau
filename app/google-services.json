@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "519937484533",
+    "firebase_url": "https://nhatrovungtau-60c08.firebaseio.com",
+    "project_id": "nhatrovungtau-60c08",
+    "storage_bucket": "nhatrovungtau-60c08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519937484533:android:09541472fb313d44",
+        "android_client_info": {
+          "package_name": "com.example.anle.nhatrovungtau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519937484533-piubs78mbpj4tukfdjl7h5ope3nmp50c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anle.nhatrovungtau",
+            "certificate_hash": "f7b17236870192bdc40730053a0ab045fdc0aa45"
+          }
+        },
+        {
+          "client_id": "519937484533-gsuan4t2af1cnbc631jpql5u0mkvohft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIdyaA7T7LSd8g3By47MyDTZLqgKZtuIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519937484533-gsuan4t2af1cnbc631jpql5u0mkvohft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

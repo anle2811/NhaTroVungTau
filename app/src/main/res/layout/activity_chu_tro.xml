@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChuTroActivity">
+    <RelativeLayout
+        android:background="@drawable/backgroundmenu"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <RelativeLayout
+            android:layout_centerInParent="true"
+            android:background="@drawable/background_color_black70"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="26dp"
+                android:layout_alignParentBottom="true"
+                android:textStyle="bold"
+                android:textColor="@color/mautext1"
+                android:text="Lê Quang An"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:id="@+id/ibtn_qltro"
+                android:scaleType="fitCenter"
+                android:src="@drawable/qltroicon"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_style1"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+            <TextView
+                android:layout_marginBottom="25sp"
+                android:gravity="center"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="5dp"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@id/ibtn_qltro"
+                android:textColor="@color/mautext1"
+                android:text="Quản Lý\nTrọ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/ibtn_dangxuat"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logouticon"
+                android:background="@drawable/button_style1"
+                android:layout_alignParentRight="true"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+            <TextView
+                android:layout_marginRight="7dp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/ibtn_dangxuat"
+                android:textColor="@color/mautext1"
+                android:text="Đăng Xuất"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageButton
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/ibtn_ttcn"
+                android:scaleType="fitCenter"
+                android:src="@drawable/usericon"
+                android:background="@drawable/button_style1"
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+            <TextView
+                android:gravity="center"
+                android:layout_marginLeft="7dp"
+                android:textStyle="bold"
+                android:layout_below="@id/ibtn_ttcn"
+                android:textColor="@color/mautext1"
+                android:text="Thông Tin\nCá Nhân"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:weightSum="2"
+                android:orientation="vertical"
+                android:background="@drawable/button_style1"
+                android:layout_centerInParent="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+                <ImageView
+                    android:layout_marginTop="11dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:src="@drawable/addicon"
+                    android:layout_width="50dp"
+                    android:layout_height="0dp" />
+                <TextView
+                    android:textColor="@color/mautext2"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textSize="23dp"
+                    android:text="Thêm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
