@@ -153,7 +153,12 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
 
     @Override
     public void gotoDangNhap() {
-        startActivity(new Intent(dkTKActivity.this,DangNhapActivity.class));
+        Intent intent=new Intent(dkTKActivity.this,DangNhapActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("Taikhoan",params.get("Tentk"));
+        bundle.putString("Matkhau",params.get("Matkhau"));
+        intent.putExtras(bundle);
+        startActivity(intent);
         finish();
     }
 

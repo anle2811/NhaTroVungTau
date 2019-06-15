@@ -30,6 +30,7 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dangnhapchutro);
         initAll();
+        TK_MK_VuaDK();
         dangnhap();
         dangky();
     }
@@ -39,6 +40,14 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         edt_taikhoan=findViewById(R.id.edt_taikhoan);
         edt_matkhau=findViewById(R.id.edt_matkhau);
         prgbar_dangnhap=findViewById(R.id.prgbar_dangnhap);
+    }
+    public void TK_MK_VuaDK(){
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        if (bundle!=null){
+            edt_taikhoan.setText(bundle.getString("Taikhoan"));
+            edt_matkhau.setText(bundle.getString("Matkhau"));
+        }
     }
     public void dangnhap(){
         btn_dangnhap.setOnClickListener(new View.OnClickListener() {
