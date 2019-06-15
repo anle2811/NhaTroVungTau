@@ -1,4 +1,5 @@
 package com.example.anle.nhatrovungtau.PhpDB;
+import com.example.anle.nhatrovungtau.DangNhapActivity;
 import com.example.anle.nhatrovungtau.dkTKActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,15 +16,14 @@ import java.util.HashMap;
 public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //AsyncTask<Params, Progress, Result>
     // Những đối số nào không sử dụng trong quá trình thực thi tiến trình thì ta thay bằng Void.
     //Result: Là biến dùng để lưu trữ kết quả trả về sau khi tiến trình thực hiện xong.
-    private WeakReference<ResponseInActivity> mCallBack;
+    private WeakReference<Object> mCallBack;
     String url; //Chuoi url ket noi toi database thuc hien yeu cau trong code php
     private String action;
     HashMap<String,String> params; //HashMap là 1 kiểu đối tượng lưu giá trị theo cặp key / value.
     // Đây là tham số truyền vào với các tham số đi kèm với giá trị của chúng
     int requestCode; //Mã yêu cầu: để kiểm tra phải sử dụng phương thức nào
     Context context;
-    public ResponseInActivity response=null;
-    public PerformNetworkRequest(String url,String action,HashMap<String,String> params,int requestCode,Context context,ResponseInActivity callback){ //Phương thức khởi tạo
+    public PerformNetworkRequest(String url,String action,HashMap<String,String> params,int requestCode,Context context,Object callback){ //Phương thức khởi tạo
         this.url=url;
         this.action=action;
         this.params=params;
@@ -31,57 +31,100 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
         this.context=context;
         this.mCallBack=new WeakReference<>(callback);
     }
-    public interface ResponseInActivity{
+    public interface XulyDK{
         void exeTaotaikhoan();
         void gotoDangNhap();
+    }
+    public interface KiemtraDN{
+        void DangNhap();
     }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
         super.onPreExecute();
-        dkTKActivity.prgbar_tientrinh.setVisibility(View.VISIBLE);
+        switch (this.action){
+            case Api.actionExistCheck:
+            case Api.actionTaoTK:
+                dkTKActivity.prgbar_tientrinh.setVisibility(View.VISIBLE);
+                break;
+            case Api.actionDN:
+                DangNhapActivity.prgbar_dangnhap.setVisibility(View.VISIBLE);
+                break;
+
+        }
+
     }
 
     @Override
     protected void onPostExecute(String s) { //Sau khi tiến trình kết thúc thì hàm này sẽ được gọi. Ta có thể lấy được kết quả trả về sau khi tiến trình kết thúc, ở đây.
         super.onPostExecute(s);
-        dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
-        Log.d("MainActivity","String: "+s);
-        try{
-            JSONObject jsonObject=new JSONObject(s); // String s tra ve mot chuoi Json ta gán vào đối tượng json để lấy dữ liệu
+        if (s==""){
+            switch (this.action){
+                case Api.actionExistCheck:
+                case Api.actionTaoTK:
+                    dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
+                    Toast.makeText(context,"Loi ket noi, gui lai ma va thu lai",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionDN:
+                    DangNhapActivity.prgbar_dangnhap.setVisibility(View.GONE);
+                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    break;
 
+            }
+        }else {
 
+            Log.d("MainActivity", "String: " + s);
             try {
-                if (jsonObject.getString("action").equals("checkTK")){
-                    if (!jsonObject.getBoolean("error")){ // Lấy ra giá trị của key 'error' trong chuỗi json. Nếu giá trị khác true, mean: value=false thì:
-                        Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                        final ResponseInActivity callBack=mCallBack.get();
-                        if (callBack!=null){
-                            callBack.exeTaotaikhoan();
+                JSONObject jsonObject = new JSONObject(s); // String s tra ve mot chuoi Json ta gán vào đối tượng json để lấy dữ liệu
+
+                switch (this.action) {
+                    case Api.actionExistCheck: {
+                        dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
+                        if (!jsonObject.getBoolean("error")) { // Lấy ra giá trị của key 'error' trong chuỗi json. Nếu giá trị khác true, mean: value=false thì:
+                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            final XulyDK callBack = (XulyDK) mCallBack.get();
+                            if (callBack != null) {
+                                callBack.exeTaotaikhoan();
+                            }
+                            Log.d("dkTKActivity", "Message: " + jsonObject.getString("message"));
                         }
-                        Log.d("dkTKActivity","Message: "+jsonObject.getString("message"));
+                        if (jsonObject.getBoolean("error")) {
+                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            Log.d("dkTKActivity", "Message: " + jsonObject.getString("message"));
+                        }
                     }
-                    if (jsonObject.getBoolean("error")){
-                        Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                        Log.d("dkTKActivity","Message: "+jsonObject.getString("message"));
+                    break;
+
+                    case Api.actionTaoTK: {
+                        dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
+                        if (!jsonObject.getBoolean("error")) {
+                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            Log.d("dkTKActivity", "Message: " + jsonObject.getString("message"));
+                            final XulyDK callBack = (XulyDK) mCallBack.get();
+                            callBack.gotoDangNhap();
+                        }
                     }
-                }
-            }catch (Exception e){
-                Log.d("dkTKActivity","JsonObject: "+e.getMessage());
-            }
+                    break;
 
+                    case Api.actionDN: {
+                        DangNhapActivity.prgbar_dangnhap.setVisibility(View.GONE);
+                        if (!jsonObject.getBoolean("error")) {
+                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            final KiemtraDN callBack = (KiemtraDN) mCallBack.get();
+                            callBack.DangNhap();
+                        }
+                        if (jsonObject.getBoolean("error")) {
+                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            Log.d("dkTKActivity", "Message: " + jsonObject.getString("message"));
+                        }
+                    }
+                    break;
 
-            if (!jsonObject.getBoolean("error")){ // Lấy ra giá trị của key 'error' trong chuỗi json. Nếu giá trị khác true, mean: value=false thì:
-                Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
-                Log.d("dkTKActivity","Message: "+jsonObject.getString("message"));
-                if (this.action.equals("taoTaiKhoan")){
-                    final ResponseInActivity callBack=mCallBack.get();
-                    callBack.gotoDangNhap();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }catch (JSONException e){
-            Log.d("MainActivity","Fail: "+e.toString());
-            e.printStackTrace();
         }
+
     }
 
     @Override

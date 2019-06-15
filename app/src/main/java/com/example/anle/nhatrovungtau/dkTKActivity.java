@@ -31,9 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,PerformNetworkRequest.ResponseInActivity {
+public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,PerformNetworkRequest.XulyDK {
     private static final String TAG=dkTKActivity.class.getSimpleName();
-
+    private static final int REQUEST_CODE=113;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private Button btn_tieptuc,btn_trolai;
@@ -154,15 +154,16 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
     @Override
     public void gotoDangNhap() {
         startActivity(new Intent(dkTKActivity.this,DangNhapActivity.class));
+        finish();
     }
 
     public void taoTaiKhoan(){
-        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_TAO_TAIKHOAN,Api.actionTaoTK,params,113,getApplicationContext(),this);
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_TAO_TAIKHOAN,Api.actionTaoTK,params,REQUEST_CODE,getApplicationContext(),this);
         request.execute();
     }
 
     public void kiemtraTentk(){
-        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_ACC_EXIST_CHECK,Api.actionExistCheck,paramsTentk,113,getApplicationContext(),this);
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_ACC_EXIST_CHECK,Api.actionExistCheck,paramsTentk,REQUEST_CODE,getApplicationContext(),this);
         request.execute();
     }
 
