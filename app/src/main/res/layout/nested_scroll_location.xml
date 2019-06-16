@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/bot_sheet_location"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_peekHeight="0dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="#4f688e"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:gravity="bottom|center"
+                android:textStyle="bold"
+                android:textColor="@color/maucam"
+                android:textSize="17sp"
+                android:text="Nhấp vào Icon để đóng"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <TableLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+            <TableRow>
+                <ImageView
+                    android:id="@+id/img_dongGGmap"
+                    android:layout_weight="1"
+                    android:src="@drawable/ggmapbotsheet" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+    <fragment
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/ggmap"
+        android:layout_width="match_parent"
+        android:layout_height="350dp" />
+</LinearLayout>

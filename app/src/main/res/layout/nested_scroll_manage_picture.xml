@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:id="@+id/bot_sheet_pic"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_peekHeight="90dp">
@@ -30,6 +31,7 @@
             android:layout_height="80dp">
             <TableRow>
                 <Button
+                    android:textColor="#fff"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
@@ -39,6 +41,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/galleryicon" />
                 <Button
+                    android:textColor="#fff"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
@@ -67,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <Button
+                android:textColor="#fff"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
