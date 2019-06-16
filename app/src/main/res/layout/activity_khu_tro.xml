@@ -6,216 +6,230 @@
     android:layout_height="match_parent"
     android:background="#739e8a"
     tools:context=".KhuTroPhongTro.KhuTroActivity">
-    <RelativeLayout
+    <ScrollView
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:paddingBottom="5dp"
-            android:textStyle="bold"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/tv_title"
-            android:layout_alignParentTop="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/title_textview"
-            android:textAlignment="center"
-            android:textSize="27sp"
-            android:textColor="#fff"
-            android:text="Thêm khu trọ" />
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_tenkhutro"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_title"
-            app:hintTextAppearance="@style/FloatingHintStyle">
-            <EditText
-                android:inputType="text"
-                android:paddingRight="10dp"
-                android:id="@+id/edt_tenkhutro"
-                android:drawablePadding="10dp"
-                android:textColorHint="@color/mautext2"
-                android:textSize="20sp"
-                android:textColor="@color/mautext2"
-                android:paddingLeft="10dp"
-                android:drawableLeft="@drawable/tenkhutroicon"
-                android:hint="Tên khu trọ"
-                android:singleLine="true"
-                android:background="@drawable/style_edittext2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_diachi"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layout_tenkhutro"
-            app:hintTextAppearance="@style/FloatingHintStyle">
-            <EditText
-                android:inputType="text"
-                android:paddingRight="10dp"
-                android:id="@+id/edt_diachikhutro"
-                android:drawablePadding="10dp"
-                android:textColorHint="@color/mautext2"
-                android:textSize="20sp"
-                android:textColor="@color/mautext2"
-                android:paddingLeft="10dp"
-                android:drawableLeft="@drawable/diachikhuicon"
-                android:hint="Địa chỉ"
-                android:singleLine="true"
-                android:background="@drawable/style_edittext2"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-        </android.support.design.widget.TextInputLayout>
-        <Spinner
-            android:id="@+id/spn_thanhpho"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/layout_diachi"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/layout_motakhutro"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spn_thanhpho"
-            app:hintTextAppearance="@style/FloatingHintStyle">
-            <EditText
-                android:inputType="textMultiLine"
-                android:gravity="start"
-                android:paddingTop="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:id="@+id/edt_motakhutro"
-                android:textColorHint="@color/mautext2"
-                android:textSize="20sp"
-                android:textColor="@color/mautext2"
-                android:paddingLeft="10dp"
-                android:drawableTop="@drawable/detailicon"
-                android:hint="Mô tả khu trọ"
-                android:background="@drawable/style_edittext2"
-                android:layout_width="match_parent"
-                android:layout_height="130dp" />
-        </android.support.design.widget.TextInputLayout>
         <LinearLayout
-            android:id="@+id/layout_vitri"
-            android:layout_marginTop="8dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_below="@id/layout_motakhutro"
-            android:layout_width="match_parent"
-            android:layout_height="40dp">
-            <EditText
-                android:textColor="#fff"
-                android:focusable="false"
-                android:singleLine="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:paddingRight="3dp"
-                android:paddingLeft="7dp"
-                android:background="@drawable/style_noedit_edt"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:id="@+id/edt_lat"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:text="LAT: "
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-            <EditText
-                android:textColor="#fff"
-                android:focusable="false"
-                android:singleLine="true"
-                android:layout_marginRight="5dp"
-                android:paddingRight="3dp"
-                android:paddingLeft="7dp"
-                android:background="@drawable/style_noedit_edt"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:id="@+id/edt_lng"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:text="LNG: "
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <Button
-            android:paddingRight="10dp"
-            android:drawableStart="@drawable/dinhvitroicon"
-            android:drawableLeft="@drawable/dinhvitroicon"
-            android:layout_marginRight="15dp"
-            android:id="@+id/btn_latlng"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/layout_vitri"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:text="Định vị khu trọ"
-            android:textColor="#ff9197"
-            android:background="@drawable/button_style2"
-            android:layout_width="150dp"
-            android:layout_height="60dp" />
-        <TextView
-            android:textStyle="bold|italic"
-            android:id="@+id/tv_hinhhienthi"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
-            android:textSize="20sp"
-            android:textColor="#a62900"
-            android:layout_below="@id/layout_vitri"
-            android:text="Ảnh hiển thị: "
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/img_avtkhu"
-            android:background="@drawable/pic_border"
-            android:scaleType="fitCenter"
-            android:src="@drawable/addpicicon"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_below="@id/tv_hinhhienthi"
-            android:layout_width="150dp"
-            android:layout_height="80dp" />
-        <LinearLayout
-            android:id="@+id/layout_luuhuy"
-            android:weightSum="2"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
+            android:weightSum="10"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Button
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textColor="#fff"
-                android:background="@drawable/button_style1"
-                android:id="@+id/btn_huy"
-                android:text="Hủy"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="40dp" />
-            <Button
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:textColor="#fff"
-                android:background="@drawable/button_style1"
-                android:id="@+id/btn_luulai"
-                android:text="Lưu lại"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="40dp" />
+            <RelativeLayout
+                android:layout_weight="9.2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+                <TextView
+                    android:paddingBottom="5dp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tv_title"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/title_textview"
+                    android:textAlignment="center"
+                    android:textSize="27sp"
+                    android:textColor="#fff"
+                    android:text="Thêm khu trọ" />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_tenkhutro"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title"
+                    app:hintTextAppearance="@style/FloatingHintStyle">
+                    <EditText
+                        android:inputType="text"
+                        android:paddingRight="10dp"
+                        android:id="@+id/edt_tenkhutro"
+                        android:drawablePadding="10dp"
+                        android:textColorHint="@color/mautext2"
+                        android:textSize="20sp"
+                        android:textColor="@color/mautext2"
+                        android:paddingLeft="10dp"
+                        android:drawableLeft="@drawable/tenkhutroicon"
+                        android:hint="Tên khu trọ"
+                        android:singleLine="true"
+                        android:background="@drawable/style_edittext2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_diachi"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_tenkhutro"
+                    app:hintTextAppearance="@style/FloatingHintStyle">
+                    <EditText
+                        android:inputType="text"
+                        android:paddingRight="10dp"
+                        android:id="@+id/edt_diachikhutro"
+                        android:drawablePadding="10dp"
+                        android:textColorHint="@color/mautext2"
+                        android:textSize="20sp"
+                        android:textColor="@color/mautext2"
+                        android:paddingLeft="10dp"
+                        android:drawableLeft="@drawable/diachikhuicon"
+                        android:hint="Địa chỉ"
+                        android:singleLine="true"
+                        android:background="@drawable/style_edittext2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+                </android.support.design.widget.TextInputLayout>
+                <Spinner
+                    android:background="@drawable/background_itemspinner"
+                    android:id="@+id/spn_thanhpho"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/layout_diachi"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/layout_motakhutro"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/spn_thanhpho"
+                    app:hintTextAppearance="@style/FloatingHintStyle">
+                    <EditText
+                        android:inputType="textMultiLine"
+                        android:gravity="start"
+                        android:paddingTop="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="5dp"
+                        android:id="@+id/edt_motakhutro"
+                        android:textColorHint="@color/mautext2"
+                        android:textSize="20sp"
+                        android:textColor="@color/mautext2"
+                        android:paddingLeft="10dp"
+                        android:drawableTop="@drawable/detailicon"
+                        android:hint="Mô tả khu trọ"
+                        android:background="@drawable/style_edittext2"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp" />
+                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:id="@+id/layout_vitri"
+                    android:layout_marginTop="8dp"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/layout_motakhutro"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <EditText
+                        android:textColor="#fff"
+                        android:focusable="false"
+                        android:singleLine="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="7dp"
+                        android:background="@drawable/style_noedit_edt"
+                        android:layout_weight="1"
+                        android:inputType="none"
+                        android:id="@+id/edt_lat"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="LAT: "
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                    <EditText
+                        android:textColor="#fff"
+                        android:focusable="false"
+                        android:singleLine="true"
+                        android:layout_marginRight="5dp"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="7dp"
+                        android:background="@drawable/style_noedit_edt"
+                        android:layout_weight="1"
+                        android:inputType="none"
+                        android:id="@+id/edt_lng"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:text="LNG: "
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <Button
+                    android:paddingRight="10dp"
+                    android:drawableStart="@drawable/dinhvitroicon"
+                    android:drawableLeft="@drawable/dinhvitroicon"
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/btn_latlng"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/layout_vitri"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="Định vị khu trọ"
+                    android:textColor="#ff9197"
+                    android:background="@drawable/button_style2"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp" />
+                <TextView
+                    android:textStyle="bold|italic"
+                    android:id="@+id/tv_hinhhienthi"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="20sp"
+                    android:textColor="#a62900"
+                    android:layout_below="@id/layout_vitri"
+                    android:text="Ảnh khu trọ: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_avtkhu"
+                    android:background="@drawable/pic_border"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/addpicicon"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_below="@id/tv_hinhhienthi"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_weight="0.8"
+                android:id="@+id/layout_luuhuy"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+                <Button
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/button_style1"
+                    android:id="@+id/btn_huy"
+                    android:text="Hủy"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+                <Button
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/button_style1"
+                    android:id="@+id/btn_luulai"
+                    android:text="Lưu lại"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp" />
+            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </ScrollView>
+
     <include layout="@layout/nested_scroll_location"/>
 </android.support.design.widget.CoordinatorLayout>

@@ -12,12 +12,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.anle.nhatrovungtau.CustomAdapter.SpnTPAdapter;
+import com.example.anle.nhatrovungtau.Models.ThanhPho;
 import com.example.anle.nhatrovungtau.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -29,6 +33,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -42,6 +49,10 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private double latitude,longitude;
     private EditText edt_lat,edt_lng;
 
+    private Spinner spn_thanhpho;
+    private List<ThanhPho> thanhPhoList;
+    private SpnTPAdapter spnTPAdapter;
+
     private Button btn_dinhvitro;
     private BottomSheetBehavior bottomSheetBehavior;
     private ImageView img_dongGGmap;
@@ -51,8 +62,38 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khu_tro);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        initSpinner();
         initEditText();
         initBtnDinhvi();
+    }
+    public void initSpinner(){
+        spn_thanhpho=findViewById(R.id.spn_thanhpho);
+
+        thanhPhoList=new ArrayList<>();
+        thanhPhoList.add(new ThanhPho("Chọn thành phố...",""));
+        thanhPhoList.add(new ThanhPho("Hà Nội","Ha Noi"));
+        thanhPhoList.add(new ThanhPho("Đà Nẵng","Da Nang"));
+        thanhPhoList.add(new ThanhPho("Vũng Tàu","Vung Tau"));
+        thanhPhoList.add(new ThanhPho("Sài Gòn","Sai Gon"));
+        thanhPhoList.add(new ThanhPho("Hội An","Hoi An"));
+        thanhPhoList.add(new ThanhPho("Hạ Long","Ha Long"));
+        thanhPhoList.add(new ThanhPho("Hải Phòng","Hai Phong"));
+
+        spnTPAdapter=new SpnTPAdapter(KhuTroActivity.this,R.layout.custom_spinner_tp,thanhPhoList);
+
+        spn_thanhpho.setAdapter(spnTPAdapter);
+
+        spn_thanhpho.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(KhuTroActivity.this,thanhPhoList.get(position).getTentp(),Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
     public void initEditText(){
         edt_lat=findViewById(R.id.edt_lat);

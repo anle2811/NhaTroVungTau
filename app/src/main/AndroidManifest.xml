@@ -19,20 +19,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".DangNhapActivity" />
-        <activity android:name=".dkTKActivity" />
-        <activity android:name=".ChuTroActivity" />
-        <activity android:name=".KhuTroPhongTro.PhongTroActivity">
-
-        </activity>
-        <activity android:name=".KhuTroPhongTro.KhuTroActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DangNhapActivity" />
+        <activity android:name=".dkTKActivity" />
+        <activity android:name=".ChuTroActivity" />
+        <activity android:name=".KhuTroPhongTro.PhongTroActivity"/>
+        <activity android:name=".KhuTroPhongTro.KhuTroActivity"/>
     </application>
 
 </manifest>
