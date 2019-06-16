@@ -6,9 +6,7 @@
     android:background="#293241"
     android:id="@+id/relLayout_ttcn"
     android:layout_gravity="center"
-    android:paddingBottom="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+    android:paddingBottom="5dp">
     <ScrollView
         android:id="@+id/src_ttcn"
         android:fillViewport="true"
@@ -16,10 +14,10 @@
         android:layout_height="wrap_content">
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="0">
+            android:layout_height="wrap_content">
             <TableRow>
                 <TextView
+                    android:layout_weight="1"
                     android:paddingBottom="3dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
@@ -32,6 +30,7 @@
             </TableRow>
             <TableRow android:layout_marginTop="5dp">
                 <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
                     app:hintTextAppearance="@style/FloatingHintStyle">
                     <EditText
                         android:text="Null"
@@ -51,6 +50,7 @@
             </TableRow>
             <TableRow>
                 <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
                     app:hintTextAppearance="@style/FloatingHintStyle">
                     <EditText
                         android:text="Null"
@@ -71,6 +71,7 @@
             </TableRow>
             <TableRow>
                 <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
                     app:hintTextAppearance="@style/FloatingHintStyle">
                     <EditText
                         android:text="Null"
@@ -90,6 +91,7 @@
             </TableRow>
             <TableRow>
                 <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
                     app:hintTextAppearance="@style/FloatingHintStyle">
                     <EditText
                         android:text="Null"
@@ -109,6 +111,7 @@
             </TableRow>
             <TableRow android:layout_marginTop="3dp">
                 <TextView
+                    android:layout_weight="1"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textColor="#ffffff"
@@ -116,6 +119,7 @@
             </TableRow>
             <TableRow android:layout_marginTop="2dp">
                 <LinearLayout
+                    android:layout_weight="1"
                     android:orientation="vertical">
                     <LinearLayout
                         android:weightSum="3"
@@ -173,6 +177,7 @@
             </TableRow>
             <TableRow android:layout_marginTop="5dp">
                 <LinearLayout
+                    android:layout_weight="1"
                     android:weightSum="3"
                     android:orientation="horizontal">
                     <TextView

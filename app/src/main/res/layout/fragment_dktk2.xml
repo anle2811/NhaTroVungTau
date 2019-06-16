@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#1565c0"
-    android:stretchColumns="0">
+    android:background="#1565c0">
     <TableRow>
         <TextView
+            android:layout_weight="1"
             android:background="#f4aa00"
             android:textAlignment="center"
             android:textSize="30sp"
@@ -15,6 +15,7 @@
     </TableRow>
     <TableRow android:layout_marginTop="15dp">
         <LinearLayout
+            android:layout_weight="1"
             android:weightSum="4"
             android:orientation="horizontal">
             <android.support.design.widget.TextInputLayout
@@ -47,6 +48,7 @@
     </TableRow>
     <TableRow android:layout_marginTop="15dp">
         <android.support.design.widget.TextInputLayout
+            android:layout_weight="1"
             app:hintTextAppearance="@style/FloatingHintStyle">
         <EditText
             android:layout_marginRight="5dp"
@@ -63,6 +65,7 @@
     </TableRow>
     <TableRow android:layout_marginTop="15dp">
         <android.support.design.widget.TextInputLayout
+            android:layout_weight="1"
             app:hintTextAppearance="@style/FloatingHintStyle">
         <EditText
             android:layout_marginRight="5dp"
@@ -79,6 +82,7 @@
     </TableRow>
     <TableRow android:layout_marginTop="15dp">
         <android.support.design.widget.TextInputLayout
+            android:layout_weight="1"
             app:hintTextAppearance="@style/FloatingHintStyle">
         <EditText
             android:layout_marginRight="5dp"
@@ -95,6 +99,7 @@
     </TableRow>
     <TableRow android:layout_marginTop="15dp">
         <android.support.design.widget.TextInputLayout
+            android:layout_weight="1"
             app:hintTextAppearance="@style/FloatingHintStyle">
         <EditText
             android:layout_marginRight="5dp"
