@@ -87,6 +87,11 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         Bundle bundle=new Bundle();
         try {
             bundle.putString("Hoten",jsonObject.getString("hoten"));
+            bundle.putString("Cmnd",jsonObject.getString("cmnd"));
+            bundle.putString("Email",jsonObject.getString("email"));
+            bundle.putString("Diachi",jsonObject.getString("diachi"));
+            bundle.putString("Gioitinh",jsonObject.getString("gioitinh"));
+            bundle.putString("Ngaysinh",jsonObject.getString("ngaysinh"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
