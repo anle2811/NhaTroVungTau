@@ -14,6 +14,9 @@ import android.widget.ProgressBar;
 import com.example.anle.nhatrovungtau.PhpDB.Api;
 import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 public class DangNhapActivity extends AppCompatActivity implements PerformNetworkRequest.KiemtraDN{
@@ -66,9 +69,29 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         request.execute();
     }
 
+    public void yeuCauTTchutro(){
+        HashMap<String,String> params=new HashMap<>();
+        params.put("Tentk",edt_taikhoan.getText().toString().trim());
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_TT_CHUTRO,Api.actionLayTTchutro,params,REQUEST_CODE,getApplicationContext(),this);
+        request.execute();
+    }
+
     @Override
     public void DangNhap() {
-        startActivity(new Intent(DangNhapActivity.this,ChuTroActivity.class));
+        yeuCauTTchutro();
+    }
+
+    @Override
+    public void layTTchutro(JSONObject jsonObject) {
+        Intent intent=new Intent(DangNhapActivity.this,ChuTroActivity.class);
+        Bundle bundle=new Bundle();
+        try {
+            bundle.putString("Hoten",jsonObject.getString("hoten"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        intent.putExtras(bundle);
+        startActivity(intent);
         finish();
     }
 

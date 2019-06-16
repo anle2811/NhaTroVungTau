@@ -37,6 +37,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
     }
     public interface KiemtraDN{
         void DangNhap();
+        void layTTchutro(JSONObject jsonObject);
     }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
@@ -118,6 +119,14 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                         }
                     }
                     break;
+
+                    case Api.actionLayTTchutro:{
+                        if (!jsonObject.getBoolean("error")){
+                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                            final KiemtraDN callBack=(KiemtraDN) mCallBack.get();
+                            callBack.layTTchutro(new JSONObject(jsonObject.getString("chutro")));
+                        }
+                    }
 
                 }
             } catch (JSONException e) {
