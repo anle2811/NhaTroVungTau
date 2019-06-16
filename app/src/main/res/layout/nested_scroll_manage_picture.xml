@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_peekHeight="90dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="#4f688e"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:gravity="bottom|center"
+                android:textStyle="bold"
+                android:textColor="@color/maucam"
+                android:textSize="17sp"
+                android:text="Vuốt lên để quản lý ảnh"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <TableLayout
+            android:weightSum="3"
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+            <TableRow>
+                <Button
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Hủy"
+                    android:background="@drawable/button_style1" />
+                <ImageView
+                    android:layout_weight="1"
+                    android:src="@drawable/galleryicon" />
+                <Button
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Lưu lại"
+                    android:background="@drawable/button_style1" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:weightSum="5"
+        android:orientation="vertical"
+        android:background="#004860"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <RelativeLayout
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <GridView
+                android:numColumns="4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Button
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_alignParentRight="true"
+                android:text="Thêm ảnh"
+                android:background="@drawable/button_style1"
+                android:layout_width="100dp"
+                android:layout_height="50dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

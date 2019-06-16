@@ -81,7 +81,6 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
                 Log.d(TAG,"Code: "+code);
                 verifyVerificationCode(code);
             }*/
-            Toast.makeText(dkTKActivity.this,"onVerificationCompleted called",Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onVerificationFailed(FirebaseException e) { //Phương thức này được gọi khi không gửi được code xác minh

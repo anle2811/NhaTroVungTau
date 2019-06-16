@@ -10,15 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".DangNhapActivity" />
+        <activity android:name=".dkTKActivity" />
+        <activity android:name=".ChuTroActivity"></activity>
+        <activity android:name=".KhuTroPhongTro.PhongTroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DangNhapActivity" />
-        <activity android:name=".dkTKActivity" />
-        <activity android:name=".ChuTroActivity"></activity>
     </application>
 
 </manifest>

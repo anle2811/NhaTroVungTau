@@ -8,6 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="FloatingHintStyle" parent="@android:style/TextAppearance">
-        <item name="android:textColor">#f4aa00</item>
+        <item name="android:textColor">#680024</item>
     </style>
 </resources>
