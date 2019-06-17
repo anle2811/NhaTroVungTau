@@ -69,36 +69,17 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         request.execute();
     }
 
-    public void yeuCauTTchutro(){
-        HashMap<String,String> params=new HashMap<>();
-        params.put("Tentk",edt_taikhoan.getText().toString().trim());
-        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_TT_CHUTRO,Api.actionLayTTchutro,params,REQUEST_CODE,getApplicationContext(),this);
-        request.execute();
-    }
-
     @Override
     public void DangNhap() {
-        yeuCauTTchutro();
-    }
-
-    @Override
-    public void layTTchutro(JSONObject jsonObject) {
         Intent intent=new Intent(DangNhapActivity.this,ChuTroActivity.class);
         Bundle bundle=new Bundle();
-        try {
-            bundle.putString("Hoten",jsonObject.getString("hoten"));
-            bundle.putString("Cmnd",jsonObject.getString("cmnd"));
-            bundle.putString("Email",jsonObject.getString("email"));
-            bundle.putString("Diachi",jsonObject.getString("diachi"));
-            bundle.putString("Gioitinh",jsonObject.getString("gioitinh"));
-            bundle.putString("Ngaysinh",jsonObject.getString("ngaysinh"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        bundle.putString("TENTK",edt_taikhoan.getText().toString().trim());
         intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }
+
+
 
     public void dangky(){
         btn_dangkytk.setOnClickListener(new View.OnClickListener() {

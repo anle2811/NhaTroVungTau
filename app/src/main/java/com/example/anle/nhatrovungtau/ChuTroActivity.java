@@ -15,22 +15,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.KhuTroActivity;
+import com.example.anle.nhatrovungtau.PhpDB.Api;
+import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,PerformNetworkRequest.TTChuTro {
+
+    private static String TENTK;
+    private static final int REQUEST_CODE=113;
+    public static ProgressBar prgbar_ttcn;
+    public static ProgressBar prgbar_layTTCT;
 
     private LinearLayout ln_themkhutro;
     private TextView tv_tenchutro;
     private ImageButton ibtn_ttcn;
 
     private Dialog dialogTTCN;
+    private View viewTTCN;
     private EditText edt_hoten,edt_cmnd,edt_email,edt_diachi;
     private Spinner spn_ngay,spn_thang,spn_nam;
     private RadioGroup rdg_gioitinh;
@@ -46,14 +60,16 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_chu_tro);
         initThemkhutro();
         initAll();
-        loadTTchutro();
-        tachNgaySinh();
         showTTCN();
+        loadTTchutro();
+        yeuCauTTchutro();
+
     }
 
     public void initAll(){
         tv_tenchutro=findViewById(R.id.tv_tenchutro);
         ibtn_ttcn=findViewById(R.id.ibtn_ttcn);
+        prgbar_layTTCT=findViewById(R.id.prgbar_layTTCT);
     }
 
     public void initThemkhutro(){
@@ -66,17 +82,36 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
+    public void yeuCauTTchutro(){
+        HashMap<String,String> params=new HashMap<>();
+        params.put("Tentk",TENTK);
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_TT_CHUTRO,Api.actionLayTTchutro,params,REQUEST_CODE,getApplicationContext(),this);
+        request.execute();
+    }
+
+    @Override
+    public void layTTchutro(JSONObject jsonObject) {
+        prgbar_layTTCT.setVisibility(View.GONE);
+        try {
+            this.tenchutro=jsonObject.getString("hoten");
+            tv_tenchutro.setText(tenchutro);
+            this.cmnd=jsonObject.getString("cmnd");
+            this.email=jsonObject.getString("email");
+            this.diachi=jsonObject.getString("diachi");
+            this.gioitinh=jsonObject.getString("gioitinh");
+            this.ngaysinh=jsonObject.getString("ngaysinh");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        tachNgaySinh();
+    }
+
     public void loadTTchutro(){
         Intent intent=getIntent();
         Bundle bundle=intent.getExtras();
         if (bundle!=null){
-            this.tenchutro=bundle.getString("Hoten");
-            tv_tenchutro.setText(tenchutro);
-            this.cmnd=bundle.getString("Cmnd");
-            this.email=bundle.getString("Email");
-            this.diachi=bundle.getString("Diachi");
-            this.gioitinh=bundle.getString("Gioitinh");
-            this.ngaysinh=bundle.getString("Ngaysinh");
+            TENTK=bundle.getString("TENTK");
         }
     }
 
@@ -119,36 +154,87 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
+    public void initChonGioitinh(View view){
+        rdg_gioitinh=view.findViewById(R.id.rdg_gioitinh);
+        rdg_gioitinh.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (group.getCheckedRadioButtonId()){
+                    case R.id.rd_nam: ChuTroActivity.this.gioitinh="Nam";break;
+                    case R.id.rd_nu: ChuTroActivity.this.gioitinh="Nữ";break;
+                }
+            }
+        });
+    }
+
+    public void capNhatTT(){
+        this.tenchutro=edt_hoten.getText().toString().trim();
+        this.cmnd=edt_cmnd.getText().toString().trim();
+        this.email=edt_email.getText().toString().trim();
+        this.diachi=edt_diachi.getText().toString().trim();
+
+        HashMap<String,String> params=new HashMap<>();
+        params.put("Hoten",tenchutro);
+        params.put("Cmnd",cmnd);
+        params.put("Email",email);
+        params.put("Diachi",diachi);
+        params.put("Ngaysinh",ngaysinh);
+        params.put("Gioitinh",gioitinh);
+        params.put("Tentk",TENTK);
+
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_UPDATE_TT_CHUTRO,
+                Api.actionUpdateTTchutro,params,REQUEST_CODE,getApplicationContext(),this);
+        request.execute();
+    }
+
+    @Override
+    public void updateTT() {
+        prgbar_ttcn.setVisibility(View.GONE);
+        dongDialogTTCN();
+        tachNgaySinh();
+    }
+
+    protected void dongDialogTTCN(){
+        enableChinhsuaTTCN(false);
+        btn_chinhsua.setText("CHỈNH SỬA");
+        tv_tenchutro.setText(tenchutro);
+        dialogTTCN.dismiss();
+    }
+
     public void showTTCN(){
         dialogTTCN=new Dialog(ChuTroActivity.this);
-        View view=LayoutInflater.from(ChuTroActivity.this).inflate(R.layout.dialog_ttcn,(ViewGroup)findViewById(R.id.relLayout_ttcn),false);
-        dialogTTCN.setContentView(view);
+        viewTTCN=LayoutInflater.from(ChuTroActivity.this).inflate(R.layout.dialog_ttcn,(ViewGroup)findViewById(R.id.relLayout_ttcn),false);
+        dialogTTCN.setContentView(viewTTCN);
         dialogTTCN.setCanceledOnTouchOutside(false);
         dialogTTCN.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        prgbar_ttcn=viewTTCN.findViewById(R.id.prgbar_ttcn);
 
-        initEdtTTCN(view);
-        initAndsetupSpinner(view);
+        initEdtTTCN(viewTTCN);
+        initAndsetupSpinner(viewTTCN);
+        initChonGioitinh(viewTTCN);
 
-        rd_nam=view.findViewById(R.id.rd_nam);
-        rd_nu=view.findViewById(R.id.rd_nu);
+        rd_nam=viewTTCN.findViewById(R.id.rd_nam);
+        rd_nu=viewTTCN.findViewById(R.id.rd_nu);
 
-        btn_dong=view.findViewById(R.id.btn_dong);
-        btn_chinhsua=view.findViewById(R.id.btn_chinhsua);
+        btn_dong=viewTTCN.findViewById(R.id.btn_dong);
+        btn_chinhsua=viewTTCN.findViewById(R.id.btn_chinhsua);
 
         btn_dong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enableChinhsuaTTCN(false);
-                btn_chinhsua.setText("CHỈNH SỬA");
-                dialogTTCN.dismiss();
+                dongDialogTTCN();
             }
         });
 
         btn_chinhsua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn_chinhsua.setText("CẬP NHẬT");
-                enableChinhsuaTTCN(true);
+                if (!edt_hoten.isEnabled()){
+                    btn_chinhsua.setText("CẬP NHẬT");
+                    enableChinhsuaTTCN(true);
+                }else {
+                    capNhatTT();
+                }
             }
         });
 
@@ -230,7 +316,10 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+       ngaysinh=spn_ngay.getSelectedItem().toString()+
+                "/"+spn_thang.getSelectedItem().toString()+
+                "/"+spn_nam.getSelectedItem().toString();
+        Toast.makeText(ChuTroActivity.this,ngaysinh,Toast.LENGTH_SHORT).show();
     }
 
     @Override

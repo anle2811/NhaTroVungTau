@@ -1,4 +1,5 @@
 package com.example.anle.nhatrovungtau.PhpDB;
+import com.example.anle.nhatrovungtau.ChuTroActivity;
 import com.example.anle.nhatrovungtau.DangNhapActivity;
 import com.example.anle.nhatrovungtau.dkTKActivity;
 import android.content.Context;
@@ -37,7 +38,11 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
     }
     public interface KiemtraDN{
         void DangNhap();
+
+    }
+    public interface TTChuTro{
         void layTTchutro(JSONObject jsonObject);
+        void updateTT();
     }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
@@ -50,7 +55,12 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
             case Api.actionDN:
                 DangNhapActivity.prgbar_dangnhap.setVisibility(View.VISIBLE);
                 break;
-
+            case Api.actionLayTTchutro:
+                ChuTroActivity.prgbar_layTTCT.setVisibility(View.VISIBLE);
+                break;
+            case Api.actionUpdateTTchutro:
+                ChuTroActivity.prgbar_ttcn.setVisibility(View.VISIBLE);
+                break;
         }
 
     }
@@ -69,7 +79,14 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     DangNhapActivity.prgbar_dangnhap.setVisibility(View.GONE);
                     Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
                     break;
-
+                case Api.actionLayTTchutro:
+                    ChuTroActivity.prgbar_layTTCT.setVisibility(View.GONE);
+                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionUpdateTTchutro:
+                    ChuTroActivity.prgbar_ttcn.setVisibility(View.GONE);
+                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    break;
             }
         }else {
 
@@ -122,11 +139,21 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
 
                     case Api.actionLayTTchutro:{
                         if (!jsonObject.getBoolean("error")){
-                            Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                            final KiemtraDN callBack=(KiemtraDN) mCallBack.get();
+                            Toast.makeText(context, "Hoàn tất lấy thông tin", Toast.LENGTH_SHORT).show();
+                            final TTChuTro callBack=(TTChuTro) mCallBack.get();
                             callBack.layTTchutro(new JSONObject(jsonObject.getString("chutro")));
                         }
-                    }
+                    }break;
+
+                    case Api.actionUpdateTTchutro:{
+                        if (!jsonObject.getBoolean("error")){
+                            Toast.makeText(context,"Đã cập nhật",Toast.LENGTH_SHORT).show();
+                            final TTChuTro callBack=(TTChuTro) mCallBack.get();
+                            callBack.updateTT();
+                        }else {
+                            Toast.makeText(context,"Không thành công\nvui lòng thử lại.",Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
 
                 }
             } catch (JSONException e) {
