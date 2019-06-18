@@ -1,27 +1,40 @@
 package com.example.anle.nhatrovungtau.KhuTroPhongTro;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.anle.nhatrovungtau.CustomAdapter.SpnTPAdapter;
 import com.example.anle.nhatrovungtau.Models.ThanhPho;
+import com.example.anle.nhatrovungtau.PhpDB.Api;
+import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
 import com.example.anle.nhatrovungtau.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,10 +47,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private static String TENTK;
+
+    private static final int REQUEST_CODE=113;
+
+    public static ProgressBar prgbar_themkhutro;
+    private Button btn_luulai;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap map;
@@ -48,6 +70,17 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final float DEFAULT_ZOOM=16f;
     private double latitude,longitude;
     private EditText edt_lat,edt_lng;
+    private EditText edt_tenkhutro,edt_diachikhutro,edt_motakhutro;
+    private ImageView img_avtkhu;
+    private String THANHPHO;
+
+    private Dialog dialog_takeOfpick;
+    private LinearLayout ln_chupanh,ln_chonanh;
+    private Button btn_dong;
+    private Bitmap fixBitmap;
+    private ByteArrayOutputStream byteArrayOutputStream;
+    private byte [] byteArray;
+    private String convertImage;
 
     private Spinner spn_thanhpho;
     private List<ThanhPho> thanhPhoList;
@@ -62,10 +95,98 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khu_tro);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        prgbar_themkhutro=findViewById(R.id.prgbar_themkhutro);
+        byteArrayOutputStream=new ByteArrayOutputStream();
+        getTENTK();
         initSpinner();
         initEditText();
         initBtnDinhvi();
+        initDongVaLuu();
+        setDialog_takeOfpick();
     }
+
+    private void getTENTK(){
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        if (bundle!=null){
+            TENTK=bundle.getString("TENTK");
+        }else {
+            TENTK="";
+        }
+    }
+
+    public void setupChupAnh(){
+        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        fixBitmap=(Bitmap) data.getExtras().get("data");
+        img_avtkhu.setImageBitmap(fixBitmap);
+    }
+
+    public void initDongVaLuu(){
+        btn_luulai=findViewById(R.id.btn_luulai);
+        btn_luulai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadAnh();
+            }
+        });
+    }
+
+    public void UploadAnh(){
+        Log.d("Upanh","UploadAnh");
+        try {
+            fixBitmap.compress(Bitmap.CompressFormat.JPEG,30,byteArrayOutputStream);
+            byteArray=byteArrayOutputStream.toByteArray();
+            convertImage=Base64.encodeToString(byteArray,Base64.DEFAULT);
+        }catch (Exception e){
+            Log.d("Upanh","Exception: "+e.getMessage());
+            return;
+        }
+        Log.d("Upanh","convertImage: "+convertImage);
+        HashMap<String,String> params=new HashMap<>();
+        params.put("name","phong1");
+        params.put("data",convertImage);
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_UPLOAD_ANH,Api.actionUploadAnh,params,REQUEST_CODE,getApplicationContext(),this);
+        request.execute();
+    }
+
+    public void setDialog_takeOfpick(){
+        dialog_takeOfpick=new Dialog(KhuTroActivity.this);
+        View view=LayoutInflater.from(KhuTroActivity.this).inflate(R.layout.takeorpick_picdialog,(ViewGroup)findViewById(R.id.relLayout_TakeOrPick),false);
+        dialog_takeOfpick.setContentView(view);
+        dialog_takeOfpick.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Button btn_dong=view.findViewById(R.id.btn_dong);
+        ln_chupanh=view.findViewById(R.id.ln_chupanh);
+        ln_chonanh=view.findViewById(R.id.ln_chonanh);
+        btn_dong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_takeOfpick.dismiss();
+            }
+        });
+
+        img_avtkhu=findViewById(R.id.img_avtkhu);
+        img_avtkhu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_takeOfpick.show();
+            }
+        });
+
+        ln_chupanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setupChupAnh();
+            }
+        });
+    }
+
     public void initSpinner(){
         spn_thanhpho=findViewById(R.id.spn_thanhpho);
 
@@ -86,7 +207,13 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         spn_thanhpho.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(KhuTroActivity.this,thanhPhoList.get(position).getTentp(),Toast.LENGTH_SHORT).show();
+                if (position==0){
+                    THANHPHO=null;
+                }else {
+                    THANHPHO=thanhPhoList.get(position).getTentp().trim();
+                    Toast.makeText(KhuTroActivity.this,thanhPhoList.get(position).getTentp(),Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -96,6 +223,10 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         });
     }
     public void initEditText(){
+        edt_tenkhutro=findViewById(R.id.edt_tenkhutro);
+        edt_diachikhutro=findViewById(R.id.edt_diachikhutro);
+        edt_motakhutro=findViewById(R.id.edt_motakhutro);
+        img_avtkhu=findViewById(R.id.img_avtkhu);
         edt_lat=findViewById(R.id.edt_lat);
         edt_lng=findViewById(R.id.edt_lng);
     }

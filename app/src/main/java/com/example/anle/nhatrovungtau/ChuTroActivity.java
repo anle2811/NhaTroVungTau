@@ -77,7 +77,11 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         ln_themkhutro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChuTroActivity.this,KhuTroActivity.class));
+                Intent intent=new Intent(ChuTroActivity.this,KhuTroActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("TENTK",TENTK);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

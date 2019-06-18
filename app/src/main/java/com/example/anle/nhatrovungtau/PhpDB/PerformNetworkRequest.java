@@ -1,6 +1,7 @@
 package com.example.anle.nhatrovungtau.PhpDB;
 import com.example.anle.nhatrovungtau.ChuTroActivity;
 import com.example.anle.nhatrovungtau.DangNhapActivity;
+import com.example.anle.nhatrovungtau.KhuTroPhongTro.KhuTroActivity;
 import com.example.anle.nhatrovungtau.dkTKActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -61,6 +62,10 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
             case Api.actionUpdateTTchutro:
                 ChuTroActivity.prgbar_ttcn.setVisibility(View.VISIBLE);
                 break;
+
+            case Api.actionUploadAnh:
+                KhuTroActivity.prgbar_themkhutro.setVisibility(View.VISIBLE);
+                break;
         }
 
     }
@@ -85,6 +90,10 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionUpdateTTchutro:
                     ChuTroActivity.prgbar_ttcn.setVisibility(View.GONE);
+                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionUploadAnh:
+                    KhuTroActivity.prgbar_themkhutro.setVisibility(View.GONE);
                     Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -152,6 +161,15 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                             callBack.updateTT();
                         }else {
                             Toast.makeText(context,"Không thành công\nvui lòng thử lại.",Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionUploadAnh:{
+                        KhuTroActivity.prgbar_themkhutro.setVisibility(View.GONE);
+                        if (!jsonObject.getBoolean("error")){
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }
                     }break;
 

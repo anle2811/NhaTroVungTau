@@ -191,13 +191,19 @@
                 <ImageView
                     android:id="@+id/img_avtkhu"
                     android:background="@drawable/pic_border"
-                    android:scaleType="fitCenter"
+                    android:scaleType="fitXY"
                     android:src="@drawable/addpicicon"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="15dp"
                     android:layout_below="@id/tv_hinhhienthi"
                     android:layout_width="150dp"
                     android:layout_height="80dp" />
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/prgbar_themkhutro"
+                    android:layout_centerInParent="true"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_weight="0.8"
