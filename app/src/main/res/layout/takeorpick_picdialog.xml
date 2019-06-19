@@ -65,4 +65,22 @@
         android:text="ĐÓNG"
         android:layout_width="100dp"
         android:layout_height="50dp" />
+    <LinearLayout
+        android:id="@+id/ln_xemanh"
+        android:layout_below="@id/ln_cachthuc"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/xemanhicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:textSize="18dp"
+            android:textColor="#fff"
+            android:text="Xem Ảnh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>

@@ -189,15 +189,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:layout_toLeftOf="@id/btn_latlng"
+                    android:layout_alignParentLeft="true"
                     android:id="@+id/img_avtkhu"
                     android:background="@drawable/pic_border"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerInside"
                     android:src="@drawable/addpicicon"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5dp"
                     android:layout_below="@id/tv_hinhhienthi"
-                    android:layout_width="150dp"
-                    android:layout_height="80dp" />
+                    android:layout_width="160dp"
+                    android:layout_height="100dp" />
                 <ProgressBar
                     android:visibility="gone"
                     android:id="@+id/prgbar_themkhutro"

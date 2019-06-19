@@ -4,10 +4,15 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -75,7 +80,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private String THANHPHO;
 
     private Dialog dialog_takeOfpick;
-    private LinearLayout ln_chupanh,ln_chonanh;
+    private LinearLayout ln_chupanh,ln_chonanh,ln_xemanh;
     private Button btn_dong;
     private Bitmap fixBitmap;
     private ByteArrayOutputStream byteArrayOutputStream;
@@ -117,15 +122,79 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
 
     public void setupChupAnh(){
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent,0);
+        startActivityForResult(intent,2000);
+    }
+
+    public void setupChonAnh(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, ""), 2001);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1999){
+            if (resultCode==RESULT_OK){
+                byte [] byteArr=data.getByteArrayExtra("byteArr");
+                fixBitmap=BitmapFactory.decodeByteArray(byteArr,0,byteArr.length);
+                img_avtkhu.setImageBitmap(fixBitmap);
+            }
+        }
+        if (requestCode==2000){
+            if (resultCode==RESULT_OK){
+                fixBitmap=(Bitmap) data.getExtras().get("data");
+                img_avtkhu.setImageBitmap(fixBitmap);
+            }
+        }
+        if (requestCode==2001){
+            if (resultCode==RESULT_OK){
+                fixBitmap=BitmapFactory.decodeFile(getAbsolutePath(data.getData()));
+                img_avtkhu.setImageBitmap(fixBitmap);
+            }
+        }
+    }
 
-        fixBitmap=(Bitmap) data.getExtras().get("data");
-        img_avtkhu.setImageBitmap(fixBitmap);
+    private Uri getUri() {
+        String state = Environment.getExternalStorageState();
+        if(!state.equalsIgnoreCase(Environment.MEDIA_MOUNTED))
+            return MediaStore.Images.Media.INTERNAL_CONTENT_URI;
+
+        return MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    }
+
+    public String getAbsolutePath(Uri uri) {
+        if(Build.VERSION.SDK_INT >= 19){
+            String id = "";
+            if(uri.getLastPathSegment().split(":").length > 1)
+                id = uri.getLastPathSegment().split(":")[1];
+            else if(uri.getLastPathSegment().split(":").length > 0)
+                id = uri.getLastPathSegment().split(":")[0];
+            if(id.length() > 0){
+                final String[] imageColumns = {MediaStore.Images.Media.DATA };
+                final String imageOrderBy = null;
+                Uri tempUri = getUri();
+                Cursor imageCursor = getContentResolver().query(tempUri, imageColumns, MediaStore.Images.Media._ID + "=" + id, null, imageOrderBy);
+                if (imageCursor.moveToFirst()) {
+                    return imageCursor.getString(imageCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        }else{
+            String[] projection = { MediaStore.MediaColumns.DATA };
+            Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null) {
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+                cursor.moveToFirst();
+                return cursor.getString(column_index);
+            } else
+                return null;
+        }
+
     }
 
     public void initDongVaLuu(){
@@ -164,6 +233,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         Button btn_dong=view.findViewById(R.id.btn_dong);
         ln_chupanh=view.findViewById(R.id.ln_chupanh);
         ln_chonanh=view.findViewById(R.id.ln_chonanh);
+        ln_xemanh=view.findViewById(R.id.ln_xemanh);
         btn_dong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,7 +252,27 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         ln_chupanh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog_takeOfpick.dismiss();
                 setupChupAnh();
+            }
+        });
+        ln_chonanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_takeOfpick.dismiss();
+                setupChonAnh();
+            }
+        });
+        ln_xemanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_takeOfpick.dismiss();
+                ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                fixBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                byte [] byteArr=stream.toByteArray();
+                Intent intent=new Intent(KhuTroActivity.this,PhotoFullScreen.class);
+                intent.putExtra("byteArr",byteArr);
+                startActivityForResult(intent,1999);
             }
         });
     }

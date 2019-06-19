@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".KhuTroPhongTro.PhotoFullScreen"
+    android:orientation="vertical"
+    android:weightSum="8"
+    android:background="@color/maunen2">
+    <ImageView
+        android:id="@+id/img_xemanh"
+        android:src="@drawable/icon_null_image"
+        android:layout_weight="7"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <LinearLayout
+        android:layout_marginBottom="3dp"
+        android:background="@color/maunen2"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <Button
+            android:textColor="#fff"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button_style2"
+            android:layout_weight="1"
+            android:text="Xoay 90 độ"
+            android:id="@+id/btn_xoayClock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:textColor="#fff"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button_style2"
+            android:layout_weight="1"
+            android:text="Xoay -90 độ"
+            android:id="@+id/btn_xoayAntiClock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:textColor="#00ff0d"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button_style2"
+            android:layout_weight="1"
+            android:text="Lưu"
+            android:id="@+id/btn_luulai"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:textColor="#ff0000"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button_style2"
+            android:layout_weight="1"
+            android:id="@+id/btn_donglai"
+            android:text="Đóng"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>
