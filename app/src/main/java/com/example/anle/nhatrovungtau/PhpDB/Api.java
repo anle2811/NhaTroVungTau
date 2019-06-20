@@ -8,12 +8,12 @@ public class Api {
     public static final String actionDN="kiemtraDN";
     public static final String actionLayTTchutro="layTTchutro";
     public static final String actionUpdateTTchutro="updateTTchutro";
-    public static final String actionUploadAnh="uploadAnh";
+    public static final String actionThemKhuTro="themKhuTro";
 
     public static final String URL_TAO_TAIKHOAN=ROOT_URL+actionTaoTK;
     public static final String URL_ACC_EXIST_CHECK=ROOT_URL+actionExistCheck;
     public static final String URL_KIEMTRA_DN=ROOT_URL+actionDN;
     public static final String URL_LAY_TT_CHUTRO=ROOT_URL+actionLayTTchutro;
     public static final String URL_UPDATE_TT_CHUTRO=ROOT_URL+actionUpdateTTchutro;
-    public static final String URL_UPLOAD_ANH=ROOT_URL+actionUploadAnh;
+    public static final String URL_THEM_KHUTRO=ROOT_URL+actionThemKhuTro;
 }

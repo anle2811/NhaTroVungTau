@@ -1,5 +1,6 @@
 package com.example.anle.nhatrovungtau.KhuTroPhongTro;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +14,13 @@ import android.widget.ImageView;
 
 import com.example.anle.nhatrovungtau.R;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class PhotoFullScreen extends AppCompatActivity {
 
@@ -42,8 +49,18 @@ public class PhotoFullScreen extends AppCompatActivity {
     }
 
     public Bitmap getBitmap(){
-        Intent intent=getIntent();
-        byte [] byteArr=intent.getByteArrayExtra("byteArr");
+        byte [] byteArr=null;
+        try {
+            File file=new File(getFilesDir(),"img.txt");
+            FileInputStream in=new FileInputStream(file);
+            long byteLength= file.length();
+            byteArr=new byte[(int) byteLength];
+            in.read(byteArr,0, (int) byteLength);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Bitmap bitmap=BitmapFactory.decodeByteArray(byteArr,0,byteArr.length);
         return bitmap;
     }
@@ -53,7 +70,7 @@ public class PhotoFullScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(PhotoFullScreen.this,KhuTroActivity.class);
-                intent.putExtra("byteArr",chuyenBitmapThanhByteArr(bitmap));
+                chuyenBitmapThanhByteArr(bitmap);
                 setResult(RESULT_OK,intent);
                 finish();
             }
@@ -69,11 +86,20 @@ public class PhotoFullScreen extends AppCompatActivity {
         });
     }
 
-    public byte [] chuyenBitmapThanhByteArr(Bitmap bitmap){
+    public void chuyenBitmapThanhByteArr(Bitmap bitmap){
         ByteArrayOutputStream stream=new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
         byte [] byteArr=stream.toByteArray();
-        return byteArr;
+
+        try {
+            FileOutputStream fileOutput=openFileOutput("img.txt",Context.MODE_PRIVATE);
+            fileOutput.write(byteArr);
+            fileOutput.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void xoayAnh(int gocxoay){

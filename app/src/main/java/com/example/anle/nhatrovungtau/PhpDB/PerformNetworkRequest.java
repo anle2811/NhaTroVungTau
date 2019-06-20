@@ -63,7 +63,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 ChuTroActivity.prgbar_ttcn.setVisibility(View.VISIBLE);
                 break;
 
-            case Api.actionUploadAnh:
+            case Api.actionThemKhuTro:
                 KhuTroActivity.prgbar_themkhutro.setVisibility(View.VISIBLE);
                 break;
         }
@@ -92,7 +92,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     ChuTroActivity.prgbar_ttcn.setVisibility(View.GONE);
                     Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
                     break;
-                case Api.actionUploadAnh:
+                case Api.actionThemKhuTro:
                     KhuTroActivity.prgbar_themkhutro.setVisibility(View.GONE);
                     Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
                     break;
@@ -164,7 +164,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                         }
                     }break;
 
-                    case Api.actionUploadAnh:{
+                    case Api.actionThemKhuTro:{
                         KhuTroActivity.prgbar_themkhutro.setVisibility(View.GONE);
                         if (!jsonObject.getBoolean("error")){
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();

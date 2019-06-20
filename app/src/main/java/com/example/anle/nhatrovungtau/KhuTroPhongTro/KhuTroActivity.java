@@ -2,6 +2,7 @@ package com.example.anle.nhatrovungtau.KhuTroPhongTro;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -53,6 +54,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -101,13 +107,37 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         setContentView(R.layout.activity_khu_tro);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         prgbar_themkhutro=findViewById(R.id.prgbar_themkhutro);
-        byteArrayOutputStream=new ByteArrayOutputStream();
         getTENTK();
         initSpinner();
         initEditText();
+        PhucHoiTrangThai(savedInstanceState);
         initBtnDinhvi();
         initDongVaLuu();
         setDialog_takeOfpick();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("Tenkhutro",edt_tenkhutro.getText().toString().trim());
+        outState.putString("Diachi",edt_diachikhutro.getText().toString().trim());
+        outState.putString("Thanhpho",THANHPHO);
+        outState.putString("Mota",edt_motakhutro.getText().toString().trim());
+        outState.putString("Lat",String.valueOf(latitude));
+        outState.putString("Lng",String.valueOf(longitude));
+    }
+
+    public void PhucHoiTrangThai(Bundle savedInstanceState){
+        if (savedInstanceState!=null){
+            edt_tenkhutro.setText(savedInstanceState.getString("Tenkhutro"));
+            edt_diachikhutro.setText(savedInstanceState.getString("Diachi"));
+            phuchoiChonTP(savedInstanceState.getString("Thanhpho"));
+            edt_motakhutro.setText(savedInstanceState.getString("Mota"));
+            edt_lat.setText("LAT: "+savedInstanceState.getString("Lat"));
+            edt_lng.setText("LNG: "+savedInstanceState.getString("Lng"));
+            latitude=Double.parseDouble(savedInstanceState.getString("Lat"));
+            longitude=Double.parseDouble(savedInstanceState.getString("Lng"));
+        }
     }
 
     private void getTENTK(){
@@ -137,7 +167,18 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==1999){
             if (resultCode==RESULT_OK){
-                byte [] byteArr=data.getByteArrayExtra("byteArr");
+                byte [] byteArr=null;
+                File file=new File(getFilesDir(),"img.txt");
+                try {
+                    FileInputStream fileInput=new FileInputStream(file);
+                    long byteLength=file.length();
+                    byteArr=new byte[(int)byteLength];
+                    fileInput.read(byteArr,0,(int)byteLength);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 fixBitmap=BitmapFactory.decodeByteArray(byteArr,0,byteArr.length);
                 img_avtkhu.setImageBitmap(fixBitmap);
             }
@@ -208,9 +249,11 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void UploadAnh(){
+        byteArrayOutputStream=new ByteArrayOutputStream();
+        HashMap<String,String> params=new HashMap<>();
         Log.d("Upanh","UploadAnh");
         try {
-            fixBitmap.compress(Bitmap.CompressFormat.JPEG,30,byteArrayOutputStream);
+            fixBitmap.compress(Bitmap.CompressFormat.JPEG,60,byteArrayOutputStream);
             byteArray=byteArrayOutputStream.toByteArray();
             convertImage=Base64.encodeToString(byteArray,Base64.DEFAULT);
         }catch (Exception e){
@@ -218,10 +261,16 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
             return;
         }
         Log.d("Upanh","convertImage: "+convertImage);
-        HashMap<String,String> params=new HashMap<>();
-        params.put("name","phong1");
-        params.put("data",convertImage);
-        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_UPLOAD_ANH,Api.actionUploadAnh,params,REQUEST_CODE,getApplicationContext(),this);
+
+        params.put("Tentk",TENTK);
+        params.put("Tentp",THANHPHO);
+        params.put("Lat",String.valueOf(latitude));
+        params.put("Lng",String.valueOf(longitude));
+        params.put("Tenkhutro",edt_tenkhutro.getText().toString().trim());
+        params.put("Diachi",edt_diachikhutro.getText().toString().trim());
+        params.put("Mota",edt_motakhutro.getText().toString().trim());
+        params.put("ImgData",convertImage);
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_THEM_KHUTRO,Api.actionThemKhuTro,params,REQUEST_CODE,getApplicationContext(),this);
         request.execute();
     }
 
@@ -267,14 +316,33 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 dialog_takeOfpick.dismiss();
-                ByteArrayOutputStream stream=new ByteArrayOutputStream();
-                fixBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
-                byte [] byteArr=stream.toByteArray();
-                Intent intent=new Intent(KhuTroActivity.this,PhotoFullScreen.class);
-                intent.putExtra("byteArr",byteArr);
-                startActivityForResult(intent,1999);
+                try {
+                    ByteArrayOutputStream stream=new ByteArrayOutputStream();
+                    fixBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+                    byte [] byteArr=stream.toByteArray();
+                    FileOutputStream fileOutput =openFileOutput("img.txt",Context.MODE_PRIVATE);
+                    fileOutput.write(byteArr);
+                    fileOutput.close();
+                    Intent intent=new Intent(KhuTroActivity.this,PhotoFullScreen.class);
+                    startActivityForResult(intent,1999);
+                }catch (Exception e){
+                    Log.d("Loi","Loi: "+e.getMessage());
+                }
+
             }
         });
+    }
+
+    public void phuchoiChonTP(String THANHPHO){
+        if (THANHPHO!=null){
+            for (int k=1;k<=thanhPhoList.size()-1;k++){
+                if (THANHPHO.equals(thanhPhoList.get(k).getTentp())){
+                    spn_thanhpho.setSelection(k);
+                }
+            }
+        }else {
+            spn_thanhpho.setSelection(0);
+        }
     }
 
     public void initSpinner(){
