@@ -42,7 +42,8 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
     private HashMap<String,String> paramsTentk;
     private FragmentTTCB fragmentTTCB;
     private FragmentTTDN fragmentTTDN;
-    public static ProgressBar prgbar_tientrinh;
+    public static DialogLoad ktTkDialog;
+    public static DialogLoad taotkDialog;
 
     private String maxacnhan;
     private FirebaseAuth mAuth;
@@ -69,7 +70,8 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
         fragmentTTDN=new FragmentTTDN();
         params=new HashMap<>();
         paramsTentk=new HashMap<>();
-        prgbar_tientrinh=findViewById(R.id.prgbar_tientrinh);
+        ktTkDialog=new DialogLoad(this,"Đang kiểm tra tên tài khoản...");
+        taotkDialog=new DialogLoad(this,"Đang tạo tài khoản...");
         mAuth=FirebaseAuth.getInstance();
     }
 

@@ -201,12 +201,6 @@
                     android:layout_below="@id/tv_hinhhienthi"
                     android:layout_width="160dp"
                     android:layout_height="100dp" />
-                <ProgressBar
-                    android:visibility="gone"
-                    android:id="@+id/prgbar_themkhutro"
-                    android:layout_centerInParent="true"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_weight="0.8"

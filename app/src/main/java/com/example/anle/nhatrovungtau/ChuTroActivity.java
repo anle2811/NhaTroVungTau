@@ -36,8 +36,8 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
 
     private static String TENTK;
     private static final int REQUEST_CODE=113;
-    public static ProgressBar prgbar_ttcn;
-    public static ProgressBar prgbar_layTTCT;
+    public static DialogLoad TTCNload;
+    public static DialogLoad LayTTload;
 
     private LinearLayout ln_themkhutro;
     private TextView tv_tenchutro;
@@ -69,7 +69,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     public void initAll(){
         tv_tenchutro=findViewById(R.id.tv_tenchutro);
         ibtn_ttcn=findViewById(R.id.ibtn_ttcn);
-        prgbar_layTTCT=findViewById(R.id.prgbar_layTTCT);
+        LayTTload=new DialogLoad(this,"Đang tải thông tin...");
     }
 
     public void initThemkhutro(){
@@ -95,7 +95,6 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void layTTchutro(JSONObject jsonObject) {
-        prgbar_layTTCT.setVisibility(View.GONE);
         try {
             this.tenchutro=jsonObject.getString("hoten");
             tv_tenchutro.setText(tenchutro);
@@ -193,7 +192,6 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void updateTT() {
-        prgbar_ttcn.setVisibility(View.GONE);
         dongDialogTTCN();
         tachNgaySinh();
     }
@@ -211,7 +209,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         dialogTTCN.setContentView(viewTTCN);
         dialogTTCN.setCanceledOnTouchOutside(false);
         dialogTTCN.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        prgbar_ttcn=viewTTCN.findViewById(R.id.prgbar_ttcn);
+        TTCNload =new DialogLoad(dialogTTCN.getContext(),"Đang lưu lại cập nhật...");
 
         initEdtTTCN(viewTTCN);
         initAndsetupSpinner(viewTTCN);

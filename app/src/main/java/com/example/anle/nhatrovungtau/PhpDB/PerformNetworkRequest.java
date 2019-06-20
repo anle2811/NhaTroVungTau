@@ -50,51 +50,56 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
         super.onPreExecute();
         switch (this.action){
             case Api.actionExistCheck:
+                dkTKActivity.ktTkDialog.show();
+                break;
             case Api.actionTaoTK:
-                dkTKActivity.prgbar_tientrinh.setVisibility(View.VISIBLE);
+                dkTKActivity.taotkDialog.show();
                 break;
             case Api.actionDN:
-                DangNhapActivity.prgbar_dangnhap.setVisibility(View.VISIBLE);
+                DangNhapActivity.dialogLoad.show();
                 break;
             case Api.actionLayTTchutro:
-                ChuTroActivity.prgbar_layTTCT.setVisibility(View.VISIBLE);
+                ChuTroActivity.LayTTload.show();
                 break;
             case Api.actionUpdateTTchutro:
-                ChuTroActivity.prgbar_ttcn.setVisibility(View.VISIBLE);
+                ChuTroActivity.TTCNload.show();
                 break;
 
             case Api.actionThemKhuTro:
-                KhuTroActivity.prgbar_themkhutro.setVisibility(View.VISIBLE);
+                KhuTroActivity.themKTdialog.show();
                 break;
         }
 
     }
+
 
     @Override
     protected void onPostExecute(String s) { //Sau khi tiến trình kết thúc thì hàm này sẽ được gọi. Ta có thể lấy được kết quả trả về sau khi tiến trình kết thúc, ở đây.
         super.onPostExecute(s);
         if (s==""){
             switch (this.action){
-                case Api.actionExistCheck:
+                case Api.actionExistCheck: dkTKActivity.ktTkDialog.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, không kiểm tra được tên tài khoản",Toast.LENGTH_LONG).show();
+                    break;
                 case Api.actionTaoTK:
-                    dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
-                    Toast.makeText(context,"Loi ket noi, gui lai ma va thu lai",Toast.LENGTH_LONG).show();
+                    dkTKActivity.taotkDialog.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng gửi lại mã xác nhận để thử lại",Toast.LENGTH_LONG).show();
                     break;
                 case Api.actionDN:
-                    DangNhapActivity.prgbar_dangnhap.setVisibility(View.GONE);
-                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    DangNhapActivity.dialogLoad.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
                 case Api.actionLayTTchutro:
-                    ChuTroActivity.prgbar_layTTCT.setVisibility(View.GONE);
-                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    ChuTroActivity.LayTTload.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
                 case Api.actionUpdateTTchutro:
-                    ChuTroActivity.prgbar_ttcn.setVisibility(View.GONE);
-                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    ChuTroActivity.TTCNload.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
                 case Api.actionThemKhuTro:
-                    KhuTroActivity.prgbar_themkhutro.setVisibility(View.GONE);
-                    Toast.makeText(context,"Loi ket noi, vui long thu lai",Toast.LENGTH_LONG).show();
+                    KhuTroActivity.themKTdialog.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
         }else {
@@ -105,7 +110,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
 
                 switch (this.action) {
                     case Api.actionExistCheck: {
-                        dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
+                        dkTKActivity.ktTkDialog.cancel();
                         if (!jsonObject.getBoolean("error")) { // Lấy ra giá trị của key 'error' trong chuỗi json. Nếu giá trị khác true, mean: value=false thì:
                             Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             final XulyDK callBack = (XulyDK) mCallBack.get();
@@ -122,7 +127,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
 
                     case Api.actionTaoTK: {
-                        dkTKActivity.prgbar_tientrinh.setVisibility(View.GONE);
+                        dkTKActivity.taotkDialog.cancel();
                         if (!jsonObject.getBoolean("error")) {
                             Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             Log.d("dkTKActivity", "Message: " + jsonObject.getString("message"));
@@ -133,7 +138,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
 
                     case Api.actionDN: {
-                        DangNhapActivity.prgbar_dangnhap.setVisibility(View.GONE);
+                        DangNhapActivity.dialogLoad.cancel();
                         if (!jsonObject.getBoolean("error")) {
                             Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                             final KiemtraDN callBack = (KiemtraDN) mCallBack.get();
@@ -147,6 +152,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
 
                     case Api.actionLayTTchutro:{
+                        ChuTroActivity.LayTTload.cancel();
                         if (!jsonObject.getBoolean("error")){
                             Toast.makeText(context, "Hoàn tất lấy thông tin", Toast.LENGTH_SHORT).show();
                             final TTChuTro callBack=(TTChuTro) mCallBack.get();
@@ -155,6 +161,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     }break;
 
                     case Api.actionUpdateTTchutro:{
+                        ChuTroActivity.TTCNload.cancel();
                         if (!jsonObject.getBoolean("error")){
                             Toast.makeText(context,"Đã cập nhật",Toast.LENGTH_SHORT).show();
                             final TTChuTro callBack=(TTChuTro) mCallBack.get();
@@ -165,7 +172,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     }break;
 
                     case Api.actionThemKhuTro:{
-                        KhuTroActivity.prgbar_themkhutro.setVisibility(View.GONE);
+                        KhuTroActivity.themKTdialog.cancel();
                         if (!jsonObject.getBoolean("error")){
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.anle.nhatrovungtau.R;
@@ -24,7 +25,8 @@ import java.io.IOException;
 
 public class PhotoFullScreen extends AppCompatActivity {
 
-    private Button btn_luu,btn_clock,btn_antiClock,btn_dong;
+    private ImageButton btn_clock,btn_antiClock;
+    private Button btn_luu,btn_dong;
     private ImageView img_xemanh;
     private Bitmap bitmap;
     @Override

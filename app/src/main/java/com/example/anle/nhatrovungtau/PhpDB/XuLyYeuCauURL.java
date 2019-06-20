@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -24,8 +25,8 @@ public class XuLyYeuCauURL {
         try{
             url=new URL(requestURL); //Tạo một url từ chuỗi requestURL
             HttpURLConnection conn=(HttpURLConnection)url.openConnection(); //Mở kết nối với sever
-            /*conn.setReadTimeout(60000); //Thời gian chờ đọc
-            conn.setConnectTimeout(60000); //Thời gian chờ mở liên kết đến url*/
+            conn.setReadTimeout(60000); //Thời gian chờ đọc
+            conn.setConnectTimeout(60000); //Thời gian chờ mở liên kết đến url
             conn.setRequestMethod("POST");  //Yêu cầu POST được sử dụng để gửi dữ liệu đến máy chủ.
             // Bằng cách ghi vào Output Stream của kết nối, bạn có thể dễ dàng thêm bất kỳ dữ liệu nào vào body của yêu cầu POST.
             // Tuy nhiên, trước khi bạn làm vậy, bạn phải chắc chắn rằng bạn gọi phương thức setDoOutput() của đối tượng HttpURLConnection và truyền true vào nó.

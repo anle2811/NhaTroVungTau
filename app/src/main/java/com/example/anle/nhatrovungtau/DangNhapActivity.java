@@ -27,7 +27,7 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
     private Button btn_dangnhap;
     private EditText edt_taikhoan;
     private TextInputEditText edt_matkhau;
-    public static ProgressBar prgbar_dangnhap;
+    public static DialogLoad dialogLoad;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,7 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         btn_dangnhap=findViewById(R.id.btn_dangnhap);
         edt_taikhoan=findViewById(R.id.edt_taikhoan);
         edt_matkhau=findViewById(R.id.edt_matkhau);
-        prgbar_dangnhap=findViewById(R.id.prgbar_dangnhap);
+        dialogLoad=new DialogLoad(this,"Đang Đăng Nhập...");
     }
     public void TK_MK_VuaDK(){
         Intent intent=getIntent();

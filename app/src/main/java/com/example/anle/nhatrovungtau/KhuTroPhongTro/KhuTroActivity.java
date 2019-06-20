@@ -38,6 +38,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.anle.nhatrovungtau.CustomAdapter.SpnTPAdapter;
+import com.example.anle.nhatrovungtau.DialogLoad;
 import com.example.anle.nhatrovungtau.Models.ThanhPho;
 import com.example.anle.nhatrovungtau.PhpDB.Api;
 import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
@@ -69,7 +70,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private static final int REQUEST_CODE=113;
 
-    public static ProgressBar prgbar_themkhutro;
+    public static DialogLoad themKTdialog;
     private Button btn_luulai;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -106,7 +107,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khu_tro);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        prgbar_themkhutro=findViewById(R.id.prgbar_themkhutro);
+        themKTdialog=new DialogLoad(this,"Đang thêm khu trọ...");
         getTENTK();
         initSpinner();
         initEditText();

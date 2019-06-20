@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_gravity="center"
+    android:background="@drawable/background_dialog"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:padding="15dp">
+    <TextView
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:textSize="15sp"
+        android:textColor="#fff"
+        android:text="Dang dang nhap vui long cho"
+        android:id="@+id/tv_phamtram"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/prgbar_load" />
+</RelativeLayout>
