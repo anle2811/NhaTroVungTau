@@ -2,10 +2,14 @@ package com.example.anle.nhatrovungtau;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +26,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.anle.nhatrovungtau.CustomAdapter.StaggeredRecyclerAdapter;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.KhuTroActivity;
 import com.example.anle.nhatrovungtau.PhpDB.Api;
 import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,PerformNetworkRequest.TTChuTro {
 
@@ -42,6 +50,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     private LinearLayout ln_themkhutro;
     private TextView tv_tenchutro;
     private ImageButton ibtn_ttcn;
+    private ImageButton ibtn_lammoiDS;
 
     private Dialog dialogTTCN;
     private View viewTTCN;
@@ -54,6 +63,14 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     private String tenchutro,cmnd,email,diachi,gioitinh,ngaysinh;
     private int ngay,thang,nam;
     private String[] ngaySinh;
+
+    private RecyclerView staggeredRC;
+    private StaggeredRecyclerAdapter adapter;
+    private StaggeredGridLayoutManager manager;
+    List<TestKhuTro> khuTroList;
+
+    public static DialogLoad DSkhutroLoad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +80,16 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         showTTCN();
         loadTTchutro();
         yeuCauTTchutro();
-
+        initDSkhutro();
+        setupLammoiDS();
     }
 
     public void initAll(){
         tv_tenchutro=findViewById(R.id.tv_tenchutro);
         ibtn_ttcn=findViewById(R.id.ibtn_ttcn);
+        ibtn_lammoiDS=findViewById(R.id.ibtn_qltro);
         LayTTload=new DialogLoad(this,"Đang tải thông tin...");
+        DSkhutroLoad=new DialogLoad(this,"Đang làm mới danh sách Khu Trọ...");
     }
 
     public void initThemkhutro(){
@@ -91,6 +111,49 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         params.put("Tentk",TENTK);
         PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_TT_CHUTRO,Api.actionLayTTchutro,params,REQUEST_CODE,getApplicationContext(),this);
         request.execute();
+    }
+
+    public void setupLammoiDS(){
+        ibtn_lammoiDS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,String> params=new HashMap<>();
+                params.put("Tentk",TENTK);
+                PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_DS_KHUTRO,Api.actionLayDSkhutro,
+                        params,REQUEST_CODE,getApplicationContext(),ChuTroActivity.this);
+                request.execute();
+            }
+        });
+    }
+
+    public void initDSkhutro(){
+        staggeredRC=findViewById(R.id.recyc_KhuTro);
+        manager=new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        staggeredRC.setLayoutManager(manager);
+    }
+
+    @Override
+    public void layDSkhutro(JSONArray dskhutro) {
+        khuTroList=new ArrayList<>();
+        for (int k=0;k<dskhutro.length();k++){
+            try {
+                JSONObject object=dskhutro.getJSONObject(k);
+                Log.d("Loi","JSONObject "+object.toString());
+                khuTroList.add(new TestKhuTro(object.getDouble("Lat"),
+                        object.getDouble("Lng"),
+                        object.getString("Tenkhutro"),
+                        object.getInt("Slphong"),
+                        object.getString("Diachi"),
+                        object.getString("Mota"),
+                        object.getString("Img"),
+                        object.getString("Tentp")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("Loi","Error: "+e.getMessage());
+            }
+        }
+        adapter=new StaggeredRecyclerAdapter(ChuTroActivity.this,khuTroList);
+        staggeredRC.setAdapter(adapter);
     }
 
     @Override

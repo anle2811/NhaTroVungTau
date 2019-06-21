@@ -6,14 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ChuTroActivity">
     <RelativeLayout
-        android:background="@drawable/backgroundmenu"
+        android:id="@+id/rel_menu"
+        android:background="@drawable/blurbackground"
         android:layout_width="match_parent"
         android:layout_height="200dp">
         <RelativeLayout
+            android:background="#50000000"
             android:layout_centerInParent="true"
-            android:background="@drawable/background_color_black70"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_above="@id/tv_tenchutro"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Xin Chào !!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/tv_tenchutro"
                 android:layout_marginBottom="5dp"
@@ -21,7 +31,7 @@
                 android:textSize="26dp"
                 android:layout_alignParentBottom="true"
                 android:textStyle="bold"
-                android:textColor="@color/mautext1"
+                android:textColor="#3e0002"
                 android:text="Lê Quang An"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -43,8 +53,8 @@
                 android:layout_marginRight="5dp"
                 android:textStyle="bold"
                 android:layout_toLeftOf="@id/ibtn_qltro"
-                android:textColor="@color/mautext1"
-                android:text="Quản Lý\nTrọ"
+                android:textColor="@color/maunen2"
+                android:text="Làm mới DS\nkhu trọ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageButton
@@ -62,7 +72,7 @@
                 android:textStyle="bold"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/ibtn_dangxuat"
-                android:textColor="@color/mautext1"
+                android:textColor="@color/maunen2"
                 android:text="Đăng Xuất"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -80,7 +90,7 @@
                 android:layout_marginLeft="7dp"
                 android:textStyle="bold"
                 android:layout_below="@id/ibtn_ttcn"
-                android:textColor="@color/mautext1"
+                android:textColor="@color/maunen2"
                 android:text="Thông Tin\nCá Nhân"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -88,7 +98,7 @@
                 android:id="@+id/ln_themkhutro"
                 android:weightSum="2"
                 android:orientation="vertical"
-                android:background="@drawable/button_style1"
+                android:background="@drawable/button_style3"
                 android:layout_centerInParent="true"
                 android:layout_width="100dp"
                 android:layout_height="100dp">
@@ -100,16 +110,21 @@
                     android:layout_width="50dp"
                     android:layout_height="0dp" />
                 <TextView
-                    android:textColor="@color/mautext2"
+                    android:gravity="center"
+                    android:textColor="@color/mautext1"
                     android:layout_weight="1"
                     android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:textSize="23dp"
-                    android:text="Thêm"
+                    android:textSize="16dp"
+                    android:text="Thêm Khu\nTrọ"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyc_KhuTro"
+        android:layout_below="@id/rel_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

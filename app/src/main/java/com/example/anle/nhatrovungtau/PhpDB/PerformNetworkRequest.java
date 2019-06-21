@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +45,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
     public interface TTChuTro{
         void layTTchutro(JSONObject jsonObject);
         void updateTT();
+        void layDSkhutro(JSONArray dskhutro);
     }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
@@ -67,6 +69,9 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
 
             case Api.actionThemKhuTro:
                 KhuTroActivity.themKTdialog.show();
+                break;
+            case Api.actionLayDSkhutro:
+                ChuTroActivity.DSkhutroLoad.show();
                 break;
         }
 
@@ -100,6 +105,10 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 case Api.actionThemKhuTro:
                     KhuTroActivity.themKTdialog.cancel();
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionLayDSkhutro:
+                    ChuTroActivity.DSkhutroLoad.cancel();
+                    Toast.makeText(context,"Lỗi mạng, vui lòng thử làm mới lại",Toast.LENGTH_LONG).show();
                     break;
             }
         }else {
@@ -177,6 +186,17 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionLayDSkhutro:{
+                        ChuTroActivity.DSkhutroLoad.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            final TTChuTro callBack=(TTChuTro) mCallBack.get();
+                            callBack.layDSkhutro(jsonObject.getJSONArray("khutros"));
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,"Lấy danh sách khu trọ thất bại",Toast.LENGTH_SHORT).show();
                         }
                     }break;
 
