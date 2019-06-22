@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/rel_thanhpho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iconCity"
+                android:src="@drawable/cityicon"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:id="@+id/tv_TP"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:textSize="25sp"
+                android:text="Vũng Tàu"
+                android:layout_toRightOf="@id/iconCity"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/rel_diachi"
+            android:layout_below="@id/rel_thanhpho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iconDiachi"
+                android:src="@drawable/dckhutroicon"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:paddingEnd="3dp"
+                android:paddingRight="3dp"
+                android:id="@+id/tv_DC"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:textSize="25sp"
+                android:text="152/A Nguyen Van Troi"
+                android:layout_toRightOf="@id/iconDiachi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/rel_mota"
+            android:layout_below="@id/rel_diachi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iconMota"
+                android:src="@drawable/motaicon"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:paddingEnd="3dp"
+                android:paddingRight="3dp"
+                android:id="@+id/tv_MOTA"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+                android:textSize="25sp"
+                android:text="@string/motakhutro"
+                android:layout_toRightOf="@id/iconMota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

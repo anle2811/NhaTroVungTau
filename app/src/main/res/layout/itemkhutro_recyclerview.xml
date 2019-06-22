@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp">
+    android:padding="6dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="@drawable/khungitemkhutro">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -28,11 +32,10 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="5dp"
-                android:textColor="@color/maunen2"
+                android:textColor="#fff"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:text="Tro Cua An"
-                android:background="@drawable/textview_style4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </FrameLayout>
@@ -44,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="90dp">
             <LinearLayout
-                android:weightSum="2"
+                android:weightSum="2.1"
                 android:layout_weight="8"
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -62,12 +65,16 @@
                         android:paddingLeft="5dp"
                         android:textColor="#fff"
                         android:textSize="20sp"
-                        android:textStyle="bold"
+                        android:textStyle="italic"
                         android:text="Vung Tau"
-                        android:background="@drawable/textview_style1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </FrameLayout>
+                <FrameLayout
+                    android:background="@drawable/textview_style2"
+                    android:layout_weight="0.1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
                 <FrameLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -79,11 +86,9 @@
                     android:paddingRight="20dp"
                     android:layout_marginLeft="5dp"
                     android:paddingLeft="5dp"
-                    android:textColor="@color/maunen2"
+                    android:textColor="#fff"
                     android:textSize="20sp"
-                    android:textStyle="bold"
                     android:text="Suoi Nghe Vung Tau"
-                    android:background="@drawable/textview_style2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 </FrameLayout>

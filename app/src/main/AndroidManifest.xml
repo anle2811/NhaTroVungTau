@@ -3,9 +3,7 @@
     package="com.example.anle.nhatrovungtau">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,7 +21,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <activity android:name=".MainActivity" android:configChanges="orientation"
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,20 +31,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".DangNhapActivity" android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".dkTKActivity" android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ChuTroActivity" android:configChanges="orientation"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".DangNhapActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dkTKActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChuTroActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".KhuTroPhongTro.PhongTroActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KhuTroPhongTro.KhuTroActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KhuTroPhongTro.PhotoFullScreen"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".XemKhuTroPhongTro.ChiTietKhuTro"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".KhuTroPhongTro.PhongTroActivity" android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".KhuTroPhongTro.KhuTroActivity" android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".KhuTroPhongTro.PhotoFullScreen" android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

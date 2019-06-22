@@ -30,6 +30,7 @@ import com.example.anle.nhatrovungtau.CustomAdapter.StaggeredRecyclerAdapter;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.KhuTroActivity;
 import com.example.anle.nhatrovungtau.PhpDB.Api;
 import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
+import com.example.anle.nhatrovungtau.XemKhuTroPhongTro.ChiTietKhuTro;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,PerformNetworkRequest.TTChuTro {
+public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,PerformNetworkRequest.TTChuTro,StaggeredRecyclerAdapter.ChonKhuTro {
 
     private static String TENTK;
     private static final int REQUEST_CODE=113;
@@ -65,9 +66,8 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     private String[] ngaySinh;
 
     private RecyclerView staggeredRC;
-    private StaggeredRecyclerAdapter adapter;
     private StaggeredGridLayoutManager manager;
-    List<TestKhuTro> khuTroList;
+    private List<TestKhuTro> khuTroList;
 
     public static DialogLoad DSkhutroLoad;
 
@@ -133,6 +133,23 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     @Override
+    public void xemChiTiet(int position) {
+        chuyenTTKhuTro(position);
+    }
+
+    public void chuyenTTKhuTro(int position){
+        Intent intent=new Intent(ChuTroActivity.this,ChiTietKhuTro.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("Tenkhutro",khuTroList.get(position).getTenKhu());
+        bundle.putString("Diachikhu",khuTroList.get(position).getDiaChi());
+        bundle.putString("Thanhpho",khuTroList.get(position).getThanhPho());
+        bundle.putString("Motakhu",khuTroList.get(position).getMota());
+        bundle.putString("Image",khuTroList.get(position).getAnhKhu());
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
     public void layDSkhutro(JSONArray dskhutro) {
         khuTroList=new ArrayList<>();
         for (int k=0;k<dskhutro.length();k++){
@@ -152,7 +169,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
                 Log.d("Loi","Error: "+e.getMessage());
             }
         }
-        adapter=new StaggeredRecyclerAdapter(ChuTroActivity.this,khuTroList);
+        StaggeredRecyclerAdapter adapter=new StaggeredRecyclerAdapter(ChuTroActivity.this,khuTroList,ChuTroActivity.this);
         staggeredRC.setAdapter(adapter);
     }
 
@@ -384,7 +401,6 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
        ngaysinh=spn_ngay.getSelectedItem().toString()+
                 "/"+spn_thang.getSelectedItem().toString()+
                 "/"+spn_nam.getSelectedItem().toString();
-        Toast.makeText(ChuTroActivity.this,ngaysinh,Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:padding="5dp"
+        android:background="@drawable/textview_style1"
+        android:layout_margin="5dp"
+        android:id="@+id/frame_buttonThem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:text="Thêm Phòng Trọ"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/addicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+    </FrameLayout>
+    <ListView
+        android:id="@+id/lv_DSphongtro"
+        android:layout_below="@id/frame_buttonThem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+</RelativeLayout>

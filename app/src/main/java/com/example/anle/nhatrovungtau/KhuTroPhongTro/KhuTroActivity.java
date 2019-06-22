@@ -69,6 +69,8 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private static String TENTK;
 
     private static final int REQUEST_CODE=113;
+    private static final int CAMERA_PERMISSION_CODE=111;
+    private static final int READ_EXTERNAL_PERMISSION_CODE=222;
 
     public static DialogLoad themKTdialog;
     private Button btn_luulai;
@@ -90,8 +92,6 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private LinearLayout ln_chupanh,ln_chonanh,ln_xemanh;
     private Button btn_dong;
     private Bitmap fixBitmap;
-    private ByteArrayOutputStream byteArrayOutputStream;
-    private byte [] byteArray;
     private String convertImage;
 
     private Spinner spn_thanhpho;
@@ -161,6 +161,34 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, ""), 2001);
+    }
+
+    public void capquyenCAMERA(){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            if (checkSelfPermission(Manifest.permission.CAMERA)==
+                    PackageManager.PERMISSION_DENIED){
+                String [] permission={Manifest.permission.CAMERA};
+                requestPermissions(permission,CAMERA_PERMISSION_CODE);
+            }else {
+                setupChupAnh();
+            }
+        }else {
+            setupChupAnh();
+        }
+    }
+
+    public void capquyenREAD_EXTERNAL(){
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==
+                    PackageManager.PERMISSION_DENIED){
+                String [] permission={Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permission,READ_EXTERNAL_PERMISSION_CODE);
+            }else {
+                setupChonAnh();
+            }
+        }else {
+            setupChonAnh();
+        }
     }
 
     @Override
@@ -250,7 +278,8 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void UploadAnh(){
-        byteArrayOutputStream=new ByteArrayOutputStream();
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        byte [] byteArray=null;
         HashMap<String,String> params=new HashMap<>();
         Log.d("Upanh","UploadAnh");
         try {
@@ -303,14 +332,14 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 dialog_takeOfpick.dismiss();
-                setupChupAnh();
+                capquyenCAMERA();
             }
         });
         ln_chonanh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog_takeOfpick.dismiss();
-                setupChonAnh();
+                capquyenREAD_EXTERNAL();
             }
         });
         ln_xemanh.setOnClickListener(new View.OnClickListener() {
@@ -457,7 +486,25 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
                     LocationPemissionsGranted=true; //Quyền được cấp
                     initMap(); // Bắt đầu khởi tạo bản đồ
                 }
-            }
+            }break;
+
+            case CAMERA_PERMISSION_CODE:{
+                if (grantResults.length>0&&grantResults[0]==
+                        PackageManager.PERMISSION_GRANTED){
+                    setupChupAnh();
+                }else {
+                    Toast.makeText(KhuTroActivity.this,"Bạn chưa cấp quyền chụp ảnh!!",Toast.LENGTH_SHORT).show();
+                }
+            }break;
+
+            case READ_EXTERNAL_PERMISSION_CODE:{
+                if (grantResults.length>0&&grantResults[0]==
+                        PackageManager.PERMISSION_GRANTED){
+                    setupChonAnh();
+                }else {
+                    Toast.makeText(KhuTroActivity.this,"Bạn chưa cấp quyền truy cập file!!",Toast.LENGTH_SHORT).show();
+                }
+            }break;
         }
     }
 
