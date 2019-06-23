@@ -3,6 +3,7 @@ import com.example.anle.nhatrovungtau.ChuTroActivity;
 import com.example.anle.nhatrovungtau.DangNhapActivity;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.KhuTroActivity;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.PhongTroActivity;
+import com.example.anle.nhatrovungtau.XemKhuTroPhongTro.ChiTietKhuTro;
 import com.example.anle.nhatrovungtau.dkTKActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -48,6 +49,9 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
         void updateTT();
         void layDSkhutro(JSONArray dskhutro);
     }
+    public interface DSPhongTro{
+        void layDSphongtro(JSONArray dsphong);
+    }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
         super.onPreExecute();
@@ -76,6 +80,9 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 break;
             case Api.actionThemPhongTro:
                 PhongTroActivity.loadThemPhong.show();
+                break;
+            case Api.actionLayDSphongtro:
+                ChiTietKhuTro.loadDSphong.show();
                 break;
         }
 
@@ -116,6 +123,10 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionThemPhongTro:
                     PhongTroActivity.loadThemPhong.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionLayDSphongtro:
+                    ChiTietKhuTro.loadDSphong.cancel();
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -214,6 +225,17 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionLayDSphongtro:{
+                        ChiTietKhuTro.loadDSphong.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            final DSPhongTro callBack=(DSPhongTro)mCallBack.get();
+                            callBack.layDSphongtro(jsonObject.getJSONArray("phongtros"));
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,"Lấy danh sách phòng thất bại",Toast.LENGTH_SHORT).show();
                         }
                     }break;
                 }

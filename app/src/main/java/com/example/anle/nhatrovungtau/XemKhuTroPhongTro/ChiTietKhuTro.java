@@ -1,5 +1,6 @@
 package com.example.anle.nhatrovungtau.XemKhuTroPhongTro;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -11,19 +12,30 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.anle.nhatrovungtau.DialogLoad;
 import com.example.anle.nhatrovungtau.R;
 import com.example.anle.nhatrovungtau.SlidePagerAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ChiTietKhuTro extends AppCompatActivity{
 
+    public interface GoiFragment{
+        void goiFragment(Context context);
+    }
+
+    private WeakReference<Object> callBack;
+
     private static String TENTK;
     private static String IDKHUTRO;
+
+    public static DialogLoad loadDSphong;
 
     private List<Fragment> fragmentList;
     private PagerAdapter pagerAdapter;
@@ -96,11 +108,33 @@ public class ChiTietKhuTro extends AppCompatActivity{
         pagerAdapter=new SlidePagerAdapter(getSupportFragmentManager(),fragmentList);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0:Toast.makeText(ChiTietKhuTro.this,"Tag 1",Toast.LENGTH_SHORT).show();break;
+                    case 1: GoiFragment callBack=(GoiFragment) ChiTietKhuTro.this.callBack.get();
+                            callBack.goiFragment(getApplicationContext());break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     public void init(){
         fragmentKhuTro=new FragmentKhuTro();
         fragmentPhongTro=new FragmentPhongTro();
+        callBack= new WeakReference<Object>(fragmentPhongTro);
         img_detailKhuTro=findViewById(R.id.img_detailKhuTro);
+        loadDSphong=new DialogLoad(this,"Đang lấy danh sách phòng...");
     }
 }
