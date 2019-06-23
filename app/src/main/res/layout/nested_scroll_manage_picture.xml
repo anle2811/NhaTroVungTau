@@ -31,6 +31,7 @@
             android:layout_height="80dp">
             <TableRow>
                 <Button
+                    android:id="@+id/btn_huythemphong"
                     android:textColor="#fff"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
@@ -41,6 +42,7 @@
                     android:layout_weight="1"
                     android:src="@drawable/galleryicon" />
                 <Button
+                    android:id="@+id/btn_luuphong"
                     android:textColor="#fff"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
@@ -61,15 +63,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <GridView
+                android:id="@+id/gridView_anhPhong"
                 android:numColumns="4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <Button
+                android:id="@+id/btn_themAnh"
                 android:textColor="#fff"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="5dp"
