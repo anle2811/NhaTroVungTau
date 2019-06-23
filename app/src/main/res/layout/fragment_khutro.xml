@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<ScrollView
+    android:id="@+id/scroll_chitietkhu"
     android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -19,6 +20,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
+                android:textColor="#fff"
                 android:id="@+id/tv_TP"
                 android:layout_marginLeft="5dp"
                 android:textStyle="bold"
@@ -42,6 +44,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
+                android:textColor="#fff"
                 android:paddingEnd="3dp"
                 android:paddingRight="3dp"
                 android:id="@+id/tv_DC"
@@ -67,6 +70,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
+                android:textColor="#fff"
                 android:paddingEnd="3dp"
                 android:paddingRight="3dp"
                 android:id="@+id/tv_MOTA"
@@ -74,10 +78,10 @@
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:textSize="25sp"
-                android:text="@string/motakhutro"
+                android:text="Nothing"
                 android:layout_toRightOf="@id/iconMota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
     </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>

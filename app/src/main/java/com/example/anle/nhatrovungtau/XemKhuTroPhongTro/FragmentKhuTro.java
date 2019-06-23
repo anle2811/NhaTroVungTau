@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.anle.nhatrovungtau.R;
@@ -17,6 +19,7 @@ public class FragmentKhuTro extends Fragment {
 
     private ChiTietKhuTro chiTietKhuTro;
 
+    private ScrollView scroll_chitietkhu;
     private TextView tv_thanhpho;
     private TextView tv_diachi;
     private TextView tv_mota;
@@ -36,6 +39,8 @@ public class FragmentKhuTro extends Fragment {
         tv_thanhpho=rootView.findViewById(R.id.tv_TP);
         tv_diachi=rootView.findViewById(R.id.tv_DC);
         tv_mota=rootView.findViewById(R.id.tv_MOTA);
+        scroll_chitietkhu=rootView.findViewById(R.id.scroll_chitietkhu);
+        ViewCompat.setNestedScrollingEnabled(scroll_chitietkhu,true);
     }
 
     public void setTextTT(HashMap<String,String> tt){

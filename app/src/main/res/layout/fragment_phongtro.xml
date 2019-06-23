@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
         android:padding="5dp"
@@ -25,10 +26,29 @@
             android:layout_height="50dp" />
     </FrameLayout>
     <ListView
-        android:id="@+id/lv_DSphongtro"
         android:layout_below="@id/frame_buttonThem"
+        android:id="@+id/lv_DSphongtro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rel_NoPhongTro"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-    </ListView>
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imgnodata"
+            android:src="@drawable/notfound"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/imgnodata"
+            android:textColor="#fff"
+            android:text="Bạn chưa có phòng nào..."
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </RelativeLayout>

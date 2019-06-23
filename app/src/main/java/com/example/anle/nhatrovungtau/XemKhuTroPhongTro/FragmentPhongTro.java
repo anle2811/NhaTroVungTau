@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.anle.nhatrovungtau.CustomAdapter.ListViewPhongTroAdapter;
@@ -39,13 +41,14 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
     private HashMap<String,String> hashMap;
 
     private ListView lv_phongtro;
-    private ListViewPhongTroAdapter phongTroAdapter;
     private List<PhongTro> phongTroList;
+    private boolean daLoad=false;
 
     private ChiTietKhuTro chiTietKhuTro;
 
     private ViewGroup rootView;
 
+    private RelativeLayout rel_NoPhongTro;
     private FrameLayout frame_buttonThem;
     private Locale localeVN;
     private NumberFormat currencyVN;
@@ -66,13 +69,18 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
     public void init(){
         frame_buttonThem=rootView.findViewById(R.id.frame_buttonThem);
         lv_phongtro=rootView.findViewById(R.id.lv_DSphongtro);
+        ViewCompat.setNestedScrollingEnabled(lv_phongtro,true);
+        rel_NoPhongTro=rootView.findViewById(R.id.rel_NoPhongTro);
         localeVN = new Locale("vi", "VN");
         currencyVN = NumberFormat.getCurrencyInstance(localeVN);
     }
 
     @Override
     public void goiFragment(Context context) {
-        loadDSphong(context);
+        if (!daLoad){
+            rel_NoPhongTro.setVisibility(View.GONE);
+            loadDSphong(context);
+        }
     }
 
     public void loadDSphong(Context context){
@@ -85,23 +93,28 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
 
     @Override
     public void layDSphongtro(JSONArray dsphong) {
-        phongTroList=new ArrayList<>();
-        for (int k=0;k<dsphong.length();k++){
-            try {
-                JSONObject object=dsphong.getJSONObject(k);
-                phongTroList.add(new PhongTro(String.valueOf(object.getInt("Idphong")),
-                        currencyVN.format(object.getDouble("Giaphong")),
-                        String.valueOf(object.getDouble("Dientich")),
-                        object.getInt("Trangthai"),
-                        object.getInt("Ghep"),
-                        object.getString("Img"),
-                        object.getString("Mota")));
-            } catch (JSONException e) {
-                e.printStackTrace();
+        if (dsphong.length()>0) {
+            phongTroList = new ArrayList<>();
+            for (int k = 0; k < dsphong.length(); k++) {
+                try {
+                    JSONObject object = dsphong.getJSONObject(k);
+                    phongTroList.add(new PhongTro(String.valueOf(object.getInt("Idphong")),
+                            currencyVN.format(object.getDouble("Giaphong")),
+                            String.valueOf(object.getDouble("Dientich")),
+                            object.getInt("Trangthai"),
+                            object.getInt("Ghep"),
+                            object.getString("Img"),
+                            object.getString("Mota")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
+            ListViewPhongTroAdapter adapter = new ListViewPhongTroAdapter(getActivity(), R.layout.listview_dsphongtro, phongTroList);
+            lv_phongtro.setAdapter(adapter);
+            daLoad = true;
+        }else {
+            rel_NoPhongTro.setVisibility(View.VISIBLE);
         }
-        ListViewPhongTroAdapter adapter=new ListViewPhongTroAdapter(getActivity(),R.layout.listview_dsphongtro,phongTroList);
-        lv_phongtro.setAdapter(adapter);
     }
 
     public void clickThemPhong(){

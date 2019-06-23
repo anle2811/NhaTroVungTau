@@ -3,11 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:background="@drawable/khungitemkhutro">
+    android:layout_marginBottom="7dp">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -20,7 +16,7 @@
             android:layout_height="wrap_content" />
         <FrameLayout
             android:layout_gravity="top"
-            android:background="#a0000000"
+            android:background="#280060"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -41,7 +37,7 @@
         </FrameLayout>
         <LinearLayout
             android:weightSum="10"
-            android:background="#a0000000"
+            android:background="#c8ffffff"
             android:layout_gravity="bottom"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -63,7 +59,7 @@
                         android:paddingRight="20dp"
                         android:layout_marginLeft="5dp"
                         android:paddingLeft="5dp"
-                        android:textColor="#fff"
+                        android:textColor="#000"
                         android:textSize="20sp"
                         android:textStyle="italic"
                         android:text="Vung Tau"
@@ -71,6 +67,7 @@
                         android:layout_height="wrap_content" />
                 </FrameLayout>
                 <FrameLayout
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/textview_style2"
                     android:layout_weight="0.1"
                     android:layout_width="match_parent"
@@ -86,7 +83,7 @@
                     android:paddingRight="20dp"
                     android:layout_marginLeft="5dp"
                     android:paddingLeft="5dp"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="20sp"
                     android:text="Suoi Nghe Vung Tau"
                     android:layout_width="wrap_content"
@@ -105,7 +102,7 @@
                     android:layout_height="0dp">
                     <TextView
                         android:layout_gravity="center"
-                        android:textColor="@color/mautext1"
+                        android:textColor="#000"
                         android:gravity="center"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -119,7 +116,7 @@
                     android:layout_height="0dp">
                     <TextView
                         android:id="@+id/tv_SLPHONG"
-                        android:textColor="@color/mautext2"
+                        android:textColor="#fff"
                         android:layout_margin="5dp"
                         android:background="@drawable/textview_style3"
                         android:gravity="center"

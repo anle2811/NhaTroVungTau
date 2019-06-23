@@ -17,13 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="150dp">
         <TextView
-            android:textColor="#000"
+            android:textColor="#fff"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_gravity="end"
             android:padding="5dp"
             android:gravity="center"
-            android:background="@drawable/textview_style3"
+            android:background="@drawable/textview_style4"
             android:textStyle="bold"
             android:text="1.500.000đ"
             android:textSize="20sp"
