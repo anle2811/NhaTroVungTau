@@ -13,7 +13,16 @@ import android.widget.FrameLayout;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.PhongTroActivity;
 import com.example.anle.nhatrovungtau.R;
 
+import java.util.HashMap;
+
 public class FragmentPhongTro extends Fragment {
+
+    private static String TENTK;
+    private static String IDKHUTRO;
+
+    private HashMap<String,String> hashMap;
+
+    private ChiTietKhuTro chiTietKhuTro;
 
     private ViewGroup rootView;
 
@@ -24,6 +33,10 @@ public class FragmentPhongTro extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView=(ViewGroup)inflater.inflate(R.layout.fragment_phongtro,container,false);
         init();
+        chiTietKhuTro=(ChiTietKhuTro) getActivity();
+        hashMap=chiTietKhuTro.chuyenTenTKvaIDkhu();
+        TENTK=hashMap.get("Tentk");
+        IDKHUTRO=hashMap.get("Idkhutro");
         clickThemPhong();
         return rootView;
     }
@@ -36,7 +49,12 @@ public class FragmentPhongTro extends Fragment {
         frame_buttonThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),PhongTroActivity.class));
+                Intent intent=new Intent(getActivity(),PhongTroActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("Tentk",TENTK);
+                bundle.putString("Idkhutro",IDKHUTRO);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

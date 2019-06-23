@@ -2,6 +2,7 @@ package com.example.anle.nhatrovungtau.PhpDB;
 import com.example.anle.nhatrovungtau.ChuTroActivity;
 import com.example.anle.nhatrovungtau.DangNhapActivity;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.KhuTroActivity;
+import com.example.anle.nhatrovungtau.KhuTroPhongTro.PhongTroActivity;
 import com.example.anle.nhatrovungtau.dkTKActivity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -73,6 +74,9 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
             case Api.actionLayDSkhutro:
                 ChuTroActivity.DSkhutroLoad.show();
                 break;
+            case Api.actionThemPhongTro:
+                PhongTroActivity.loadThemPhong.show();
+                break;
         }
 
     }
@@ -109,6 +113,10 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 case Api.actionLayDSkhutro:
                     ChuTroActivity.DSkhutroLoad.cancel();
                     Toast.makeText(context,"Lỗi mạng, vui lòng thử làm mới lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionThemPhongTro:
+                    PhongTroActivity.loadThemPhong.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
         }else {
@@ -200,6 +208,14 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                         }
                     }break;
 
+                    case Api.actionThemPhongTro:{
+                        PhongTroActivity.loadThemPhong.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

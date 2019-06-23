@@ -10,6 +10,7 @@ public class Api {
     public static final String actionUpdateTTchutro="updateTTchutro";
     public static final String actionThemKhuTro="themKhuTro";
     public static final String actionLayDSkhutro="layDSkhutro";
+    public static final String actionThemPhongTro="themPhongTro";
 
     public static final String URL_TAO_TAIKHOAN=ROOT_URL+actionTaoTK;
     public static final String URL_ACC_EXIST_CHECK=ROOT_URL+actionExistCheck;
@@ -18,4 +19,5 @@ public class Api {
     public static final String URL_UPDATE_TT_CHUTRO=ROOT_URL+actionUpdateTTchutro;
     public static final String URL_THEM_KHUTRO=ROOT_URL+actionThemKhuTro;
     public static final String URL_LAY_DS_KHUTRO=ROOT_URL+actionLayDSkhutro;
+    public static final String URL_THEM_PHONGTRO=ROOT_URL+actionThemPhongTro;
 }

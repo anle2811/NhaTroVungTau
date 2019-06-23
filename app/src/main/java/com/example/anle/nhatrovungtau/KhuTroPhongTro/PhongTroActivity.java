@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anle.nhatrovungtau.CustomAdapter.GridViewAnhPhongAdapter;
+import com.example.anle.nhatrovungtau.DialogLoad;
+import com.example.anle.nhatrovungtau.PhpDB.Api;
+import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
 import com.example.anle.nhatrovungtau.R;
 
 import org.json.JSONArray;
@@ -53,12 +58,21 @@ import java.util.List;
 
 public class PhongTroActivity extends AppCompatActivity {
 
+    private static String TENTK;
+    private static String IDKHUTRO;
+    private static final int REQUEST_CODE=113;
+    public static DialogLoad loadThemPhong;
+
     private static final int CAMERA_PERMISSION_CODE=111;
     private static final int READ_EXTERNAL_PERMISSION_CODE=222;
     private int tempRequestCode;
     private int checkChon;
     private boolean checkShowXemAnh=false;
 
+    private LinearLayout botsheet;
+    private FrameLayout frame_phongtro;
+    private ImageView img_qlAnhphong;
+    private TextView tv_iconQlanh;
     private BottomSheetBehavior bottomSheetBehavior;
     private EditText edt_giaphong,edt_dientich,edt_mota;
     private Button btn_themAnh;
@@ -84,14 +98,25 @@ public class PhongTroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phong_tro);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getTKandID();
         initAll();
         initBottomSheet();
         setDialog_takeOfpick();
         setupChonAvtPhong();
         setupGridViewImgPhong();
         PhucHoiTrangThaiGridAnhPhong(savedInstanceState);
+        setBtn_luuphong();
     }
 
+    public void getTKandID(){
+        Intent intent=getIntent();
+        Bundle bundle=intent.getExtras();
+        if (bundle!=null){
+            TENTK=bundle.getString("Tentk");
+            IDKHUTRO=bundle.getString("Idkhutro");
+            Log.d("GET","GET: "+TENTK+"_"+IDKHUTRO);
+        }
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -150,6 +175,51 @@ public class PhongTroActivity extends AppCompatActivity {
         btn_huythemphong=findViewById(R.id.btn_huythemphong);
         btn_luuphong=findViewById(R.id.btn_luuphong);
         gridView_anhPhong=findViewById(R.id.gridView_anhPhong);
+        loadThemPhong=new DialogLoad(this,"Đang thêm phòng trọ...");
+    }
+
+    public void setBtn_luuphong(){
+        btn_luuphong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadPhong();
+            }
+        });
+    }
+
+    public void UploadPhong(){
+        String convertImage=ConvertImageToString(avtBitmap,60);
+        List<String> convert=new ArrayList<>();
+        for (int k=0;k<bitmapList.size();k++){
+            convert.add(ConvertImageToString(bitmapList.get(k),50));
+        }
+        JSONArray jsonArray=new JSONArray(convert);
+        HashMap<String,String> params=new HashMap<>();
+        params.put("Tentk",TENTK);
+        params.put("Idkhutro",IDKHUTRO);
+        params.put("Giaphong",edt_giaphong.getText().toString().trim());
+        params.put("Dientich",edt_dientich.getText().toString().trim());
+        params.put("Mota",edt_mota.getText().toString().trim());
+        params.put("ImgData",convertImage);
+        params.put("Soanh",String.valueOf(bitmapList.size()));
+        params.put("ArrDataAnh",jsonArray.toString());
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_THEM_PHONGTRO,Api.actionThemPhongTro,params,
+                REQUEST_CODE,getApplicationContext(),PhongTroActivity.this);
+        request.execute();
+    }
+
+    public String ConvertImageToString(Bitmap bitmap,int quality){
+        String convertImage=null;
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        byte [] byteArray=null;
+        try {
+            bitmap.compress(Bitmap.CompressFormat.JPEG,quality,byteArrayOutputStream);
+            byteArray=byteArrayOutputStream.toByteArray();
+            convertImage=Base64.encodeToString(byteArray,Base64.DEFAULT);
+        }catch (Exception e){
+            Log.d("Loi","Error: "+e.getMessage());
+        }
+        return convertImage;
     }
 
     public void setupChonAvtPhong(){
@@ -170,6 +240,35 @@ public class PhongTroActivity extends AppCompatActivity {
     public void initBottomSheet(){
         View bottomSheet=findViewById(R.id.bot_sheet_pic);
         bottomSheetBehavior=BottomSheetBehavior.from(bottomSheet);
+        botsheet=findViewById(R.id.bot_sheet_pic);
+        img_qlAnhphong=findViewById(R.id.img_qlAnhphong);
+        frame_phongtro=findViewById(R.id.frame_phongtro);
+        tv_iconQlanh=findViewById(R.id.tv_iconQlAnh);
+
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (i==BottomSheetBehavior.STATE_EXPANDED){
+                    bottomSheetBehavior.setPeekHeight(botsheet.getHeight());
+                    tv_iconQlanh.setText("Nhấp vào icon để đóng");
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
+        img_qlAnhphong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                    bottomSheetBehavior.setPeekHeight(frame_phongtro.getHeight());
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    tv_iconQlanh.setText("Vuốt lên để quản lý ảnh");
+                }
+            }
+        });
 
     }
 

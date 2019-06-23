@@ -140,6 +140,8 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     public void chuyenTTKhuTro(int position){
         Intent intent=new Intent(ChuTroActivity.this,ChiTietKhuTro.class);
         Bundle bundle=new Bundle();
+        bundle.putString("Tentk",TENTK);
+        bundle.putString("Idkhutro",String.valueOf(khuTroList.get(position).getIdkhutro()));
         bundle.putString("Tenkhutro",khuTroList.get(position).getTenKhu());
         bundle.putString("Diachikhu",khuTroList.get(position).getDiaChi());
         bundle.putString("Thanhpho",khuTroList.get(position).getThanhPho());
@@ -156,7 +158,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
             try {
                 JSONObject object=dskhutro.getJSONObject(k);
                 Log.d("Loi","JSONObject "+object.toString());
-                khuTroList.add(new TestKhuTro(object.getDouble("Lat"),
+                khuTroList.add(new TestKhuTro(object.getInt("Idkhutro"),object.getDouble("Lat"),
                         object.getDouble("Lng"),
                         object.getString("Tenkhutro"),
                         object.getInt("Slphong"),

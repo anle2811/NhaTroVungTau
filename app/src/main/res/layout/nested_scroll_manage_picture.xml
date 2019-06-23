@@ -8,6 +8,7 @@
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_peekHeight="90dp">
     <FrameLayout
+        android:id="@+id/frame_phongtro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -17,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <TextView
+                android:id="@+id/tv_iconQlAnh"
                 android:gravity="bottom|center"
                 android:textStyle="bold"
                 android:textColor="@color/maucam"
@@ -39,6 +41,7 @@
                     android:text="Hủy"
                     android:background="@drawable/button_style1" />
                 <ImageView
+                    android:id="@+id/img_qlAnhphong"
                     android:layout_weight="1"
                     android:src="@drawable/galleryicon" />
                 <Button

@@ -22,6 +22,9 @@ import java.util.List;
 
 public class ChiTietKhuTro extends AppCompatActivity{
 
+    private static String TENTK;
+    private static String IDKHUTRO;
+
     private List<Fragment> fragmentList;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
@@ -47,6 +50,8 @@ public class ChiTietKhuTro extends AppCompatActivity{
         Intent intent=getIntent();
         Bundle bundle=intent.getExtras();
         if (bundle!=null){
+            TENTK=bundle.getString("Tentk");
+            IDKHUTRO=bundle.getString("Idkhutro");
             Picasso.get().load(bundle.getString("Image"))
                     .placeholder(R.drawable.icon_null_image)
                     .into(img_detailKhuTro);
@@ -62,6 +67,13 @@ public class ChiTietKhuTro extends AppCompatActivity{
             }
 
         }
+    }
+
+    public HashMap<String,String> chuyenTenTKvaIDkhu(){
+        HashMap<String,String> IDandTK=new HashMap<>();
+        IDandTK.put("Tentk",TENTK);
+        IDandTK.put("Idkhutro",IDKHUTRO);
+        return IDandTK;
     }
 
     public HashMap<String,String> chuyenTT(){

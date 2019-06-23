@@ -2,6 +2,16 @@ package com.example.anle.nhatrovungtau;
 
 public class TestKhuTro {
 
+    private int Idkhutro;
+
+    public int getIdkhutro() {
+        return Idkhutro;
+    }
+
+    public void setIdkhutro(int idkhutro) {
+        Idkhutro = idkhutro;
+    }
+
     private double Lat;
     private double Lng;
     private String TenKhu;
@@ -46,7 +56,8 @@ public class TestKhuTro {
     public TestKhuTro() {
     }
 
-    public TestKhuTro(double lat, double lng, String tenKhu, int soPhong, String diaChi, String mota, String anhKhu, String thanhPho) {
+    public TestKhuTro(int Idkhutro,double lat, double lng, String tenKhu, int soPhong, String diaChi, String mota, String anhKhu, String thanhPho) {
+        this.Idkhutro=Idkhutro;
         Lat = lat;
         Lng = lng;
         TenKhu = tenKhu;
