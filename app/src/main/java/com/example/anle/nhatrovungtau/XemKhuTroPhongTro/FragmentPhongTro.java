@@ -11,11 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.anle.nhatrovungtau.ChuTroActivity;
 import com.example.anle.nhatrovungtau.CustomAdapter.ListViewPhongTroAdapter;
 import com.example.anle.nhatrovungtau.KhuTroPhongTro.PhongTroActivity;
 import com.example.anle.nhatrovungtau.Models.PhongTro;
@@ -37,6 +39,7 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
 
     private static String TENTK;
     private static String IDKHUTRO;
+    private static String TENKHUTRO;
     private static final int REQUEST_CODE=113;
     private HashMap<String,String> hashMap;
 
@@ -62,8 +65,40 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
         hashMap=chiTietKhuTro.chuyenTenTKvaIDkhu();
         TENTK=hashMap.get("Tentk");
         IDKHUTRO=hashMap.get("Idkhutro");
+        TENKHUTRO=hashMap.get("Tenkhutro");
         clickThemPhong();
+        setXemTTPhong();
         return rootView;
+    }
+
+    public void setXemTTPhong(){
+        lv_phongtro.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    chuyenTTphong(position);
+
+            }
+        });
+    }
+
+    public void chuyenTTphong(int position){
+        try {
+            Intent intent=new Intent(getActivity(),ChiTietPhongTro.class);
+            Bundle bundle=new Bundle();
+            bundle.putString("Tenkhutro",TENKHUTRO);
+            bundle.putString("Idphong",phongTroList.get(position).getIdphong());
+            bundle.putString("Giaphong",phongTroList.get(position).getGiaphong());
+            bundle.putInt("Trangthai",phongTroList.get(position).getTrangthai());
+            bundle.putInt("Ghep",phongTroList.get(position).getGhep());
+            bundle.putString("Dientich",phongTroList.get(position).getDientich());
+            bundle.putString("Img",phongTroList.get(position).getImg());
+            bundle.putString("Mota",phongTroList.get(position).getMota());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }catch (Exception e){
+            Log.d("LOI","LOI: "+e.getMessage());
+        }
     }
 
     public void init(){

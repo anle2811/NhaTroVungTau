@@ -43,6 +43,8 @@ import java.util.List;
 
 public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,PerformNetworkRequest.TTChuTro,StaggeredRecyclerAdapter.ChonKhuTro {
 
+    private SessionManager loginManager;
+
     private static String TENTK;
     private static final int REQUEST_CODE=113;
     public static DialogLoad TTCNload;
@@ -50,6 +52,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
 
     private LinearLayout ln_themkhutro;
     private TextView tv_tenchutro;
+    private ImageButton ibtn_dangxuat;
     private ImageButton ibtn_ttcn;
     private ImageButton ibtn_lammoiDS;
 
@@ -85,11 +88,29 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void initAll(){
+        loginManager=new SessionManager(getApplicationContext());
         tv_tenchutro=findViewById(R.id.tv_tenchutro);
+        ibtn_dangxuat=findViewById(R.id.ibtn_dangxuat);
         ibtn_ttcn=findViewById(R.id.ibtn_ttcn);
         ibtn_lammoiDS=findViewById(R.id.ibtn_qltro);
         LayTTload=new DialogLoad(this,"Đang tải thông tin...");
         DSkhutroLoad=new DialogLoad(this,"Đang làm mới danh sách Khu Trọ...");
+        checkLoged();
+        dangxuat();
+    }
+
+    public void dangxuat(){
+        ibtn_dangxuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginManager.logOut();
+            }
+        });
+    }
+
+    public void checkLoged(){
+        loginManager.checkLogin();
+        TENTK=loginManager.getTAIKHOAN();
     }
 
     public void initThemkhutro(){

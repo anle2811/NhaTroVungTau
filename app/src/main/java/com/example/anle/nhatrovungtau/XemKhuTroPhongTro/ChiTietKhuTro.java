@@ -34,15 +34,15 @@ public class ChiTietKhuTro extends AppCompatActivity{
 
     private static String TENTK;
     private static String IDKHUTRO;
-
+    private static String TENKHUTRO;
     public static DialogLoad loadDSphong;
 
     private List<Fragment> fragmentList;
-    private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private FragmentKhuTro fragmentKhuTro;
     private FragmentPhongTro fragmentPhongTro;
     private TabLayout tabLayout;
+    private String [] tabtitle={"Thông Tin Khu Trọ","Quản Lý Phòng"};
 
     private CollapsingToolbarLayout toolbarLayout;
     private ImageView img_detailKhuTro;
@@ -68,6 +68,7 @@ public class ChiTietKhuTro extends AppCompatActivity{
                     .placeholder(R.drawable.icon_null_image)
                     .into(img_detailKhuTro);
             try{
+                TENKHUTRO=bundle.getString("Tenkhutro");
                 toolbarLayout.setTitle(bundle.getString("Tenkhutro"));
                 HashMap<String,String> detailKhuTro=new HashMap<>();
                 detailKhuTro.put("Thanhpho",bundle.getString("Thanhpho"));
@@ -85,6 +86,7 @@ public class ChiTietKhuTro extends AppCompatActivity{
         HashMap<String,String> IDandTK=new HashMap<>();
         IDandTK.put("Tentk",TENTK);
         IDandTK.put("Idkhutro",IDKHUTRO);
+        IDandTK.put("Tenkhutro",TENKHUTRO);
         return IDandTK;
     }
 
@@ -105,14 +107,15 @@ public class ChiTietKhuTro extends AppCompatActivity{
         fragmentList.add(fragmentKhuTro);
         fragmentList.add(fragmentPhongTro);
         viewPager=findViewById(R.id.viewpager_KTPT);
-        pagerAdapter=new SlidePagerAdapter(getSupportFragmentManager(),fragmentList);
-        viewPager.setAdapter(pagerAdapter);
+        SlidePagerAdapter slidePagerAdapter=new SlidePagerAdapter(getSupportFragmentManager(),fragmentList);
+        slidePagerAdapter.setTabtitle(tabtitle);
+        viewPager.setAdapter(slidePagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
-                    case 0:Toast.makeText(ChiTietKhuTro.this,"Tag 1",Toast.LENGTH_SHORT).show();break;
+                    case 0:break;
                     case 1: GoiFragment callBack=(GoiFragment) ChiTietKhuTro.this.callBack.get();
                             callBack.goiFragment(getApplicationContext());break;
                 }

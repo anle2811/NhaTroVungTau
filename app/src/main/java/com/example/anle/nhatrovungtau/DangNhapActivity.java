@@ -1,6 +1,7 @@
 package com.example.anle.nhatrovungtau;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 public class DangNhapActivity extends AppCompatActivity implements PerformNetworkRequest.KiemtraDN{
 
     private static final int REQUEST_CODE=113;
-
+    private SessionManager loginManager;
     private Button btn_dangkytk;
     private Button btn_dangnhap;
     private EditText edt_taikhoan;
@@ -43,6 +44,7 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         edt_taikhoan=findViewById(R.id.edt_taikhoan);
         edt_matkhau=findViewById(R.id.edt_matkhau);
         dialogLoad=new DialogLoad(this,"Đang Đăng Nhập...");
+        loginManager=new SessionManager(getApplicationContext());
     }
     public void TK_MK_VuaDK(){
         Intent intent=getIntent();
@@ -75,11 +77,14 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         Bundle bundle=new Bundle();
         bundle.putString("TENTK",edt_taikhoan.getText().toString().trim());
         intent.putExtras(bundle);
+        keepLogin();
         startActivity(intent);
         finish();
     }
 
-
+    public void keepLogin(){
+        loginManager.createLoginSession(edt_taikhoan.getText().toString().trim());
+    }
 
     public void dangky(){
         btn_dangkytk.setOnClickListener(new View.OnClickListener() {

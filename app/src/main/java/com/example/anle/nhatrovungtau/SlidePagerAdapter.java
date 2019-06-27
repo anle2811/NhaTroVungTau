@@ -9,12 +9,16 @@ import java.util.List;
 
 public class SlidePagerAdapter extends FragmentStatePagerAdapter {
 
-    private String [] tabtitle={"Thông Tin Khu Trọ","Quản Lý Phòng"};
+    private String [] tabtitle;
     private List<Fragment> fragmentList;
 
     public SlidePagerAdapter(FragmentManager fm,List<Fragment> fragmentList){
         super(fm);
         this.fragmentList=fragmentList;
+    }
+
+    public void setTabtitle(String [] tabtitle){
+        this.tabtitle=tabtitle;
     }
 
     @Override

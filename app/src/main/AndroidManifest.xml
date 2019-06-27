@@ -24,13 +24,7 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".DangNhapActivity"
             android:configChanges="orientation"
@@ -42,11 +36,14 @@
         <activity
             android:name=".ChuTroActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".KhuTroPhongTro.PhongTroActivity">
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".KhuTroPhongTro.PhongTroActivity"></activity>
         <activity
             android:name=".KhuTroPhongTro.KhuTroActivity"
             android:configChanges="orientation"
@@ -55,10 +52,11 @@
             android:name=".KhuTroPhongTro.PhotoFullScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".XemKhuTroPhongTro.ChiTietKhuTro"
+        <activity
+            android:name=".XemKhuTroPhongTro.ChiTietKhuTro"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".XemKhuTroPhongTro.ChiTietPhongTro"></activity>
     </application>
 
 </manifest>
