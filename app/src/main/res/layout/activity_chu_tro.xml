@@ -128,4 +128,24 @@
         android:id="@+id/recyc_KhuTro"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:id="@+id/rel_reload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/abc"
+            android:src="@drawable/reload"
+            android:layout_width="60dp"
+            android:layout_height="60dp" />
+        <TextView
+            android:textColor="#fff"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_below="@+id/abc"
+            android:text="Tải Lại"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </RelativeLayout>

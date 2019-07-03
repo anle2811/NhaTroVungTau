@@ -71,5 +71,31 @@
                 android:layout_height="match_parent"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/line_thaydoianh"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:id="@+id/btn_luuthaydoi"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_style1"
+            android:text="LƯU"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_huythaydoi"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_style1"
+            android:text="HỦY"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

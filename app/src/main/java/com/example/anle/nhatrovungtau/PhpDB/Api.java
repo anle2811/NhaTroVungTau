@@ -13,6 +13,8 @@ public class Api {
     public static final String actionThemPhongTro="themPhongTro";
     public static final String actionLayDSphongtro="layDSphong";
     public static final String actionLayAnhPhong="layAnhPhong";
+    public static final String actionXoaAnhPhong="xoaRowAnhPhong";
+    public static final String actionThemAnhPhong="themAnhPhong";
 
     public static final String URL_TAO_TAIKHOAN=ROOT_URL+actionTaoTK;
     public static final String URL_ACC_EXIST_CHECK=ROOT_URL+actionExistCheck;
@@ -24,4 +26,6 @@ public class Api {
     public static final String URL_THEM_PHONGTRO=ROOT_URL+actionThemPhongTro;
     public static final String URL_LAY_DS_PHONGTRO=ROOT_URL+actionLayDSphongtro;
     public static final String URL_LAY_ANHPHONG=ROOT_URL+actionLayAnhPhong;
+    public static final String URL_XOA_ANHPHONG=ROOT_URL+actionXoaAnhPhong;
+    public static final String URL_THEM_ANHPHONG=ROOT_URL+actionThemAnhPhong;
 }

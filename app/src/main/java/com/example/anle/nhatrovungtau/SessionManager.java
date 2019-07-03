@@ -25,12 +25,13 @@ public class SessionManager {
     public void createLoginSession(String name){
         editor.putBoolean(IS_LOGIN, true);
         editor.putString(TAI_KHOAN, name);
-        editor.commit();
+        editor.apply();
     }
 
     public String getTAIKHOAN(){
         String taikhoan="";
         taikhoan=pref.getString(TAI_KHOAN,"");
+        Log.d("KT","TENTK: "+taikhoan);
         return taikhoan;
     }
 
@@ -46,6 +47,8 @@ public class SessionManager {
                 Log.d("KT",": aaa"+e.getMessage());
             }
 
+        }else {
+            Log.d("KT",": bbb");
         }
     }
 
@@ -56,7 +59,7 @@ public class SessionManager {
 
     public void logOut(){
         editor.clear();
-        editor.commit();
+        editor.apply();
         Intent intent=new Intent(context,DangNhapActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

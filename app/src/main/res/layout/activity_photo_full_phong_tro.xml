@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".KhuTroPhongTro.PhotoFullPhongTro">
+    <ImageView
+        android:src="@drawable/icon_null_image"
+        android:scaleType="fitCenter"
+        android:id="@+id/img_anhPhongFull"
+        android:layout_width="match_parent"
+        android:layout_height="500dp" />
+    <Button
+        android:layout_below="@id/img_anhPhongFull"
+        android:id="@+id/btn_xoaAnhPhong"
+        android:text="XÓA"
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
+    <Button
+        android:layout_marginLeft="20sp"
+        android:layout_toRightOf="@id/btn_xoaAnhPhong"
+        android:layout_below="@id/img_anhPhongFull"
+        android:id="@+id/btn_thoatFull"
+        android:text="ĐÓNG"
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
+</RelativeLayout>

@@ -55,6 +55,8 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
     }
     public interface DSAnhPhong{
         void layDSanhphong(JSONArray dsUrlAnh);
+        void runThemAnhPhong(Context context);
+        void daThemAnhPhong();
     }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
@@ -91,6 +93,12 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
             case Api.actionLayAnhPhong:
                 ChiTietPhongTro.loadAnhPhong.show();
                 break;
+            case Api.actionXoaAnhPhong:
+                ChiTietPhongTro.loadThayDoi.show();
+                break;
+            case Api.actionThemAnhPhong:
+                ChiTietPhongTro.loadThayDoi.show();
+                break;
         }
 
     }
@@ -114,6 +122,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionLayTTchutro:
                     ChuTroActivity.LayTTload.cancel();
+                    ChuTroActivity.rel_reload.setVisibility(View.VISIBLE);
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
                 case Api.actionUpdateTTchutro:
@@ -138,6 +147,14 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionLayAnhPhong:
                     ChiTietPhongTro.loadAnhPhong.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionXoaAnhPhong:
+                    ChiTietPhongTro.loadThayDoi.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionThemAnhPhong:
+                    ChiTietPhongTro.loadThayDoi.cancel();
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -221,6 +238,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
 
                     case Api.actionLayDSkhutro:{
                         ChuTroActivity.DSkhutroLoad.cancel();
+                        ChuTroActivity.rel_reload.setVisibility(View.GONE);
                         if (!jsonObject.getBoolean("error")){
                             final TTChuTro callBack=(TTChuTro) mCallBack.get();
                             callBack.layDSkhutro(jsonObject.getJSONArray("khutros"));
@@ -258,6 +276,28 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,"Lấy danh sách phòng thất bại",Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionXoaAnhPhong:{
+                        ChiTietPhongTro.loadThayDoi.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            final DSAnhPhong callBack=(DSAnhPhong)mCallBack.get();
+                            callBack.runThemAnhPhong(context);
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionThemAnhPhong:{
+                        ChiTietPhongTro.loadThayDoi.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            final DSAnhPhong callBack=(DSAnhPhong)mCallBack.get();
+                            callBack.daThemAnhPhong();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }
                     }break;
                 }

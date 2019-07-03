@@ -86,6 +86,7 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
         try {
             Intent intent=new Intent(getActivity(),ChiTietPhongTro.class);
             Bundle bundle=new Bundle();
+            bundle.putString("Idkhutro",IDKHUTRO);
             bundle.putString("Tenkhutro",TENKHUTRO);
             bundle.putString("Idphong",phongTroList.get(position).getIdphong());
             bundle.putString("Giaphong",phongTroList.get(position).getGiaphong());

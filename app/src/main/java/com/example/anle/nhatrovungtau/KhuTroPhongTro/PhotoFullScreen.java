@@ -24,10 +24,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class PhotoFullScreen extends AppCompatActivity {
-
+    private static final int RESULT_XOA=28;
     private ImageButton btn_clock,btn_antiClock;
     private Button btn_luu,btn_dong;
     private ImageView img_xemanh;
+    private ImageView img_nutXoaAnh;
     private Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,8 @@ public class PhotoFullScreen extends AppCompatActivity {
         btn_dong=findViewById(R.id.btn_donglai);
         btn_clock=findViewById(R.id.btn_xoayClock);
         btn_antiClock=findViewById(R.id.btn_xoayAntiClock);
+        img_nutXoaAnh=findViewById(R.id.img_nutXoaAnh);
+        setImg_nutXoaAnh();
         img_xemanh=findViewById(R.id.img_xemanh);
         try {
             img_xemanh.setImageBitmap(getBitmap());
@@ -71,9 +74,9 @@ public class PhotoFullScreen extends AppCompatActivity {
         btn_luu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(PhotoFullScreen.this,KhuTroActivity.class);
+                //Intent intent=new Intent(PhotoFullScreen.this,KhuTroActivity.class);
                 chuyenBitmapThanhByteArr(bitmap);
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -83,6 +86,16 @@ public class PhotoFullScreen extends AppCompatActivity {
         btn_dong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    public void setImg_nutXoaAnh(){
+        img_nutXoaAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_XOA);
                 finish();
             }
         });

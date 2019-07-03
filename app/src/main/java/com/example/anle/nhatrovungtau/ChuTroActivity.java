@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     private ImageButton ibtn_dangxuat;
     private ImageButton ibtn_ttcn;
     private ImageButton ibtn_lammoiDS;
+    public static RelativeLayout rel_reload;
 
     private Dialog dialogTTCN;
     private View viewTTCN;
@@ -81,10 +83,10 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         initThemkhutro();
         initAll();
         showTTCN();
-        loadTTchutro();
         yeuCauTTchutro();
         initDSkhutro();
         setupLammoiDS();
+        setUpReloadTT();
     }
 
     public void initAll(){
@@ -93,6 +95,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         ibtn_dangxuat=findViewById(R.id.ibtn_dangxuat);
         ibtn_ttcn=findViewById(R.id.ibtn_ttcn);
         ibtn_lammoiDS=findViewById(R.id.ibtn_qltro);
+        rel_reload=findViewById(R.id.rel_reload);
         LayTTload=new DialogLoad(this,"Đang tải thông tin...");
         DSkhutroLoad=new DialogLoad(this,"Đang làm mới danh sách Khu Trọ...");
         checkLoged();
@@ -109,8 +112,14 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void checkLoged(){
-        loginManager.checkLogin();
-        TENTK=loginManager.getTAIKHOAN();
+        try {
+            loginManager.checkLogin();
+            TENTK=loginManager.getTAIKHOAN();
+            Log.d("KT","TENTK_:"+TENTK);
+        }catch (Exception e){
+            Log.d("KT","..."+e.getMessage());
+        }
+
     }
 
     public void initThemkhutro(){
@@ -127,9 +136,19 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
+    public void setUpReloadTT(){
+        rel_reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                yeuCauTTchutro();
+            }
+        });
+    }
+
     public void yeuCauTTchutro(){
         HashMap<String,String> params=new HashMap<>();
         params.put("Tentk",TENTK);
+        Log.d("KT","TENTK:__"+TENTK);
         PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_TT_CHUTRO,Api.actionLayTTchutro,params,REQUEST_CODE,getApplicationContext(),this);
         request.execute();
     }
@@ -138,13 +157,17 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         ibtn_lammoiDS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String,String> params=new HashMap<>();
-                params.put("Tentk",TENTK);
-                PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_DS_KHUTRO,Api.actionLayDSkhutro,
-                        params,REQUEST_CODE,getApplicationContext(),ChuTroActivity.this);
-                request.execute();
+                setUpLayDSKhuTro();
             }
         });
+    }
+
+    public void setUpLayDSKhuTro(){
+        HashMap<String,String> params=new HashMap<>();
+        params.put("Tentk",TENTK);
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_LAY_DS_KHUTRO,Api.actionLayDSkhutro,
+                params,REQUEST_CODE,getApplicationContext(),ChuTroActivity.this);
+        request.execute();
     }
 
     public void initDSkhutro(){
@@ -211,6 +234,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         }
 
         tachNgaySinh();
+        setUpLayDSKhuTro();
     }
 
     public void loadTTchutro(){

@@ -61,6 +61,7 @@ public class PhongTroActivity extends AppCompatActivity {
     private static String TENTK;
     private static String IDKHUTRO;
     private static final int REQUEST_CODE=113;
+    private static final int RESULT_XOA=28;
     public static DialogLoad loadThemPhong;
 
     private static final int CAMERA_PERMISSION_CODE=111;
@@ -394,6 +395,10 @@ public class PhongTroActivity extends AppCompatActivity {
                 }
                 fixBitmap=BitmapFactory.decodeByteArray(byteArr,0,byteArr.length);
                 bitmapList.set(itemSelect,fixBitmap);
+                anhPhongAdapter.notifyDataSetChanged();
+            }
+            if (resultCode==RESULT_XOA){
+                bitmapList.remove(itemSelect);
                 anhPhongAdapter.notifyDataSetChanged();
             }
         }

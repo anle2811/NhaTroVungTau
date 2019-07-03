@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.anle.nhatrovungtau.DialogLoad;
 import com.example.anle.nhatrovungtau.R;
@@ -28,9 +31,13 @@ public class ChiTietPhongTro extends AppCompatActivity {
     private static String IDPHONG;
 
     public static DialogLoad loadAnhPhong;
-
+    public static DialogLoad loadThayDoi;
+    public static LinearLayout line_thaydoianh;
+    private Button btn_luuthaydoi,btn_huythaydoi;
     public interface GoiFragment{
         void goiFragment(Context context);
+        void huythaydoi();
+        void luuthaydoi(Context context);
     }
 
     private WeakReference<Object> callBack;
@@ -55,6 +62,7 @@ public class ChiTietPhongTro extends AppCompatActivity {
         setupTitleCollapsToolbar();
         setupViewPager();
         getTTphongtro();
+        setUpLuuHuy();
     }
 
     public void getTTphongtro(){
@@ -67,12 +75,13 @@ public class ChiTietPhongTro extends AppCompatActivity {
                 swt_choghep.setChecked(true);
             }
             IDPHONG=bundle.getString("Idphong");
-            Picasso.get().load(bundle.getString("Image"))
+            Picasso.get().load(bundle.getString("Img"))
                     .placeholder(R.drawable.icon_null_image)
                     .into(img_AVTPhong);
             try{
                 toolbarLayout.setTitle("Phòng ("+bundle.getString("Tenkhutro")+")");
                 HashMap<String,String> detailPhongTro=new HashMap<>();
+                detailPhongTro.put("Idkhutro",bundle.getString("Idkhutro"));
                 detailPhongTro.put("Idphong",IDPHONG);
                 detailPhongTro.put("Giaphong",bundle.getString("Giaphong"));
                 detailPhongTro.put("Trangthai",String.valueOf(bundle.getInt("Trangthai")));
@@ -141,5 +150,27 @@ public class ChiTietPhongTro extends AppCompatActivity {
         img_AVTPhong=findViewById(R.id.img_detailPhongTro);
         swt_choghep=findViewById(R.id.swt_choghep);
         loadAnhPhong=new DialogLoad(ChiTietPhongTro.this,"Đang tải ảnh của phòng...");
+        loadThayDoi=new DialogLoad(ChiTietPhongTro.this,"Đang lưu thay đổi...");
+        line_thaydoianh=findViewById(R.id.line_thaydoianh);
+        btn_luuthaydoi=findViewById(R.id.btn_luuthaydoi);
+        btn_huythaydoi=findViewById(R.id.btn_huythaydoi);
+    }
+
+    public void setUpLuuHuy(){
+        btn_huythaydoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoiFragment callback=(GoiFragment)callBack.get();
+                callback.huythaydoi();
+                line_thaydoianh.setVisibility(View.GONE);
+            }
+        });
+        btn_luuthaydoi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoiFragment callback=(GoiFragment)callBack.get();
+                callback.luuthaydoi(getApplicationContext());
+            }
+        });
     }
 }

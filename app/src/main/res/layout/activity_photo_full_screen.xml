@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KhuTroPhongTro.PhotoFullScreen"
+    tools:context=".KhuTroPhongTro.PhotoFullScreen">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="8"
     android:background="@color/maunen2">
@@ -64,3 +68,10 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>
+    <ImageView
+        android:layout_gravity="right"
+        android:src="@drawable/icondelete"
+        android:id="@+id/img_nutXoaAnh"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
+</FrameLayout>
