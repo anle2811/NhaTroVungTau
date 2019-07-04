@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_dialog"
+    android:id="@+id/relLayout_ttphong"
+    android:layout_gravity="center"
+    android:paddingBottom="5dp">
+    <ScrollView
+        android:id="@+id/src_ttphong"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow>
+                <TextView
+                    android:layout_weight="1"
+                    android:paddingBottom="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/title_textview"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textColor="#fff"
+                    android:text="Cập nhật phòng" />
+            </TableRow>
+            <TableRow android:layout_marginTop="5dp">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/FloatingHintStyle">
+                    <EditText
+                        android:text="Null"
+                        android:textColor="#fff"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/edt_CNgiaphong"
+                        android:singleLine="true"
+                        android:paddingLeft="15dp"
+                        android:hint="Giá phòng"
+                        android:textSize="20sp"
+                        android:background="@drawable/style_noedit_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow android:layout_marginTop="5dp">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/FloatingHintStyle">
+                    <EditText
+                        android:text="Null"
+                        android:textColor="#fff"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/edt_CNdientichphong"
+                        android:singleLine="true"
+                        android:paddingLeft="15dp"
+                        android:hint="Diện tích"
+                        android:textSize="20sp"
+                        android:background="@drawable/style_noedit_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+            <TableRow android:layout_marginTop="5dp">
+                <android.support.design.widget.TextInputLayout
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/FloatingHintStyle">
+                    <EditText
+                        android:text="Null"
+                        android:textColor="#fff"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/edt_CNmotaphong"
+                        android:paddingLeft="15dp"
+                        android:hint="Mô tả"
+                        android:textSize="20sp"
+                        android:background="@drawable/style_noedit_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="40dp"/>
+                </android.support.design.widget.TextInputLayout>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_below="@id/src_ttphong"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:id="@+id/btn_dongCNphong"
+            android:textColor="#fff"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="ĐÓNG"
+            android:background="@drawable/button_style2"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/btn_CNphong"
+            android:textColor="#fff"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_style2"
+            android:text="CẬP NHẬT"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

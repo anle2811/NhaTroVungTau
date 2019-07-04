@@ -56,7 +56,12 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
     public interface DSAnhPhong{
         void layDSanhphong(JSONArray dsUrlAnh);
         void runThemAnhPhong(Context context);
-        void daThemAnhPhong();
+        void daThemAnhPhong(Context context);
+    }
+    public interface CapNhatTTPhong{
+        void capNhatGhepY();
+        void capNhatGhepN();
+        void capnhatTTdone();
     }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
@@ -98,6 +103,15 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 break;
             case Api.actionThemAnhPhong:
                 ChiTietPhongTro.loadThayDoi.show();
+                break;
+            case Api.actionCapNhatGhep:
+                ChiTietPhongTro.loadDoiGhep.show();
+                break;
+            case Api.actionCapNhatTTPhong:
+                ChiTietPhongTro.loadCNTTphong.show();
+                break;
+            case Api.actionCapNhatNguoi:
+                ChiTietPhongTro.loadCNSnguoi.show();
                 break;
         }
 
@@ -155,6 +169,20 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionThemAnhPhong:
                     ChiTietPhongTro.loadThayDoi.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionCapNhatGhep:
+                    ChiTietPhongTro.loadDoiGhep.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    CapNhatTTPhong callBack=(CapNhatTTPhong)mCallBack.get();
+                    callBack.capNhatGhepN();
+                    break;
+                case Api.actionCapNhatTTPhong:
+                    ChiTietPhongTro.loadCNTTphong.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionCapNhatNguoi:
+                    ChiTietPhongTro.loadCNSnguoi.cancel();
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -294,10 +322,42 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                         ChiTietPhongTro.loadThayDoi.cancel();
                         if (!jsonObject.getBoolean("error")){
                             final DSAnhPhong callBack=(DSAnhPhong)mCallBack.get();
-                            callBack.daThemAnhPhong();
+                            callBack.daThemAnhPhong(context);
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionCapNhatGhep:{
+                        ChiTietPhongTro.loadDoiGhep.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            CapNhatTTPhong callBack=(CapNhatTTPhong)mCallBack.get();
+                            callBack.capNhatGhepY();
+                        }else {
+                            Toast.makeText(context,"Thất bại",Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionCapNhatTTPhong:{
+                        ChiTietPhongTro.loadCNTTphong.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            CapNhatTTPhong callBack=(CapNhatTTPhong)mCallBack.get();
+                            callBack.capnhatTTdone();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,"Thất bại",Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionCapNhatNguoi:{
+                        ChiTietPhongTro.loadCNSnguoi.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            CapNhatTTPhong callBack=(CapNhatTTPhong)mCallBack.get();
+                            callBack.capnhatTTdone();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,"Thất bại",Toast.LENGTH_SHORT).show();
                         }
                     }break;
                 }

@@ -16,8 +16,8 @@
             app:layout_scrollFlags="exitUntilCollapsed|scroll"
             app:contentScrim="@color/maucamnhe"
             app:title="Mikita"
-            app:expandedTitleMarginStart="35dp"
-            app:expandedTitleMarginBottom="20dp">
+            app:expandedTitleMarginStart="15dp"
+            app:expandedTitleMarginBottom="100dp">
             <ImageView
                 android:id="@+id/img_detailPhongTro"
                 android:scaleType="centerCrop"
@@ -38,6 +38,16 @@
                     android:text="Cho Ghép "
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/btn_suaTTPhong"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/button_style4"
+                    android:layout_gravity="bottom"
+                    android:text="Chỉnh Sửa"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp" />
             </FrameLayout>
             <android.support.v7.widget.Toolbar
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

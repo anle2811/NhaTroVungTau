@@ -33,6 +33,7 @@ public class ListViewPhongTroAdapter extends ArrayAdapter<PhongTro> {
         if (convertView==null){
             convertView=LayoutInflater.from(context).inflate(resource,parent,false);
             viewHolder=new ListViewPhongTroAdapter.ViewHolder();
+            viewHolder.tv_sttPhong=convertView.findViewById(R.id.tv_sttPhong);
             viewHolder.img_hinhphong=convertView.findViewById(R.id.img_hinhphong);
             viewHolder.tv_giaphong=convertView.findViewById(R.id.tv_giaphong);
             viewHolder.tv_dientich=convertView.findViewById(R.id.tv_dientich);
@@ -45,6 +46,7 @@ public class ListViewPhongTroAdapter extends ArrayAdapter<PhongTro> {
         PhongTro phongTro=phongTroList.get(position);
         Picasso.get().load(phongTro.getImg()).placeholder(R.drawable.icon_null_image)
                 .into(viewHolder.img_hinhphong);
+        viewHolder.tv_sttPhong.setText(String.valueOf(position+1));
         viewHolder.tv_giaphong.setText(phongTro.getGiaphong());
         viewHolder.tv_dientich.setText(phongTro.getDientich());
         viewHolder.tv_songuoi.setText(phongTro.getTrangthai()+"");
@@ -55,6 +57,7 @@ public class ListViewPhongTroAdapter extends ArrayAdapter<PhongTro> {
     }
 
     public class ViewHolder{
+        private TextView tv_sttPhong;
         private ImageView img_hinhphong;
         private TextView tv_giaphong;
         private TextView tv_dientich;

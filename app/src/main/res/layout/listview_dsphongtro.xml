@@ -3,17 +3,32 @@
     android:padding="7dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:scaleType="centerCrop"
-        android:id="@+id/img_hinhphong"
-        android:src="@drawable/blurbackground"
+    <FrameLayout
+        android:id="@+id/frame_sttPhong"
         android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_height="150dp">
+        <ImageView
+            android:scaleType="centerCrop"
+            android:id="@+id/img_hinhphong"
+            android:src="@drawable/blurbackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tv_sttPhong"
+            android:textColor="#000"
+            android:background="#00ffbf"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:text="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </FrameLayout>
     <LinearLayout
         android:background="@color/maunen2"
         android:paddingLeft="5dp"
         android:orientation="vertical"
-        android:layout_toRightOf="@id/img_hinhphong"
+        android:layout_toRightOf="@id/frame_sttPhong"
         android:layout_width="match_parent"
         android:layout_height="150dp">
         <TextView

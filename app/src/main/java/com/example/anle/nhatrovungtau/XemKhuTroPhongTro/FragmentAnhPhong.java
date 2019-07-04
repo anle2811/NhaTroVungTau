@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -53,6 +54,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -89,6 +91,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
     private Bitmap fixBitmap;
     private int itemSelect;
     private int soluongItem;
+    private int luusoluongItem;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -303,6 +306,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
                 vitriPhucHoi.add(vitriChon);
                 anhPhongList.remove(vitriChon);
                 adapter.notifyDataSetChanged();
+                soluongItem--;
                 ChiTietPhongTro.line_thaydoianh.setVisibility(View.VISIBLE);
                 ACTION=XOAANH;
             }
@@ -338,11 +342,15 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
         }
         if (requestCode==2000){
             if (resultCode==RESULT_OK){
-                fixBitmap=(Bitmap) data.getExtras().get("data");
-                anhPhongList.add(new AnhPhong(fixBitmap,true));
-                adapter.notifyDataSetChanged();
-                ChiTietPhongTro.line_thaydoianh.setVisibility(View.VISIBLE);
-                ACTION1=THEMANH;
+                try {
+                    fixBitmap = (Bitmap) data.getExtras().get("data");
+                    anhPhongList.add(new AnhPhong(fixBitmap, true));
+                    adapter.notifyDataSetChanged();
+                    ChiTietPhongTro.line_thaydoianh.setVisibility(View.VISIBLE);
+                    ACTION1 = THEMANH;
+                }catch (Exception e){
+                    Log.d("CHUP", "ERROR: "+e.getMessage());
+                }
             }
         }
         if (requestCode==2001){
@@ -396,9 +404,12 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
     }
 
     @Override
-    public void daThemAnhPhong() {
+    public void daThemAnhPhong(Context context) {
         ACTION1=0;
+        soluongItem=anhPhongList.size();
+        luusoluongItem=soluongItem;
         ChiTietPhongTro.line_thaydoianh.setVisibility(View.GONE);
+        loadAnhPhong(context);
     }
 
     public void ThemAnhPhong(Context context){
@@ -456,6 +467,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
             phucHoi();
             xoaAnhPhongList=new ArrayList<>();
             vitriPhucHoi=new ArrayList<>();
+            soluongItem=luusoluongItem;
         }
         if (ACTION1==THEMANH){
             huyThemAnh();
@@ -509,6 +521,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
         recyc_anhphong.setAdapter(adapter);
         daLoad = true;
         soluongItem=anhPhongList.size();
+        luusoluongItem=soluongItem;
         Log.d("SIZE","Size: "+soluongItem);
     }
 }

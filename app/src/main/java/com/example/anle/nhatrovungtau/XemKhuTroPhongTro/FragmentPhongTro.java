@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import static android.app.Activity.RESULT_OK;
+
 public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragment,PerformNetworkRequest.DSPhongTro {
 
     private static String TENTK;
@@ -55,6 +57,8 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
     private FrameLayout frame_buttonThem;
     private Locale localeVN;
     private NumberFormat currencyVN;
+
+    private boolean kiemtraThayDoi=false;
 
     @Nullable
     @Override
@@ -86,6 +90,7 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
         try {
             Intent intent=new Intent(getActivity(),ChiTietPhongTro.class);
             Bundle bundle=new Bundle();
+            bundle.putString("Vitrichon",String.valueOf(position+1));
             bundle.putString("Idkhutro",IDKHUTRO);
             bundle.putString("Tenkhutro",TENKHUTRO);
             bundle.putString("Idphong",phongTroList.get(position).getIdphong());
@@ -96,9 +101,19 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
             bundle.putString("Img",phongTroList.get(position).getImg());
             bundle.putString("Mota",phongTroList.get(position).getMota());
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent,555);
         }catch (Exception e){
             Log.d("LOI","LOI: "+e.getMessage());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==555){
+            if (resultCode==RESULT_OK){
+                loadDSphong(getActivity());
+            }
         }
     }
 
@@ -109,6 +124,7 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
         rel_NoPhongTro=rootView.findViewById(R.id.rel_NoPhongTro);
         localeVN = new Locale("vi", "VN");
         currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+        
     }
 
     @Override
