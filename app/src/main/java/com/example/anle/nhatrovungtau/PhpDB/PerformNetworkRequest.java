@@ -63,6 +63,12 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
         void capNhatGhepN();
         void capnhatTTdone();
     }
+    public interface ThemKhuTro{
+        void themkhutroDone();
+    }
+    public interface ThemPhongTro{
+        void themphongtroDone();
+    }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
         super.onPreExecute();
@@ -258,6 +264,8 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     case Api.actionThemKhuTro:{
                         KhuTroActivity.themKTdialog.cancel();
                         if (!jsonObject.getBoolean("error")){
+                            ThemKhuTro callBack=(ThemKhuTro)mCallBack.get();
+                            callBack.themkhutroDone();
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
@@ -279,6 +287,8 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     case Api.actionThemPhongTro:{
                         PhongTroActivity.loadThemPhong.cancel();
                         if (!jsonObject.getBoolean("error")){
+                            ThemPhongTro callBack=(ThemPhongTro)mCallBack.get();
+                            callBack.themphongtroDone();
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();

@@ -54,7 +54,7 @@ public class StaggeredRecyclerAdapter extends RecyclerView.Adapter<StaggeredRecy
         khuTroViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Toast.makeText(context,"Ban chon: "+khuTroList.get(position).getTenKhu(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Bạn chọn: "+khuTroList.get(position).getTenKhu(),Toast.LENGTH_SHORT).show();
                 final ChonKhuTro callBack=(ChonKhuTro) mcallBack.get();
                 callBack.xemChiTiet(position);
             }

@@ -1,5 +1,7 @@
 package com.example.anle.nhatrovungtau;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,7 +23,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class DangNhapActivity extends AppCompatActivity implements PerformNetworkRequest.KiemtraDN{
-
+    private AlertDialog.Builder builder;
     private static final int REQUEST_CODE=113;
     private SessionManager loginManager;
     private Button btn_dangkytk;
@@ -37,6 +39,7 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         TK_MK_VuaDK();
         dangnhap();
         dangky();
+        initDialogTBthieu();
     }
     public void initAll(){
         btn_dangkytk=findViewById(R.id.btn_dangkytk);
@@ -58,7 +61,39 @@ public class DangNhapActivity extends AppCompatActivity implements PerformNetwor
         btn_dangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                xulyDangNhap();
+                if(kiemtranhap()==0) {
+                    xulyDangNhap();
+                }
+            }
+        });
+    }
+
+    public int kiemtranhap(){
+        int check=0;
+        String thieu="";
+        if (edt_taikhoan.getText().toString().trim().isEmpty()){
+            thieu=thieu+"[Chưa nhập tên tài khoản]"+"\n";
+            check=1;
+        }
+        if (edt_matkhau.getText().toString().trim().isEmpty()){
+            thieu=thieu+"[Chưa nhập mật khẩu]"+"\n";
+            check=1;
+        }
+        if (check!=0){
+            builder.setMessage(thieu);
+            AlertDialog thongbao=builder.create();
+            thongbao.show();
+        }
+        return check;
+    }
+
+    public void initDialogTBthieu(){
+        builder=new AlertDialog.Builder(DangNhapActivity.this);
+        builder.setTitle("Không thể tiếp tục!");
+        builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
     }

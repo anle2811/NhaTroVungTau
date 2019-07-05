@@ -133,7 +133,12 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
        params.put("Cmnd",Cmnd);
        params.put("Email",Email);
        params.put("Diachi",Diachi);
-       Log.d(TAG,"Sequence: "+Hoten+" "+Cmnd+" "+Email+" "+Diachi+" "+Ngaysinh+" "+Gioitinh);
+       nextStep();
+    }
+
+    public void nextStep(){
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        btn_trolai.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -144,6 +149,7 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
         params.put("Sdt",Sdt);
         this.maxacnhan=maxacnhan;
         Log.d(TAG,"Sequence: "+Sdt+" "+Tentk+" "+Matkhau);
+        verifyVerificationCode(this.maxacnhan);
     }
 
     @Override
@@ -182,13 +188,13 @@ public class dkTKActivity extends AppCompatActivity implements DKTKTiepTheo,Perf
             public void onClick(View v) {
                 if (viewPager.getCurrentItem()==0) {
                     fragmentTTCB.tieptheo();
+                    return;
                 }
                 if (viewPager.getCurrentItem()==1){
                     fragmentTTDN.tieptheo();
-                    verifyVerificationCode(maxacnhan);
+                    return;
                 }
-                viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
-                btn_trolai.setVisibility(View.VISIBLE);
+
             }
         });
         btn_trolai.setOnClickListener(new View.OnClickListener() {

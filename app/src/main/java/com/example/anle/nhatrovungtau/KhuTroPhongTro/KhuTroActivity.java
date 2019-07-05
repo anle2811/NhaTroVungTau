@@ -1,8 +1,10 @@
 package com.example.anle.nhatrovungtau.KhuTroPhongTro;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -64,7 +66,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallback,PerformNetworkRequest.ThemKhuTro {
 
     private static String TENTK;
 
@@ -73,7 +75,9 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final int READ_EXTERNAL_PERMISSION_CODE=222;
 
     public static DialogLoad themKTdialog;
+    private AlertDialog.Builder builder;
     private Button btn_luulai;
+    private Button btn_huythem;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap map;
@@ -82,7 +86,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234; //Code để kiểm tra quyền được cấp trong phương thức onRequestPermissionsResult()
     private boolean LocationPemissionsGranted = false; //Dùng để kiểm tra quyền vị trí đã được cấp chưa
     private static final float DEFAULT_ZOOM=16f;
-    private double latitude,longitude;
+    private double latitude=0,longitude=0;
     private EditText edt_lat,edt_lng;
     private EditText edt_tenkhutro,edt_diachikhutro,edt_motakhutro;
     private ImageView img_avtkhu;
@@ -91,7 +95,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private Dialog dialog_takeOfpick;
     private LinearLayout ln_chupanh,ln_chonanh,ln_xemanh;
     private Button btn_dong;
-    private Bitmap fixBitmap;
+    private Bitmap fixBitmap=null;
     private String convertImage;
 
     private Spinner spn_thanhpho;
@@ -115,6 +119,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         initBtnDinhvi();
         initDongVaLuu();
         setDialog_takeOfpick();
+        initDialogTBthieu();
     }
 
     @Override
@@ -268,13 +273,75 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void initDongVaLuu(){
+        btn_huythem=findViewById(R.id.btn_huy);
         btn_luulai=findViewById(R.id.btn_luulai);
         btn_luulai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadAnh();
+                if (kiemTraDieuKienLuu()==0){
+                    UploadAnh();
+                }
             }
         });
+        btn_huythem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    public int kiemTraDieuKienLuu(){
+        int check=0;
+        String noidungthieu="";
+        if (edt_tenkhutro.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập tên khu trọ]"+"\n";
+            check=1;
+        }
+        if (edt_diachikhutro.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập địa chỉ khu trọ]"+"\n";
+            check=1;
+        }
+        if (THANHPHO==null){
+            noidungthieu=noidungthieu+"[Chưa chọn thành phố]"+"\n";
+            check=1;
+        }
+        if (edt_motakhutro.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập mô tả]"+"\n";
+            check=1;
+        }
+        if (latitude==0||longitude==0){
+            noidungthieu=noidungthieu+"[Chưa định vị khu trọ]"+"\n";
+            check=1;
+        }
+        if (fixBitmap==null){
+            noidungthieu=noidungthieu+"[Chưa chọn ảnh khu trọ]"+"\n";
+            check=1;
+        }
+
+        if (check!=0){
+            builder.setMessage(noidungthieu);
+            AlertDialog thongbao=builder.create();
+            thongbao.show();
+        }
+        return check;
+    }
+
+    public void initDialogTBthieu(){
+        builder=new AlertDialog.Builder(KhuTroActivity.this);
+        builder.setTitle("Không thể lưu!");
+        builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+    }
+
+    @Override
+    public void themkhutroDone() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     public void UploadAnh(){

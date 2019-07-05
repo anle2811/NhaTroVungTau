@@ -115,6 +115,11 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
                 loadDSphong(getActivity());
             }
         }
+        if (requestCode==777){
+            if (resultCode==RESULT_OK){
+                loadDSphong(getActivity());
+            }
+        }
     }
 
     public void init(){
@@ -164,6 +169,7 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
             ListViewPhongTroAdapter adapter = new ListViewPhongTroAdapter(getActivity(), R.layout.listview_dsphongtro, phongTroList);
             lv_phongtro.setAdapter(adapter);
             daLoad = true;
+            rel_NoPhongTro.setVisibility(View.GONE);
         }else {
             rel_NoPhongTro.setVisibility(View.VISIBLE);
         }
@@ -178,7 +184,7 @@ public class FragmentPhongTro extends Fragment implements ChiTietKhuTro.GoiFragm
                 bundle.putString("Tentk",TENTK);
                 bundle.putString("Idkhutro",IDKHUTRO);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent,777);
             }
         });
     }

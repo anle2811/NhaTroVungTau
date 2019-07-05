@@ -1,8 +1,10 @@
 package com.example.anle.nhatrovungtau.KhuTroPhongTro;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -56,7 +58,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PhongTroActivity extends AppCompatActivity {
+public class PhongTroActivity extends AppCompatActivity implements PerformNetworkRequest.ThemPhongTro {
 
     private static String TENTK;
     private static String IDKHUTRO;
@@ -86,14 +88,14 @@ public class PhongTroActivity extends AppCompatActivity {
     private LinearLayout ln_chonanh;
     private LinearLayout ln_xemanh;
 
-    private Bitmap avtBitmap;
+    private Bitmap avtBitmap=null;
     private Bitmap fixBitmap;
     private GridView gridView_anhPhong;
     private List<Bitmap> bitmapList;
     private GridViewAnhPhongAdapter anhPhongAdapter;
 
     private int itemSelect;
-
+    private  AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +108,10 @@ public class PhongTroActivity extends AppCompatActivity {
         setupChonAvtPhong();
         setupGridViewImgPhong();
         PhucHoiTrangThaiGridAnhPhong(savedInstanceState);
+        phuchoiEdt(savedInstanceState);
         setBtn_luuphong();
+        setBtn_huythemphong();
+        initDialogTBthieu();
     }
 
     public void getTKandID(){
@@ -122,8 +127,19 @@ public class PhongTroActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("Giaphong",edt_giaphong.getText().toString().trim());
+        outState.putString("Dientich",edt_dientich.getText().toString().trim());
+        outState.putString("Mota",edt_mota.getText().toString().trim());
         outState.putInt("SizeListBitmap",bitmapList.size());
         LuuTrangThaiGridAnhPhong();
+    }
+
+    public void phuchoiEdt(Bundle savedInstanceState){
+        if (savedInstanceState!=null){
+            edt_giaphong.setText(savedInstanceState.getString("Giaphong"));
+            edt_dientich.setText(savedInstanceState.getString("Dientich"));
+            edt_mota.setText(savedInstanceState.getString("Mota"));
+        }
     }
 
     public void LuuTrangThaiGridAnhPhong(){
@@ -183,7 +199,66 @@ public class PhongTroActivity extends AppCompatActivity {
         btn_luuphong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadPhong();
+                if (kiemTraDieuKienLuu()==0) {
+                    UploadPhong();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void themphongtroDone() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    public void setBtn_huythemphong(){
+        btn_huythemphong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    public int kiemTraDieuKienLuu(){
+        int check=0;
+        String noidungthieu="";
+        if (edt_giaphong.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập giá phòng]"+"\n";
+            check=1;
+        }
+        if (edt_dientich.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập diện tích]"+"\n";
+            check=1;
+        }
+        if (edt_mota.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập mô tả phòng]"+"\n";
+            check=1;
+        }
+        if (avtBitmap==null){
+            noidungthieu=noidungthieu+"[Chưa chọn ảnh đại diện cho phòng]"+"\n";
+            check=1;
+        }
+        if (bitmapList.size()<1){
+            noidungthieu=noidungthieu+"[Chưa chọn chọn các ảnh mô tả về phòng]"+"\n";
+            check=1;
+        }
+        if (check!=0){
+            builder.setMessage(noidungthieu);
+            AlertDialog thongbao=builder.create();
+            thongbao.show();
+        }
+        return check;
+    }
+
+    public void initDialogTBthieu(){
+        builder = new AlertDialog.Builder(PhongTroActivity.this);
+        builder.setTitle("Không thể lưu!");
+        builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
     }

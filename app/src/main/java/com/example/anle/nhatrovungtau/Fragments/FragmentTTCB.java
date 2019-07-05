@@ -1,7 +1,9 @@
 package com.example.anle.nhatrovungtau.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +25,7 @@ import com.example.anle.nhatrovungtau.R;
 import java.util.ArrayList;
 
 public class FragmentTTCB extends Fragment implements AdapterView.OnItemSelectedListener {
-
+    private AlertDialog.Builder builder;
     private DKTKTiepTheo tiepTheo;
     private ViewGroup rootView;
     private Spinner spn_ngay,spn_thang,spn_nam;
@@ -31,7 +33,7 @@ public class FragmentTTCB extends Fragment implements AdapterView.OnItemSelected
     private EditText edt_hoten,edt_cmnd,edt_email,edt_diachi;
     private String ngay,thang,nam;
     private String sinhnhat;
-    private String gioitinh;
+    private String gioitinh="Nam";
     private static final String TAG=FragmentTTCB.class.getSimpleName();
     @Nullable
     @Override
@@ -41,14 +43,57 @@ public class FragmentTTCB extends Fragment implements AdapterView.OnItemSelected
         initEdittext();
         initAndsetupSpinner();
         initChonGioiTinh();
+        initDialogTBthieu();
         return rootView;
     }
 
     public void tieptheo(){
-        tiepTheo.truyenDL(edt_hoten.getText()+"",edt_cmnd.getText()+"",edt_email.getText()+"",
-                edt_diachi.getText()+"",sinhnhat,gioitinh);
+        if (kiemTraDieuKienDu()==0) {
+            tiepTheo.truyenDL(edt_hoten.getText().toString().trim(),
+                            edt_cmnd.getText().toString().trim(),
+                            edt_email.getText().toString().trim(),
+                            edt_diachi.getText().toString().trim(),
+                            sinhnhat, gioitinh);
+        }
     }
 
+    public int kiemTraDieuKienDu(){
+        int check=0;
+        String noidungthieu="";
+        if (edt_hoten.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập họ tên]"+"\n";
+            check=1;
+        }
+        if (edt_cmnd.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập CMND]"+"\n";
+            check=1;
+        }
+        if (edt_email.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập Email]"+"\n";
+            check=1;
+        }
+        if (edt_diachi.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập địa chỉ]"+"\n";
+            check=1;
+        }
+        if (check!=0){
+            builder.setMessage(noidungthieu);
+            AlertDialog thongbao=builder.create();
+            thongbao.show();
+        }
+        return check;
+    }
+
+    public void initDialogTBthieu(){
+        builder=new AlertDialog.Builder(getActivity());
+        builder.setTitle("Không thể tiếp tục!");
+        builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+    }
 
     public void initEdittext(){
         edt_hoten=rootView.findViewById(R.id.edt_hoten);

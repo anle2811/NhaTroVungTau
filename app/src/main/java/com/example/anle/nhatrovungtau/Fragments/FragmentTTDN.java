@@ -1,6 +1,8 @@
 package com.example.anle.nhatrovungtau.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class FragmentTTDN extends Fragment {
+    private AlertDialog.Builder builder;
     private ViewGroup rootView;
     private DKTKTiepTheo dktkTiepTheo;
     private EditText edt_sdt,edt_tentk,edt_matkhau,edt_maxacnhan,edt_laimatkhau;
@@ -30,6 +33,7 @@ public class FragmentTTDN extends Fragment {
         rootView=(ViewGroup)inflater.inflate(R.layout.fragment_dktk2,container,false);
         initEdittext();
         initBtn_guima();
+        initDialogTBthieu();
         return rootView;
     }
     public void initEdittext(){
@@ -51,10 +55,57 @@ public class FragmentTTDN extends Fragment {
     }
 
     public void tieptheo(){
-        dktkTiepTheo.truyenDL2(edt_sdt.getText().toString().trim(),
-                edt_tentk.getText().toString().trim(),
-                edt_matkhau.getText().toString().trim(),
-                edt_maxacnhan.getText().toString().trim());
+        if (kiemTraDieuKienDu()==0) {
+            dktkTiepTheo.truyenDL2(edt_sdt.getText().toString().trim(),
+                    edt_tentk.getText().toString().trim(),
+                    edt_matkhau.getText().toString().trim(),
+                    edt_maxacnhan.getText().toString().trim());
+        }
+    }
+
+    public int kiemTraDieuKienDu(){
+        int check=0;
+        String noidungthieu="";
+        if (edt_sdt.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập số điện thoại]"+"\n";
+            check=1;
+        }
+        if (edt_tentk.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập tên tài khoản]"+"\n";
+            check=1;
+        }
+        if (edt_matkhau.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập mật khẩu]"+"\n";
+            check=1;
+        }
+        if (edt_laimatkhau.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập lại mật khẩu]"+"\n";
+            check=1;
+        }else if (!edt_laimatkhau.getText().toString().trim().equals(edt_matkhau.getText().toString().trim())){
+            noidungthieu=noidungthieu+"[Mật khẩu nhập lại không trùng]"+"\n";
+            check=1;
+        }
+        if (edt_maxacnhan.getText().toString().trim().isEmpty()){
+            noidungthieu=noidungthieu+"[Chưa nhập mã xác nhận]"+"\n";
+            check=1;
+        }
+        if (check!=0){
+            builder.setMessage(noidungthieu);
+            AlertDialog thongbao=builder.create();
+            thongbao.show();
+        }
+        return check;
+    }
+
+    public void initDialogTBthieu(){
+        builder=new AlertDialog.Builder(getActivity());
+        builder.setTitle("Không thể tiếp tục!");
+        builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
     }
 
     @Override
