@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -91,6 +92,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private EditText edt_tenkhutro,edt_diachikhutro,edt_motakhutro;
     private ImageView img_avtkhu;
     private String THANHPHO;
+    private String PHUONG="null";
 
     private Dialog dialog_takeOfpick;
     private LinearLayout ln_chupanh,ln_chonanh,ln_xemanh;
@@ -99,8 +101,11 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
     private String convertImage;
 
     private Spinner spn_thanhpho;
+    private Spinner spn_phuong;
     private List<ThanhPho> thanhPhoList;
+    private List<String> phuongList;
     private SpnTPAdapter spnTPAdapter;
+    private ArrayAdapter<String> adapterPhuong;
 
     private Button btn_dinhvitro;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -361,6 +366,7 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
 
         params.put("Tentk",TENTK);
         params.put("Tentp",THANHPHO);
+        params.put("Phuong",PHUONG);
         params.put("Lat",String.valueOf(latitude));
         params.put("Lng",String.valueOf(longitude));
         params.put("Tenkhutro",edt_tenkhutro.getText().toString().trim());
@@ -442,20 +448,49 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
+    public void setPhuongList(int i){
+        switch (i){
+            case 3:{
+                phuongList.clear();
+                phuongList.add("Phường Thắng Nhất");
+                phuongList.add("Phường Thắng Nhì");
+                phuongList.add("Phường Thắng Tam");
+                phuongList.add("Phường Bốn");
+                phuongList.add("Phường Năm");
+                phuongList.add("Phường Sáu");
+                phuongList.add("Phường Bảy");
+                phuongList.add("Phường Tám");
+                phuongList.add("Phường Chín");
+                phuongList.add("Phường Mười");
+                phuongList.add("Phường Rạch Dừa");
+                phuongList.add("Phường Mười Một");
+                phuongList.add("Phường Mười Hai");
+                adapterPhuong.notifyDataSetChanged();
+            }break;
+            default: {
+                phuongList.clear();
+                adapterPhuong.notifyDataSetChanged();
+            }break;
+        }
+    }
+
     public void initSpinner(){
         spn_thanhpho=findViewById(R.id.spn_thanhpho);
-
+        spn_phuong=findViewById(R.id.spn_phuong);
+        phuongList=new ArrayList<>();
         thanhPhoList=new ArrayList<>();
         thanhPhoList.add(new ThanhPho("Chọn thành phố...",""));
-        thanhPhoList.add(new ThanhPho("Hà Nội","Ha Noi"));
-        thanhPhoList.add(new ThanhPho("Đà Nẵng","Da Nang"));
-        thanhPhoList.add(new ThanhPho("Vũng Tàu","Vung Tau"));
-        thanhPhoList.add(new ThanhPho("Sài Gòn","Sai Gon"));
-        thanhPhoList.add(new ThanhPho("Hội An","Hoi An"));
-        thanhPhoList.add(new ThanhPho("Hạ Long","Ha Long"));
-        thanhPhoList.add(new ThanhPho("Hải Phòng","Hai Phong"));
+        thanhPhoList.add(new ThanhPho("Hà Nội","Hà Nội"));
+        thanhPhoList.add(new ThanhPho("Đà Nẵng","Đà Nẵng"));
+        thanhPhoList.add(new ThanhPho("Vũng Tàu","Vũng Tàu"));
+        thanhPhoList.add(new ThanhPho("Sài Gòn","Sài Gòn"));
+        thanhPhoList.add(new ThanhPho("Hội An","Hội An"));
+        thanhPhoList.add(new ThanhPho("Hạ Long","Hạ Long"));
+        thanhPhoList.add(new ThanhPho("Hải Phòng","Hải Phòng"));
 
         spnTPAdapter=new SpnTPAdapter(KhuTroActivity.this,R.layout.custom_spinner_tp,thanhPhoList);
+        adapterPhuong=new ArrayAdapter<String>(KhuTroActivity.this,android.R.layout.simple_spinner_dropdown_item,phuongList);
+        spn_phuong.setAdapter(adapterPhuong);
 
         spn_thanhpho.setAdapter(spnTPAdapter);
 
@@ -465,10 +500,23 @@ public class KhuTroActivity extends AppCompatActivity implements OnMapReadyCallb
                 if (position==0){
                     THANHPHO=null;
                 }else {
+                    setPhuongList(position);
                     THANHPHO=thanhPhoList.get(position).getTentp().trim();
                     Toast.makeText(KhuTroActivity.this,thanhPhoList.get(position).getTentp(),Toast.LENGTH_SHORT).show();
                 }
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spn_phuong.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                PHUONG=phuongList.get(position);
             }
 
             @Override

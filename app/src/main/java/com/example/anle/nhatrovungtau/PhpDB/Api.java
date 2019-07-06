@@ -14,10 +14,12 @@ public class Api {
     public static final String actionLayDSphongtro="layDSphong";
     public static final String actionLayAnhPhong="layAnhPhong";
     public static final String actionXoaAnhPhong="xoaRowAnhPhong";
-    public static final String actionThemAnhPhong="themAnhPhong";
+    public static final String actionThemAnhPhong="bosungAnhPhong";
     public static final String actionCapNhatGhep="capNhatGhepPhong";
     public static final String actionCapNhatTTPhong="capNhatTTPhong";
     public static final String actionCapNhatNguoi="capNhatSoNPhong";
+    public static final String actionXoaKhuTro="xoaKhuTro";
+    public static final String actionCapNhatKhu="capNhatTTKhu";
 
     public static final String URL_TAO_TAIKHOAN=ROOT_URL+actionTaoTK;
     public static final String URL_ACC_EXIST_CHECK=ROOT_URL+actionExistCheck;
@@ -34,4 +36,6 @@ public class Api {
     public static final String URL_CAPNHAT_GHEP=ROOT_URL+actionCapNhatGhep;
     public static final String URL_CAPNHAT_TTPHONG=ROOT_URL+actionCapNhatTTPhong;
     public static final String URL_CAPNHAT_SNGUOI=ROOT_URL+actionCapNhatNguoi;
+    public static final String URL_XOA_KHUTRO=ROOT_URL+actionXoaKhuTro;
+    public static final String URL_CAPNHAT_KHU=ROOT_URL+actionCapNhatKhu;
 }

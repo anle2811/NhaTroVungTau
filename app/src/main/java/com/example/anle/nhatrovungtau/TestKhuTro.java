@@ -20,6 +20,15 @@ public class TestKhuTro {
     private String Mota;
     private String AnhKhu;
     private String ThanhPho;
+    private String Phuong;
+
+    public String getPhuong() {
+        return Phuong;
+    }
+
+    public void setPhuong(String phuong) {
+        Phuong = phuong;
+    }
 
     public double getLat() {
         return Lat;
@@ -56,7 +65,7 @@ public class TestKhuTro {
     public TestKhuTro() {
     }
 
-    public TestKhuTro(int Idkhutro,double lat, double lng, String tenKhu, int soPhong, String diaChi, String mota, String anhKhu, String thanhPho) {
+    public TestKhuTro(int Idkhutro,double lat, double lng, String tenKhu, int soPhong, String diaChi, String mota, String anhKhu, String thanhPho, String phuong) {
         this.Idkhutro=Idkhutro;
         Lat = lat;
         Lng = lng;
@@ -66,6 +75,7 @@ public class TestKhuTro {
         Mota = mota;
         AnhKhu = anhKhu;
         ThanhPho = thanhPho;
+        Phuong=phuong;
     }
 
     public String getAnhKhu() {

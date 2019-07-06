@@ -69,6 +69,10 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
     public interface ThemPhongTro{
         void themphongtroDone();
     }
+    public interface xulyChiTietKhuTro{
+        void xoaKhuTroDone();
+        void CNkhutroDone();
+    }
     @Override
     protected void onPreExecute() { //Được gọi đầu tiên khi tiến trình được kích hoạt
         super.onPreExecute();
@@ -118,6 +122,12 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 break;
             case Api.actionCapNhatNguoi:
                 ChiTietPhongTro.loadCNSnguoi.show();
+                break;
+            case Api.actionXoaKhuTro:
+                ChiTietKhuTro.loadXoaKhuTro.show();
+                break;
+            case Api.actionCapNhatKhu:
+                ChiTietKhuTro.loadCNkhutro.show();
                 break;
         }
 
@@ -189,6 +199,14 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionCapNhatNguoi:
                     ChiTietPhongTro.loadCNSnguoi.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionXoaKhuTro:
+                    ChiTietKhuTro.loadXoaKhuTro.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionCapNhatKhu:
+                    ChiTietKhuTro.loadCNkhutro.cancel();
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -368,6 +386,28 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(context,"Thất bại",Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionXoaKhuTro:{
+                        ChiTietKhuTro.loadXoaKhuTro.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            xulyChiTietKhuTro callBack=(xulyChiTietKhuTro)mCallBack.get();
+                            callBack.xoaKhuTroDone();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionCapNhatKhu:{
+                        ChiTietKhuTro.loadCNkhutro.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            xulyChiTietKhuTro callBack=(xulyChiTietKhuTro)mCallBack.get();
+                            callBack.CNkhutroDone();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }
                     }break;
                 }

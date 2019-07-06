@@ -1,5 +1,6 @@
 package com.example.anle.nhatrovungtau.XemKhuTroPhongTro;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,7 +16,7 @@ import com.example.anle.nhatrovungtau.R;
 
 import java.util.HashMap;
 
-public class FragmentKhuTro extends Fragment {
+public class FragmentKhuTro extends Fragment implements ChiTietKhuTro.GoiFragment {
 
     private ChiTietKhuTro chiTietKhuTro;
 
@@ -41,6 +42,11 @@ public class FragmentKhuTro extends Fragment {
         tv_mota=rootView.findViewById(R.id.tv_MOTA);
         scroll_chitietkhu=rootView.findViewById(R.id.scroll_chitietkhu);
         ViewCompat.setNestedScrollingEnabled(scroll_chitietkhu,true);
+    }
+
+    @Override
+    public void goiFragment(Context context) {
+        setTextTT(chiTietKhuTro.chuyenTT());
     }
 
     public void setTextTT(HashMap<String,String> tt){

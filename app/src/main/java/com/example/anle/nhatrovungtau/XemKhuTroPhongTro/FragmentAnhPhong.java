@@ -101,6 +101,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
         chiTietPhongTro=(ChiTietPhongTro)getActivity();
         IDPHONG=chiTietPhongTro.chuyenTT().get("Idphong");
         IDKHUTRO=chiTietPhongTro.chuyenTT().get("Idkhutro");
+        setUpDSanhphong();
         return rootView;
     }
 
@@ -454,6 +455,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
         JSONArray jArrNAMEimg=new JSONArray(NAMEimg);
         HashMap<String,String> params=new HashMap<>();
         params.put("Tentk",TENTK);
+        params.put("Idphong",IDPHONG);
         params.put("Soanh",String.valueOf(soAnh));
         params.put("ArrIdimg",jArrIDimg.toString());
         params.put("ArrAnh",jArrNAMEimg.toString());
@@ -506,22 +508,28 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
         }
     }
 
-    @Override
-    public void layDSanhphong(JSONArray dsUrlAnh) {
+    public void setUpDSanhphong(){
         anhPhongList=new ArrayList<>();
-        for (int k=0;k<dsUrlAnh.length();k++){
-            try {
-                JSONObject object=dsUrlAnh.getJSONObject(k);
-                anhPhongList.add(new AnhPhong(String.valueOf(object.getInt("Idimg")),object.getString("Url"),false));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
         adapter=new RecycAnhPhongAdapter(getActivity(),anhPhongList,FragmentAnhPhong.this);
         recyc_anhphong.setAdapter(adapter);
-        daLoad = true;
-        soluongItem=anhPhongList.size();
-        luusoluongItem=soluongItem;
-        Log.d("SIZE","Size: "+soluongItem);
+    }
+
+    @Override
+    public void layDSanhphong(JSONArray dsUrlAnh) {
+        anhPhongList.clear();
+        if (dsUrlAnh.length()>0) {
+            for (int k = 0; k < dsUrlAnh.length(); k++) {
+                try {
+                    JSONObject object = dsUrlAnh.getJSONObject(k);
+                    anhPhongList.add(new AnhPhong(String.valueOf(object.getInt("Idimg")), object.getString("Url"), false));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            adapter.notifyDataSetChanged();
+            daLoad = true;
+            soluongItem = anhPhongList.size();
+            luusoluongItem = soluongItem;
+        }
     }
 }

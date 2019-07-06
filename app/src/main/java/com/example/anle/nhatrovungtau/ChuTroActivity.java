@@ -78,7 +78,7 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     private List<TestKhuTro> khuTroList;
 
     public static DialogLoad DSkhutroLoad;
-
+    private static final int RESULT_CN=11;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +148,11 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
                 setUpLayDSKhuTro();
             }
         }
+        if (requestCode==446){
+            if (resultCode==RESULT_OK){
+                setUpLayDSKhuTro();
+            }
+        }
     }
 
     public void setUpReloadTT(){
@@ -206,10 +211,11 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         bundle.putString("Tenkhutro",khuTroList.get(position).getTenKhu());
         bundle.putString("Diachikhu",khuTroList.get(position).getDiaChi());
         bundle.putString("Thanhpho",khuTroList.get(position).getThanhPho());
+        bundle.putString("Phuong",khuTroList.get(position).getPhuong());
         bundle.putString("Motakhu",khuTroList.get(position).getMota());
         bundle.putString("Image",khuTroList.get(position).getAnhKhu());
         intent.putExtras(bundle);
-        startActivity(intent);
+        startActivityForResult(intent,446);
     }
 
     @Override
@@ -227,7 +233,8 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
                             object.getString("Diachi"),
                             object.getString("Mota"),
                             object.getString("Img"),
-                            object.getString("Tentp")));
+                            object.getString("Tentp"),
+                            object.getString("Phuong")));
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.d("Loi", "Error: " + e.getMessage());

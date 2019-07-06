@@ -32,6 +32,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -78,6 +80,8 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
     private TextView tv_iconQlanh;
     private BottomSheetBehavior bottomSheetBehavior;
     private EditText edt_giaphong,edt_dientich,edt_mota;
+    private CheckBox check_gac;
+    private String gac="0";
     private Button btn_themAnh;
     private Button btn_huythemphong;
     private Button btn_luuphong;
@@ -186,6 +190,7 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
     public void initAll(){
         edt_giaphong=findViewById(R.id.edt_giaphong);
         edt_dientich=findViewById(R.id.edt_dientich);
+        check_gac=findViewById(R.id.check_gac);
         edt_mota=findViewById(R.id.edt_mota);
         img_avtphong=findViewById(R.id.img_avtphong);
         btn_themAnh=findViewById(R.id.btn_themAnh);
@@ -193,8 +198,20 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
         btn_luuphong=findViewById(R.id.btn_luuphong);
         gridView_anhPhong=findViewById(R.id.gridView_anhPhong);
         loadThemPhong=new DialogLoad(this,"Đang thêm phòng trọ...");
+        setCheck_gac();
     }
-
+    public void setCheck_gac(){
+        check_gac.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked==true){
+                    gac="1";
+                }else {
+                    gac="0";
+                }
+            }
+        });
+    }
     public void setBtn_luuphong(){
         btn_luuphong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +292,7 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
         params.put("Idkhutro",IDKHUTRO);
         params.put("Giaphong",edt_giaphong.getText().toString().trim());
         params.put("Dientich",edt_dientich.getText().toString().trim());
+        params.put("Trangthaigac",gac);
         params.put("Mota",edt_mota.getText().toString().trim());
         params.put("ImgData",convertImage);
         params.put("Soanh",String.valueOf(bitmapList.size()));

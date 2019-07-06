@@ -43,6 +43,8 @@ import java.util.Locale;
 public class ChiTietPhongTro extends AppCompatActivity implements PerformNetworkRequest.CapNhatTTPhong {
 
     private static String IDPHONG;
+    private static int TRANGTHAI;
+    private static String IDKHUTRO;
     private static final int REQUEST_CODE=113;
     public static DialogLoad loadAnhPhong;
     public static DialogLoad loadThayDoi;
@@ -59,6 +61,7 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
     }
 
     private WeakReference<Object> callBack;
+    private WeakReference<Object> callBackTTP;
 
     private List<Fragment> fragmentList;
     private ViewPager viewPager;
@@ -107,6 +110,8 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
             }
 
             IDPHONG=bundle.getString("Idphong");
+            TRANGTHAI=bundle.getInt("Trangthai");
+            IDKHUTRO=bundle.getString("Idkhutro");
             Picasso.get().load(bundle.getString("Img"))
                     .placeholder(R.drawable.icon_null_image)
                     .into(img_AVTPhong);
@@ -223,6 +228,7 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
         fragmentTTPhong=new FragmentTTPhong();
         fragmentAnhPhong=new FragmentAnhPhong();
         callBack=new WeakReference<Object>(fragmentAnhPhong);
+        callBackTTP=new WeakReference<Object>(fragmentTTPhong);
         img_AVTPhong=findViewById(R.id.img_detailPhongTro);
         swt_choghep=findViewById(R.id.swt_choghep);
         loadAnhPhong=new DialogLoad(ChiTietPhongTro.this,"Đang tải ảnh của phòng...");
@@ -289,7 +295,23 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
 
     @Override
     public void capnhatTTdone() {
+        CNlaigiaodien();
+        dialogTTphong.cancel();
         setResult(RESULT_OK);
+    }
+
+    public void CNlaigiaodien(){
+        String giaphongnew=currencyVN.format(Double.parseDouble(edt_CNgiaphong.getText().toString().trim()));
+        HashMap<String,String> detailPhongTro=new HashMap<>();
+        detailPhongTro.put("Idkhutro",IDKHUTRO);
+        detailPhongTro.put("Idphong",IDPHONG);
+        detailPhongTro.put("Giaphong",giaphongnew);
+        detailPhongTro.put("Trangthai",String.valueOf(TRANGTHAI));
+        detailPhongTro.put("Dientich",edt_CNdientichphong.getText().toString().trim());
+        detailPhongTro.put("Mota",edt_CNmotaphong.getText().toString().trim());
+        this.detailPhongTro=detailPhongTro;
+        GoiFragment call=(GoiFragment)callBackTTP.get();
+        call.goiFragment(getApplicationContext());
     }
 
     public void setTTphongDialog(){

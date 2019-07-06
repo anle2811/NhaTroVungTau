@@ -1,6 +1,7 @@
 package com.example.anle.nhatrovungtau.XemKhuTroPhongTro;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,7 +26,7 @@ import com.example.anle.nhatrovungtau.R;
 
 import java.util.HashMap;
 
-public class FragmentTTPhong extends Fragment implements PerformNetworkRequest.CapNhatTTPhong {
+public class FragmentTTPhong extends Fragment implements PerformNetworkRequest.CapNhatTTPhong,ChiTietPhongTro.GoiFragment {
     private static final int REQUEST_CODE=113;
     private static String IDPHONG;
 
@@ -37,6 +38,7 @@ public class FragmentTTPhong extends Fragment implements PerformNetworkRequest.C
     private TextView tv_mota;
     private ChiTietPhongTro chiTietPhongTro;
     private int SnguoiBandau;
+    private boolean checkLaySN=false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,8 +66,10 @@ public class FragmentTTPhong extends Fragment implements PerformNetworkRequest.C
 
     public void setTT(HashMap<String,String> tt){
         IDPHONG=tt.get("Idphong");
-        SnguoiBandau=Integer.parseInt(tt.get("Trangthai"));
-        edt_songuoi.setText(tt.get("Trangthai"));
+        if (checkLaySN==false) {
+            SnguoiBandau = Integer.parseInt(tt.get("Trangthai"));
+            edt_songuoi.setText(tt.get("Trangthai"));
+        }
         tv_giaphong.setText(tt.get("Giaphong"));
         tv_dientich.setText(tt.get("Dientich"));
         tv_mota.setText(tt.get("Mota"));
@@ -128,6 +132,24 @@ public class FragmentTTPhong extends Fragment implements PerformNetworkRequest.C
 
     @Override
     public void capnhatTTdone() {
+        checkLaySN=true;
+        SnguoiBandau=Integer.parseInt(edt_songuoi.getText().toString().trim());
+        btn_capnhatSnguoi.setVisibility(View.GONE);
         getActivity().setResult(Activity.RESULT_OK);
+    }
+
+    @Override
+    public void goiFragment(Context context) {
+        setTT(chiTietPhongTro.chuyenTT());
+    }
+
+    @Override
+    public void huythaydoi() {
+
+    }
+
+    @Override
+    public void luuthaydoi(Context context) {
+
     }
 }

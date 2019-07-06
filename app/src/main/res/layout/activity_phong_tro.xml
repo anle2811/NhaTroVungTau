@@ -74,6 +74,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp" />
             </android.support.design.widget.TextInputLayout>
+            <CheckBox
+                android:layout_marginTop="3dp"
+                android:layout_centerHorizontal="true"
+                android:checked="false"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="Gác"
+                android:layout_below="@id/layout_dientich"
+                android:id="@+id/check_gac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/layout_mota"
                 android:layout_marginRight="10dp"
@@ -81,7 +92,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/layout_dientich"
+                android:layout_below="@id/check_gac"
                 app:hintTextAppearance="@style/FloatingHintStyle">
                 <EditText
                     android:inputType="textMultiLine"
@@ -98,7 +109,7 @@
                     android:hint="Mô tả phòng"
                     android:background="@drawable/style_edittext2"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp" />
+                    android:layout_height="140dp" />
             </android.support.design.widget.TextInputLayout>
             <TextView
                 android:textStyle="bold|italic"
