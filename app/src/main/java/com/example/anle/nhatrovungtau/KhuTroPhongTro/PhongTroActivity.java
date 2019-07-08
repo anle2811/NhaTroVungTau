@@ -284,7 +284,7 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
         String convertImage=ConvertImageToString(avtBitmap,60);
         List<String> convert=new ArrayList<>();
         for (int k=0;k<bitmapList.size();k++){
-            convert.add(ConvertImageToString(bitmapList.get(k),50));
+            convert.add(ConvertImageToString(bitmapList.get(k),100));
         }
         JSONArray jsonArray=new JSONArray(convert);
         HashMap<String,String> params=new HashMap<>();
@@ -469,6 +469,15 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
         });
     }
 
+    public Bitmap nenAnh(Bitmap bitmap){
+        Bitmap bitmapNen=null;
+        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50,stream);
+        byte [] byteArr=stream.toByteArray();
+        bitmapNen=BitmapFactory.decodeByteArray(byteArr,0,byteArr.length);
+        return bitmapNen;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -509,12 +518,12 @@ public class PhongTroActivity extends AppCompatActivity implements PerformNetwor
                     for (int i=0;i<count;i++){
                         Uri imageUri=data.getClipData().getItemAt(i).getUri();
                         fixBitmap=BitmapFactory.decodeFile(getAbsolutePath(imageUri));
-                        bitmapList.add(fixBitmap);
+                        bitmapList.add(nenAnh(fixBitmap));
                     }
                     anhPhongAdapter.notifyDataSetChanged();
                 }else if (data.getData()!=null){
                     fixBitmap=BitmapFactory.decodeFile(getAbsolutePath(data.getData()));
-                    bitmapList.add(fixBitmap);
+                    bitmapList.add(nenAnh(fixBitmap));
                     anhPhongAdapter.notifyDataSetChanged();
                 }
 

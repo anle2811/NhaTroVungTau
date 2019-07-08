@@ -51,22 +51,29 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
     private static final int REQUEST_CODE=113;
     public static DialogLoad TTCNload;
     public static DialogLoad LayTTload;
+    public static DialogLoad loadDoimk;
 
     private LinearLayout ln_themkhutro;
     private TextView tv_tenchutro;
     private ImageButton ibtn_dangxuat;
     private ImageButton ibtn_ttcn;
+    private ImageButton ibtn_doimk;
     private ImageButton ibtn_lammoiDS;
     public static RelativeLayout rel_reload;
     public static RelativeLayout rel_nokhutro;
 
     private Dialog dialogTTCN;
+    private Dialog dialogCNmk;
     private View viewTTCN;
+    private View viewCNmk;
+    private TextView tv_trangthaiCNmk;
+    private EditText edt_MKcu,edt_MKmoi,edt_laiMKmoi;
     private EditText edt_hoten,edt_cmnd,edt_email,edt_diachi;
     private Spinner spn_ngay,spn_thang,spn_nam;
     private RadioGroup rdg_gioitinh;
     private RadioButton rd_nam,rd_nu;
     private Button btn_dong,btn_chinhsua;
+    private Button btn_dongCNmk,btn_CNmk;
 
     private String tenchutro,cmnd,email,diachi,gioitinh,ngaysinh;
     private int ngay,thang,nam;
@@ -90,6 +97,8 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         initDSkhutro();
         setupLammoiDS();
         setUpReloadTT();
+        setIbtn_doimk();
+        setDialogCNmk();
     }
 
     public void initAll(){
@@ -97,11 +106,13 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
         tv_tenchutro=findViewById(R.id.tv_tenchutro);
         ibtn_dangxuat=findViewById(R.id.ibtn_dangxuat);
         ibtn_ttcn=findViewById(R.id.ibtn_ttcn);
+        ibtn_doimk=findViewById(R.id.ibtn_doimk);
         ibtn_lammoiDS=findViewById(R.id.ibtn_qltro);
         rel_reload=findViewById(R.id.rel_reload);
         rel_nokhutro=findViewById(R.id.rel_NoKhuTro);
         LayTTload=new DialogLoad(this,"Đang tải thông tin...");
         DSkhutroLoad=new DialogLoad(this,"Đang làm mới danh sách Khu Trọ...");
+        loadDoimk=new DialogLoad(this,"Đang đổi mật khẩu...");
         checkLoged();
         dangxuat();
     }
@@ -136,6 +147,67 @@ public class ChuTroActivity extends AppCompatActivity implements AdapterView.OnI
                 bundle.putString("TENTK",TENTK);
                 intent.putExtras(bundle);
                 startActivityForResult(intent,666);
+            }
+        });
+    }
+
+    public void setIbtn_doimk(){
+        ibtn_doimk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogCNmk.show();
+            }
+        });
+    }
+
+    @Override
+    public void CNmkDone() {
+        tv_trangthaiCNmk.setText("Thành Công");
+        dialogCNmk.cancel();
+    }
+
+    @Override
+    public void CNmkFail() {
+        tv_trangthaiCNmk.setText("Mật khẩu cũ không đúng");
+    }
+
+    public void setUpDoimk(){
+        HashMap<String,String> params=new HashMap<>();
+        params.put("Tentk",TENTK);
+        params.put("Mknew",edt_MKmoi.getText().toString().trim());
+        params.put("Mkold",edt_MKcu.getText().toString().trim());
+        PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_DOI_MK,Api.actionDoiMK,params,REQUEST_CODE,getApplicationContext(),ChuTroActivity.this);
+        request.execute();
+    }
+
+    public void setDialogCNmk(){
+        dialogCNmk=new Dialog(ChuTroActivity.this);
+        viewCNmk=LayoutInflater.from(ChuTroActivity.this).inflate(R.layout.dialog_doimk,(ViewGroup)findViewById(R.id.relLayout_doimk),false);
+        dialogCNmk.setContentView(viewCNmk);
+        dialogCNmk.setCanceledOnTouchOutside(false);
+        dialogCNmk.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        tv_trangthaiCNmk=viewCNmk.findViewById(R.id.tv_trangthaiCNmk);
+        edt_MKcu=viewCNmk.findViewById(R.id.edt_MKcu);
+        edt_MKmoi=viewCNmk.findViewById(R.id.edt_MKmoi);
+        edt_laiMKmoi=viewCNmk.findViewById(R.id.edt_laiMKmoi);
+        btn_dongCNmk=viewCNmk.findViewById(R.id.btn_dongCNmk);
+        btn_CNmk=viewCNmk.findViewById(R.id.btn_CNmk);
+
+        btn_dongCNmk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogCNmk.cancel();
+            }
+        });
+
+        btn_CNmk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edt_MKmoi.getText().toString().trim().equals(edt_laiMKmoi.getText().toString().trim())){
+                    setUpDoimk();
+                }else {
+                    tv_trangthaiCNmk.setText("Mật khẩu nhập lại không trùng");
+                }
             }
         });
     }

@@ -49,6 +49,8 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
         void layTTchutro(JSONObject jsonObject);
         void updateTT();
         void layDSkhutro(JSONArray dskhutro);
+        void CNmkDone();
+        void CNmkFail();
     }
     public interface DSPhongTro{
         void layDSphongtro(JSONArray dsphong);
@@ -62,6 +64,7 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
         void capNhatGhepY();
         void capNhatGhepN();
         void capnhatTTdone();
+        void xoaPhongDone();
     }
     public interface ThemKhuTro{
         void themkhutroDone();
@@ -128,6 +131,12 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                 break;
             case Api.actionCapNhatKhu:
                 ChiTietKhuTro.loadCNkhutro.show();
+                break;
+            case Api.actionXoaPhongTro:
+                ChiTietPhongTro.loadXoaPhong.show();
+                break;
+            case Api.actionDoiMK:
+                ChuTroActivity.loadDoimk.show();
                 break;
         }
 
@@ -207,6 +216,14 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                     break;
                 case Api.actionCapNhatKhu:
                     ChiTietKhuTro.loadCNkhutro.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionXoaPhongTro:
+                    ChiTietPhongTro.loadXoaPhong.cancel();
+                    Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
+                    break;
+                case Api.actionDoiMK:
+                    ChuTroActivity.loadDoimk.cancel();
                     Toast.makeText(context,"Lỗi kết nối, vui lòng kiểm tra mạng và thử lại",Toast.LENGTH_LONG).show();
                     break;
             }
@@ -407,6 +424,30 @@ public class PerformNetworkRequest extends AsyncTask<Void,Void,String> { //Async
                             callBack.CNkhutroDone();
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionXoaPhongTro:{
+                        ChiTietPhongTro.loadXoaPhong.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            CapNhatTTPhong callBack=(CapNhatTTPhong) mCallBack.get();
+                            callBack.xoaPhongDone();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }
+                    }break;
+
+                    case Api.actionDoiMK:{
+                        ChuTroActivity.loadDoimk.cancel();
+                        if (!jsonObject.getBoolean("error")){
+                            TTChuTro callBack=(TTChuTro) mCallBack.get();
+                            callBack.CNmkDone();
+                            Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
+                        }else {
+                            TTChuTro callBack=(TTChuTro) mCallBack.get();
+                            callBack.CNmkFail();
                             Toast.makeText(context,jsonObject.getString("message"),Toast.LENGTH_SHORT).show();
                         }
                     }break;

@@ -20,6 +20,8 @@ public class Api {
     public static final String actionCapNhatNguoi="capNhatSoNPhong";
     public static final String actionXoaKhuTro="xoaKhuTro";
     public static final String actionCapNhatKhu="capNhatTTKhu";
+    public static final String actionXoaPhongTro="xoaPhongTro";
+    public static final String actionDoiMK="doiMK";
 
     public static final String URL_TAO_TAIKHOAN=ROOT_URL+actionTaoTK;
     public static final String URL_ACC_EXIST_CHECK=ROOT_URL+actionExistCheck;
@@ -38,4 +40,6 @@ public class Api {
     public static final String URL_CAPNHAT_SNGUOI=ROOT_URL+actionCapNhatNguoi;
     public static final String URL_XOA_KHUTRO=ROOT_URL+actionXoaKhuTro;
     public static final String URL_CAPNHAT_KHU=ROOT_URL+actionCapNhatKhu;
+    public static final String URL_XOA_PHONGTRO=ROOT_URL+actionXoaPhongTro;
+    public static final String URL_DOI_MK=ROOT_URL+actionDoiMK;
 }

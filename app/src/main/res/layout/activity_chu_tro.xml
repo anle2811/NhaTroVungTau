@@ -95,6 +95,16 @@
                 android:text="Thông Tin\nCá Nhân"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <ImageButton
+                android:layout_toRightOf="@id/ibtn_ttcn"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/ibtn_doimk"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icondoimk"
+                android:background="@drawable/button_style1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
             <LinearLayout
                 android:id="@+id/ln_themkhutro"
                 android:weightSum="2"

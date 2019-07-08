@@ -139,6 +139,11 @@ public class FragmentTTPhong extends Fragment implements PerformNetworkRequest.C
     }
 
     @Override
+    public void xoaPhongDone() {
+
+    }
+
+    @Override
     public void goiFragment(Context context) {
         setTT(chiTietPhongTro.chuyenTT());
     }

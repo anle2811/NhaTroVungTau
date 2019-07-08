@@ -48,6 +48,16 @@
                     android:text="Chỉnh Sửa"
                     android:layout_width="100dp"
                     android:layout_height="40dp" />
+                <Button
+                    android:id="@+id/btn_xoaPhong"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#fff"
+                    android:background="@drawable/button_style4"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:text="XÓA"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp" />
             </FrameLayout>
             <android.support.v7.widget.Toolbar
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

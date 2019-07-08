@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#739e8a"
+    android:background="@color/maunen2"
     tools:context=".KhuTroPhongTro.KhuTroActivity">
     <ScrollView
         android:fillViewport="true"
@@ -93,14 +93,20 @@
                     android:layout_below="@id/layout_diachi"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"/>
-                <Spinner
-                    android:id="@+id/spn_phuong"
+                <FrameLayout
+                    android:background="@color/maucamnhe"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="8dp"
+                    android:id="@+id/frame_spnphuong"
                     android:layout_below="@id/spn_thanhpho"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"/>
+                    android:layout_height="30dp">
+                    <Spinner
+                    android:id="@+id/spn_phuong"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                </FrameLayout>
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/layout_motakhutro"
                     android:layout_marginRight="10dp"
@@ -108,7 +114,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/spn_phuong"
+                    android:layout_below="@id/frame_spnphuong"
                     app:hintTextAppearance="@style/FloatingHintStyle">
                     <EditText
                         android:inputType="textMultiLine"
@@ -191,7 +197,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
                     android:textSize="20sp"
-                    android:textColor="#a62900"
+                    android:textColor="@color/maucamnhe"
                     android:layout_below="@id/layout_vitri"
                     android:text="Ảnh khu trọ: "
                     android:layout_width="wrap_content"
@@ -200,7 +206,6 @@
                     android:layout_toLeftOf="@id/btn_latlng"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/img_avtkhu"
-                    android:background="@drawable/pic_border"
                     android:scaleType="centerInside"
                     android:src="@drawable/addpicicon"
                     android:layout_marginTop="5dp"

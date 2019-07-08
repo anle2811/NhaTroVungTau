@@ -29,6 +29,7 @@ import com.example.anle.nhatrovungtau.DialogLoad;
 import com.example.anle.nhatrovungtau.PhpDB.Api;
 import com.example.anle.nhatrovungtau.PhpDB.PerformNetworkRequest;
 import com.example.anle.nhatrovungtau.R;
+import com.example.anle.nhatrovungtau.SessionManager;
 import com.example.anle.nhatrovungtau.SlidePagerAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +43,7 @@ import java.util.Locale;
 
 public class ChiTietPhongTro extends AppCompatActivity implements PerformNetworkRequest.CapNhatTTPhong {
 
+    private static String TENTK;
     private static String IDPHONG;
     private static int TRANGTHAI;
     private static String IDKHUTRO;
@@ -51,15 +53,18 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
     public static DialogLoad loadDoiGhep;
     public static DialogLoad loadCNTTphong;
     public static DialogLoad loadCNSnguoi;
+    public static DialogLoad loadXoaPhong;
     public static LinearLayout line_thaydoianh;
     private Button btn_luuthaydoi,btn_huythaydoi;
     private Button btn_suaTTPhong;
+    private Button btn_xoaPhong;
     public interface GoiFragment{
         void goiFragment(Context context);
         void huythaydoi();
         void luuthaydoi(Context context);
     }
 
+    private SessionManager loginManager;
     private WeakReference<Object> callBack;
     private WeakReference<Object> callBackTTP;
 
@@ -83,6 +88,7 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
     private EditText edt_CNgiaphong,edt_CNdientichphong,edt_CNmotaphong;
     private Button btn_dongCNphong,btn_CNphong;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +101,7 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
         setUpDoiGhep();
         setUpDialogCNphong();
         setBtn_suaTTPhong();
+        setBtn_xoaPhong();
     }
 
     public void getTTphongtro(){
@@ -225,6 +232,8 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
     }
 
     public void init(){
+        loginManager=new SessionManager(getApplicationContext());
+        TENTK=loginManager.getTAIKHOAN();
         fragmentTTPhong=new FragmentTTPhong();
         fragmentAnhPhong=new FragmentAnhPhong();
         callBack=new WeakReference<Object>(fragmentAnhPhong);
@@ -236,10 +245,12 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
         loadDoiGhep=new DialogLoad(ChiTietPhongTro.this,"Đang đổi trạng thái ghép...");
         loadCNTTphong=new DialogLoad(ChiTietPhongTro.this,"Đang lưu cập nhật...");
         loadCNSnguoi=new DialogLoad(ChiTietPhongTro.this,"Đang cập nhật số người...");
+        loadXoaPhong=new DialogLoad(ChiTietPhongTro.this,"Đang xóa phòng...");
         line_thaydoianh=findViewById(R.id.line_thaydoianh);
         btn_luuthaydoi=findViewById(R.id.btn_luuthaydoi);
         btn_huythaydoi=findViewById(R.id.btn_huythaydoi);
         btn_suaTTPhong=findViewById(R.id.btn_suaTTPhong);
+        btn_xoaPhong=findViewById(R.id.btn_xoaPhong);
         localeVN = new Locale("vi", "VN");
         currencyVN = NumberFormat.getCurrencyInstance(localeVN);
     }
@@ -250,6 +261,20 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
             public void onClick(View v) {
                 setTTphongDialog();
                 dialogTTphong.show();
+            }
+        });
+    }
+
+    public void setBtn_xoaPhong(){
+        btn_xoaPhong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,String> params=new HashMap<>();
+                params.put("Tentk",TENTK);
+                params.put("Idkhutro",IDKHUTRO);
+                params.put("Idphong",IDPHONG);
+                PerformNetworkRequest request=new PerformNetworkRequest(Api.URL_XOA_PHONGTRO,Api.actionXoaPhongTro,params,REQUEST_CODE,getApplicationContext(),ChiTietPhongTro.this);
+                request.execute();
             }
         });
     }
@@ -298,6 +323,12 @@ public class ChiTietPhongTro extends AppCompatActivity implements PerformNetwork
         CNlaigiaodien();
         dialogTTphong.cancel();
         setResult(RESULT_OK);
+    }
+
+    @Override
+    public void xoaPhongDone() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     public void CNlaigiaodien(){

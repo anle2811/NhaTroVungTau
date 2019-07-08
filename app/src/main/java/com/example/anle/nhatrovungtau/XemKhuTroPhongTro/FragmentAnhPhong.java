@@ -298,6 +298,15 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
         }
     }
 
+    public Bitmap nenAnh(Bitmap bitmap){
+        Bitmap bitmapNen=null;
+        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50,stream);
+        byte [] byteArr=stream.toByteArray();
+        bitmapNen=BitmapFactory.decodeByteArray(byteArr,0,byteArr.length);
+        return bitmapNen;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -361,14 +370,14 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
                     for (int i=0;i<count;i++){
                         Uri imageUri=data.getClipData().getItemAt(i).getUri();
                         fixBitmap=BitmapFactory.decodeFile(getAbsolutePath(imageUri));
-                        anhPhongList.add(new AnhPhong(fixBitmap,true));
+                        anhPhongList.add(new AnhPhong(nenAnh(fixBitmap),true));
                     }
                     adapter.notifyDataSetChanged();
                     ChiTietPhongTro.line_thaydoianh.setVisibility(View.VISIBLE);
                     ACTION1=THEMANH;
                 }else if (data.getData()!=null){
                     fixBitmap=BitmapFactory.decodeFile(getAbsolutePath(data.getData()));
-                    anhPhongList.add(new AnhPhong(fixBitmap,true));
+                    anhPhongList.add(new AnhPhong(nenAnh(fixBitmap),true));
                     adapter.notifyDataSetChanged();
                     ChiTietPhongTro.line_thaydoianh.setVisibility(View.VISIBLE);
                     ACTION1=THEMANH;
@@ -416,7 +425,7 @@ public class FragmentAnhPhong extends Fragment implements ChiTietPhongTro.GoiFra
     public void ThemAnhPhong(Context context){
         List<String> convert=new ArrayList<>();
         for (int k=soluongItem;k<anhPhongList.size();k++){
-            convert.add(ConvertImageToString(anhPhongList.get(k).getBitmap(),50));
+            convert.add(ConvertImageToString(anhPhongList.get(k).getBitmap(),100));
         }
         JSONArray jsonArray=new JSONArray(convert);
         HashMap<String,String> params=new HashMap<>();
