@@ -68,6 +68,7 @@
             android:layout_weight="1"
             app:hintTextAppearance="@style/FloatingHintStyle">
         <EditText
+            android:inputType="textPassword"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:id="@+id/edt_matkhau"
@@ -85,6 +86,7 @@
             android:layout_weight="1"
             app:hintTextAppearance="@style/FloatingHintStyle">
         <EditText
+            android:inputType="textPassword"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
             android:id="@+id/edt_laimatkhau"
